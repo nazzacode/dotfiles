@@ -1,0 +1,10 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =8
+let g:netrw_dirhist_8='/home/nathan/Documents/Computing/cheatsheets'
+let g:netrw_dirhist_7='/home/nathan/Documents/Computing/comp_code/leetcode'
+let g:netrw_dirhist_6='/home/nathan/Documents/University/Year3'
+let g:netrw_dirhist_5='/home/nathan/Documents/University/Year3/IntroDatabases'
+let g:netrw_dirhist_4='/home/nathan/Documents/University/Year3/IntroDatabases/Notes'
+let g:netrw_dirhist_3='/home/nathan/Documents/University/Year3/IntroDatabases'
+let g:netrw_dirhist_2='/home/nathan/Documents/University/Year3'
+let g:netrw_dirhist_1='/home/nathan/Google Drive/Brainnwave'

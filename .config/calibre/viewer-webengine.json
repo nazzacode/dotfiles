@@ -1,0 +1,350 @@
+{
+  "configure-viewer-toolbar-geometry": {
+    "__class__": "bytearray", 
+    "__value__": "AdnQywADAAAAAACxAAABGwAAAxIAAAMrAAAAswAAAR0AAAMQAAADKQAAAAAAAAAAB4AAAACzAAABHQAAAxAAAAMp"
+  }, 
+  "local_storage": {
+    "search-bar-history-search-in-book": [
+      "markov relative"
+    ]
+  }, 
+  "main_window_geometry": {
+    "__class__": "bytearray", 
+    "__value__": "AdnQywADAAAAAAAFAAAAIgAAA7oAAAQyAAAACgAAACcAAAO1AAAELQAAAAAAAAAAB4AAAAAKAAAAJwAAA7UAAAQt"
+  }, 
+  "main_window_state": {
+    "__class__": "bytearray", 
+    "__value__": "AAAA/wAAAAH9AAAAAgAAAAAAAADaAAAECfwCAAAAAfsAAAAQAHQAbwBjAC0AZABvAGMAawIAAAAMAAAAJwAAANgAAAQFAAAAAQAAAUkAAAQJ/AIAAAAD+wAAABwAYgBvAG8AawBtAGEAcgBrAHMALQBkAG8AYwBrAAAAAAAAAAQJAAAA0gD////7AAAAFgBsAG8AbwBrAHUAcAAtAGQAbwBjAGsAAAAAAP////8AAABmAP////sAAAAcAGkAbgBzAHAAZQBjAHQAbwByAC0AZABvAGMAawAAAAAAAAAECQAAABQA////AAADrAAABAcAAAAEAAAABAAAAAgAAAAI/AAAAAEAAAAAAAAAAQAAAB4AYQBjAHQAaQBvAG4AcwBfAHQAbwBvAGwAYgBhAHICAAAAAP////8AAAAAAAAAAA=="
+  }, 
+  "old_prefs_migrated": true, 
+  "session_data": {
+    "base_font_size": 22, 
+    "book_scrollbar": true, 
+    "controls_help_shown_count": 2, 
+    "current_color_scheme": "sepia-light", 
+    "footer": {
+      "left": "pos-chapter", 
+      "middle": "section", 
+      "right": "pos-book"
+    }, 
+    "header": {
+      "left": "empty", 
+      "middle": "title", 
+      "right": "empty"
+    }, 
+    "hide_tooltips": null, 
+    "keyboard_shortcuts": {
+      "down": [
+        {
+          "altKey": false, 
+          "ctrlKey": false, 
+          "key": "ArrowDown", 
+          "metaKey": false, 
+          "shiftKey": false
+        }, 
+        {
+          "altKey": false, 
+          "ctrlKey": false, 
+          "key": "j", 
+          "metaKey": false, 
+          "shiftKey": false
+        }
+      ], 
+      "pagedown": [
+        {
+          "altKey": false, 
+          "ctrlKey": false, 
+          "key": " ", 
+          "metaKey": false, 
+          "shiftKey": false
+        }, 
+        {
+          "altKey": false, 
+          "ctrlKey": false, 
+          "key": "PageDown", 
+          "metaKey": false, 
+          "shiftKey": false
+        }, 
+        {
+          "altKey": false, 
+          "ctrlKey": true, 
+          "key": "d", 
+          "metaKey": false, 
+          "shiftKey": false
+        }
+      ], 
+      "pageup": [
+        {
+          "altKey": false, 
+          "ctrlKey": false, 
+          "key": "PageUp", 
+          "metaKey": false, 
+          "shiftKey": false
+        }, 
+        {
+          "altKey": false, 
+          "ctrlKey": true, 
+          "key": "u", 
+          "metaKey": false, 
+          "shiftKey": false
+        }
+      ], 
+      "up": [
+        {
+          "altKey": false, 
+          "ctrlKey": false, 
+          "key": "ArrowUp", 
+          "metaKey": false, 
+          "shiftKey": false
+        }, 
+        {
+          "altKey": false, 
+          "ctrlKey": false, 
+          "key": "k", 
+          "metaKey": false, 
+          "shiftKey": false
+        }
+      ]
+    }, 
+    "left-margin": {
+      "left": "empty", 
+      "middle": "empty", 
+      "right": "empty"
+    }, 
+    "lines_per_sec_auto": 0.5, 
+    "margin_bottom": 60, 
+    "margin_left": 40, 
+    "margin_right": 40, 
+    "margin_top": 60, 
+    "read_mode": "flow", 
+    "right-margin": {
+      "left": "empty", 
+      "middle": "empty", 
+      "right": "empty"
+    }, 
+    "scroll_auto_boundary_delay": 10, 
+    "standalone_font_settings": {}, 
+    "standalone_misc_settings": {
+      "remember_window_geometry": true
+    }, 
+    "standalone_recently_opened": [
+      {
+        "key": "/tmp/mozilla_nathan0/xii_ cv-2.pdf", 
+        "pathtoebook": "/tmp/mozilla_nathan0/xii_ cv-2.pdf", 
+        "timestamp": "2020-12-27T20:31:09.733Z", 
+        "title": "xii  cv-2"
+      }, 
+      {
+        "key": "/tmp/mozilla_nathan0/xii_ cv.pdf", 
+        "pathtoebook": "/tmp/mozilla_nathan0/xii_ cv.pdf", 
+        "timestamp": "2020-12-27T20:30:39.478Z", 
+        "title": "xii  cv"
+      }, 
+      {
+        "key": "/home/nathan/Downloads/p514-harel.pdf", 
+        "pathtoebook": "/home/nathan/Downloads/p514-harel.pdf", 
+        "timestamp": "2020-12-22T22:34:17.190Z", 
+        "title": "p514-harel"
+      }, 
+      {
+        "authors": [
+          "Camille Paglia"
+        ], 
+        "key": "/home/nathan/calibre_library/Camille Paglia/Sex, Art, and American Culture (37)/Sex, Art, and American Culture - Camille Paglia.epub", 
+        "pathtoebook": "/home/nathan/calibre_library/Camille Paglia/Sex, Art, and American Culture (37)/Sex, Art, and American Culture - Camille Paglia.epub", 
+        "timestamp": "2020-12-22T16:52:32.812Z", 
+        "title": "Sex, Art, and American Culture"
+      }, 
+      {
+        "authors": [
+          "Abraham Joshua Heschel"
+        ], 
+        "key": "/home/nathan/calibre_library/Abraham Joshua Heschel/The Sabbath (42)/The Sabbath - Abraham Joshua Heschel.epub", 
+        "pathtoebook": "/home/nathan/calibre_library/Abraham Joshua Heschel/The Sabbath (42)/The Sabbath - Abraham Joshua Heschel.epub", 
+        "timestamp": "2020-12-22T15:09:42.723Z", 
+        "title": "The Sabbath"
+      }, 
+      {
+        "authors": [
+          "Dr Paolo Guagliardo"
+        ], 
+        "key": "/home/nathan/Documents/University/Year3/IntroDatabases/Slides/IDS_18_null-value.pdf", 
+        "pathtoebook": "/home/nathan/Documents/University/Year3/IntroDatabases/Slides/IDS_18_null-value.pdf", 
+        "timestamp": "2020-12-19T18:40:17.973Z", 
+        "title": "The NULL value"
+      }, 
+      {
+        "authors": [
+          "Nathan Sharp (Dr Paolo Guagliardo)"
+        ], 
+        "key": "/home/nathan/Documents/University/Year3/IntroDatabases/IDB_Notes/IDB_All_Lecture_Notes.pdf", 
+        "pathtoebook": "/home/nathan/Documents/University/Year3/IntroDatabases/IDB_Notes/IDB_All_Lecture_Notes.pdf", 
+        "timestamp": "2020-12-19T18:35:44.020Z", 
+        "title": "Introduction to Databases (IDB)"
+      }, 
+      {
+        "authors": [
+          "Frode Alexander Hegland"
+        ], 
+        "key": "/home/nathan/calibre_library/Frode Alexander Hegland/THE FUTURE OF TEXT (44)/THE FUTURE OF TEXT - Frode Alexander Hegland.epub", 
+        "pathtoebook": "/home/nathan/calibre_library/Frode Alexander Hegland/THE FUTURE OF TEXT (44)/THE FUTURE OF TEXT - Frode Alexander Hegland.epub", 
+        "timestamp": "2020-12-14T01:07:25.340Z", 
+        "title": "THE FUTURE OF TEXT"
+      }, 
+      {
+        "authors": [
+          "Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein"
+        ], 
+        "key": "/home/nathan/calibre_library/Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein/Introduction to Algorithms, Third Edition (22)/Introduction to Algorithms, Third Edition - Thomas H. Cormen, Charles E. Leiserson, Ro.pdf", 
+        "pathtoebook": "/home/nathan/calibre_library/Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein/Introduction to Algorithms, Third Edition (22)/Introduction to Algorithms, Third Edition - Thomas H. Cormen, Charles E. Leiserson, Ro.pdf", 
+        "timestamp": "2020-12-11T00:02:16.656Z", 
+        "title": "Introduction to Algorithms, Third Edition"
+      }, 
+      {
+        "authors": [
+          "T. S. Eliot"
+        ], 
+        "key": "/home/nathan/calibre_library/T. S. Eliot/Four Quartets (41)/Four Quartets - T. S. Eliot.epub", 
+        "pathtoebook": "/home/nathan/calibre_library/T. S. Eliot/Four Quartets (41)/Four Quartets - T. S. Eliot.epub", 
+        "timestamp": "2020-11-28T16:38:15.334Z", 
+        "title": "Four Quartets"
+      }, 
+      {
+        "authors": [
+          "Roger Scruton"
+        ], 
+        "key": "/home/nathan/calibre_library/Roger Scruton/Beauty (40)/Beauty - Roger Scruton.pdf", 
+        "pathtoebook": "/home/nathan/calibre_library/Roger Scruton/Beauty (40)/Beauty - Roger Scruton.pdf", 
+        "timestamp": "2020-11-28T15:30:50.524Z", 
+        "title": "Beauty"
+      }, 
+      {
+        "authors": [
+          "Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein"
+        ], 
+        "key": "/home/nathan/calibre_library/Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein/Introduction to Algorithms, Third Edition (32)/Introduction to Algorithms, Third Edition - Thomas H. Cormen, Charles E. Leiserson, Ro.pdf", 
+        "pathtoebook": "/home/nathan/calibre_library/Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein/Introduction to Algorithms, Third Edition (32)/Introduction to Algorithms, Third Edition - Thomas H. Cormen, Charles E. Leiserson, Ro.pdf", 
+        "timestamp": "2020-11-03T23:45:25.099Z", 
+        "title": "Introduction to Algorithms, Third Edition"
+      }, 
+      {
+        "authors": [
+          "Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein"
+        ], 
+        "key": "/home/nathan/calibre_library/Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein/Introduction to Algorithms, Third Edition (32)/Introduction to Algorithms, Third Edition - Thomas H. Cormen, Charles E. Leiserson, Ro.epub", 
+        "pathtoebook": "/home/nathan/calibre_library/Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein/Introduction to Algorithms, Third Edition (32)/Introduction to Algorithms, Third Edition - Thomas H. Cormen, Charles E. Leiserson, Ro.epub", 
+        "timestamp": "2020-10-30T14:46:36.745Z", 
+        "title": "Introduction to Algorithms, Third Edition"
+      }, 
+      {
+        "authors": [
+          "Pearl, Judea"
+        ], 
+        "key": "/home/nathan/calibre_library/Judea Pearl/Causality (28)/Causality - Judea Pearl.epub", 
+        "pathtoebook": "/home/nathan/calibre_library/Judea Pearl/Causality (28)/Causality - Judea Pearl.epub", 
+        "timestamp": "2020-10-30T11:20:31.591Z", 
+        "title": "B00AKE1VYK EBOK"
+      }, 
+      {
+        "authors": [
+          "Judea Pearl"
+        ], 
+        "key": "/home/nathan/calibre_library/Judea Pearl, Dana Mackenzie/The Book of Why (29)/The Book of Why - Judea Pearl, Dana Mackenzie.epub", 
+        "pathtoebook": "/home/nathan/calibre_library/Judea Pearl, Dana Mackenzie/The Book of Why (29)/The Book of Why - Judea Pearl, Dana Mackenzie.epub", 
+        "timestamp": "2020-10-30T11:18:32.948Z", 
+        "title": "The Book of Why"
+      }, 
+      {
+        "authors": [
+          "Kahneman, Daniel"
+        ], 
+        "key": "/home/nathan/calibre_library/Kahneman, Daniel/Thinking, Fast and Slow (33)/Thinking, Fast and Slow - Kahneman, Daniel.epub", 
+        "pathtoebook": "/home/nathan/calibre_library/Kahneman, Daniel/Thinking, Fast and Slow (33)/Thinking, Fast and Slow - Kahneman, Daniel.epub", 
+        "timestamp": "2020-10-16T20:44:46.592Z", 
+        "title": "Thinking, Fast and Slow"
+      }, 
+      {
+        "authors": [
+          "Neal Stephenson"
+        ], 
+        "key": "/home/nathan/calibre_library/Neal Stephenson/Snow Crash (27)/Snow Crash - Neal Stephenson.epub", 
+        "pathtoebook": "/home/nathan/calibre_library/Neal Stephenson/Snow Crash (27)/Snow Crash - Neal Stephenson.epub", 
+        "timestamp": "2020-10-12T21:07:45.034Z", 
+        "title": "Snow Crash"
+      }, 
+      {
+        "authors": [
+          "Eagleman, David"
+        ], 
+        "key": "/home/nathan/calibre_library/David Eagleman/Brain _ The Story of You (8)/Brain _ The Story of You - David Eagleman.epub", 
+        "pathtoebook": "/home/nathan/calibre_library/David Eagleman/Brain _ The Story of You (8)/Brain _ The Story of You - David Eagleman.epub", 
+        "timestamp": "2020-10-05T15:51:48.228Z", 
+        "title": "Brain : The Story of You (9781101870549)"
+      }, 
+      {
+        "authors": [
+          "Steven Sloman"
+        ], 
+        "key": "/home/nathan/calibre_library/Steven Sloman/Causal Models How People Think about the World & Its Alternatives (30)/Causal Models How People Think about the W - Steven Sloman.pdf", 
+        "pathtoebook": "/home/nathan/calibre_library/Steven Sloman/Causal Models How People Think about the World & Its Alternatives (30)/Causal Models How People Think about the W - Steven Sloman.pdf", 
+        "timestamp": "2020-10-05T10:13:05.840Z", 
+        "title": "0195183118.pdf"
+      }, 
+      {
+        "authors": [
+          "Ableson, Sussman"
+        ], 
+        "key": "/home/nathan/calibre_library/Ableson, Sussman/Structure and Interpretation of computer Programs (SICP) 2e (1)/Structure and Interpretation of computer P - Ableson, Sussman.pdf", 
+        "pathtoebook": "/home/nathan/calibre_library/Ableson, Sussman/Structure and Interpretation of computer Programs (SICP) 2e (1)/Structure and Interpretation of computer P - Ableson, Sussman.pdf", 
+        "timestamp": "2020-10-03T17:52:39.761Z", 
+        "title": "Structure and Interpretation of computer P"
+      }, 
+      {
+        "authors": [
+          "Teknikker"
+        ], 
+        "key": "/home/nathan/calibre_library/Andy Clark/Mindware_ An Introductin to the Philosophy of Cognitive Science (2)/Mindware_ An Introductin to the Philosophy - Andy Clark.pdf", 
+        "pathtoebook": "/home/nathan/calibre_library/Andy Clark/Mindware_ An Introductin to the Philosophy of Cognitive Science (2)/Mindware_ An Introductin to the Philosophy - Andy Clark.pdf", 
+        "timestamp": "2020-10-03T17:40:37.714Z", 
+        "title": "DjVu Document"
+      }, 
+      {
+        "authors": [
+          "fqk"
+        ], 
+        "key": "/home/nathan/calibre_library/Plato/Plato's Republic (18)/Plato's Republic - Plato.pdf", 
+        "pathtoebook": "/home/nathan/calibre_library/Plato/Plato's Republic (18)/Plato's Republic - Plato.pdf", 
+        "timestamp": "2020-10-03T17:31:24.946Z", 
+        "title": "0521839631pre.tex"
+      }, 
+      {
+        "authors": [
+          "Joseph Campbell"
+        ], 
+        "key": "/home/nathan/calibre_library/Joseph Campbell/The Hero With A Thousand Faces (25)/The Hero With A Thousand Faces - Joseph Campbell.epub", 
+        "pathtoebook": "/home/nathan/calibre_library/Joseph Campbell/The Hero With A Thousand Faces (25)/The Hero With A Thousand Faces - Joseph Campbell.epub", 
+        "timestamp": "2020-09-28T15:12:16.028Z", 
+        "title": "The Hero With A Thousand Faces"
+      }, 
+      {
+        "authors": [
+          "Joseph Campbell"
+        ], 
+        "key": "/home/nathan/calibre_library/Joseph Campbell/The Hero With A Thousand Faces (16)/The Hero With A Thousand Faces - Joseph Campbell.pdf", 
+        "pathtoebook": "/home/nathan/calibre_library/Joseph Campbell/The Hero With A Thousand Faces (16)/The Hero With A Thousand Faces - Joseph Campbell.pdf", 
+        "timestamp": "2020-09-28T14:48:52.013Z", 
+        "title": "The Hero With A Thousand Faces, Commemorative Edition (Princeton University Press; 2004)"
+      }, 
+      {
+        "authors": [
+          "FRIEDRICH NIETZSCHE"
+        ], 
+        "key": "/home/nathan/calibre_library/Fredrich Nietzsche/Beyond Good and Evil_ Prelude to a Philosophy of the Future (17)/Beyond Good and Evil_ Prelude to a Philoso - Fredrich Nietzsche.pdf", 
+        "pathtoebook": "/home/nathan/calibre_library/Fredrich Nietzsche/Beyond Good and Evil_ Prelude to a Philosophy of the Future (17)/Beyond Good and Evil_ Prelude to a Philoso - Fredrich Nietzsche.pdf", 
+        "timestamp": "2020-09-26T22:56:19.448Z", 
+        "title": "Beyond Good and Evil: Prelude to a Philosophy of the Future"
+      }
+    ], 
+    "user_stylesheet": "text-indent:2em;}\nh1, h2, h3, h4, h5, h6\n{text-align:center;\nfont-style:italic;\nfont-weight:bold;}"
+  }
+}

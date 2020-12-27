@@ -1,0 +1,254 @@
+{
+  "action-layout-toolbar": [
+    "Add Books", 
+    "Edit Metadata", 
+    "Convert Books", 
+    "Remove Books", 
+    null, 
+    "View", 
+    "Choose Library", 
+    "Connect Share", 
+    null, 
+    "Preferences", 
+    "Help"
+  ], 
+  "advanced search dialog current tab": 0, 
+  "basic_metadata_widget_splitter_state": {
+    "__class__": "bytearray", 
+    "__value__": "AAAA/wAAAAEAAAADAAAAlgAAAAAAAALmAf////8BAAAAAQA="
+  }, 
+  "book_details_splitter_horizontal_state": [
+    true, 
+    199
+  ], 
+  "book_details_splitter_vertical_state": [
+    false, 
+    120
+  ], 
+  "book_info_dialog_layout": [
+    {
+      "__class__": "bytearray", 
+      "__value__": "AdnQywADAAAAAAH7AAAAQAAABYIAAAQNAAAB/QAAAEIAAAWAAAAECwAAAAAAAAAAB4AAAAH9AAAAQgAABYAAAAQL"
+    }, 
+    {
+      "__class__": "bytearray", 
+      "__value__": "AAAA/wAAAAEAAAACAAABXgAAAV4B/////wEAAAABAA=="
+    }
+  ], 
+  "book_list_pin_splitter_state": {
+    "__class__": "bytearray", 
+    "__value__": "AAAA/wAAAAEAAAACAAABAAAAAEYA/////wEAAAABAA=="
+  }, 
+  "booklist_grid": true, 
+  "bulk_metadata_window_geometry": {
+    "__class__": "bytearray", 
+    "__value__": "AdnQywADAAAAAAAhAAAAIwAAB1sAAAQpAAAAIwAAACUAAAdZAAAEJwAAAAAAAAAAB4AAAAAjAAAAJQAAB1kAAAQn"
+  }, 
+  "bulk_metadata_window_tab": 0, 
+  "choose-icon-theme-dialog-geometry": {
+    "__class__": "bytearray", 
+    "__value__": "AdnQywADAAAAAAAZAAAAGAAAA5EAAAP5AAAAGwAAABoAAAOPAAAD9wAAAAAAAAAAB4AAAAAbAAAAGgAAA48AAAP3"
+  }, 
+  "choose-merge-dialog-geometry": {
+    "__class__": "bytearray", 
+    "__value__": "AdnQywADAAAAAAJ1AAABjQAABQkAAALCAAACdwAAAY8AAAUHAAACwAAAAAAAAAAAB4AAAAJ3AAABjwAABQcAAALA"
+  }, 
+  "choose-merge-dialog-splitter-state": {
+    "__class__": "bytearray", 
+    "__value__": "AAAA/wAAAAEAAAACAAABhgAAAQAA/////wEAAAABAA=="
+  }, 
+  "choose_icon_theme_sort_by": 1, 
+  "convert_single_dialog_geom": {
+    "__class__": "bytearray", 
+    "__value__": "AdnQywADAAAAAAAIAAAAQQAABzUAAAQIAAAACgAAAEMAAAczAAAEBgAAAAAAAAAAB4AAAAAKAAAAQwAABzMAAAQG"
+  }, 
+  "cover_browser_splitter_horizontal_state": [
+    false, 
+    0
+  ], 
+  "cover_browser_splitter_vertical_state": [
+    false, 
+    299
+  ], 
+  "cover_grid_color": [
+    56, 
+    56, 
+    56
+  ], 
+  "cover_grid_show_title": true, 
+  "cover_grid_texture": null, 
+  "custom_colors_for_color_dialog": [
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ], 
+    [
+      255, 
+      255, 
+      255, 
+      255
+    ]
+  ], 
+  "default_author_link": null, 
+  "duplicates-question-dialog-geometry": {
+    "__class__": "bytearray", 
+    "__value__": "AdnQywADAAAAAALlAAABkgAABPYAAALPAAAC5wAAAZQAAAT0AAACzQAAAAAAAAAAB4AAAALnAAABlAAABPQAAALN"
+  }, 
+  "grid view visible": true, 
+  "hidpi": "on", 
+  "image-trim-dialog-geometry": {
+    "__class__": "bytearray", 
+    "__value__": "AdnQywADAAAAAAHdAAAA+QAABWEAAANRAAAB3wAAAPsAAAVfAAADTwAAAAAAAAAAB4AAAAHfAAAA+wAABV8AAANP"
+  }, 
+  "job-detail-view-dialog-geometry": {
+    "__class__": "bytearray", 
+    "__value__": "AdnQywADAAAAAAJfAAABKgAABRsAAAMeAAACYQAAASwAAAUZAAADHAAAAAAAAAAAB4AAAAJhAAABLAAABRkAAAMc"
+  }, 
+  "jobs view column layout3": {
+    "__class__": "bytearray", 
+    "__value__": "AAAA/wAAAAAAAAABAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAdEAAAAFAQEBAAAAAAAAAAAAAAAAAF3/////AAAAhAAAAAAAAAAFAAAAXQAAAAEAAAAAAAAAXQAAAAEAAAAAAAAAXQAAAAEAAAAAAAAAXQAAAAEAAAAAAAAAXQAAAAEAAAAAAAAD6AAAAAAA"
+  }, 
+  "jobs_dialog_geometry": {
+    "__class__": "bytearray", 
+    "__value__": "AdnQywADAAAAAAKEAAABGQAABPoAAAM0AAAChgAAARsAAAT4AAADMgAAAAAAAAAAB4AAAAKGAAABGwAABPgAAAMy"
+  }, 
+  "library_usage_stats": {
+    "/home/nathan/calibre_library": 50
+  }, 
+  "metasingle_window_geometry3": {
+    "__class__": "bytearray", 
+    "__value__": "AdnQywADAAAAAAAKAAAAJQAAA7kAAAQtAAAADAAAACcAAAO3AAAEKwAAAAAAAAAAB4AAAAAMAAAAJwAAA7cAAAQr"
+  }, 
+  "preferences dialog geometry": {
+    "__class__": "bytearray", 
+    "__value__": "AdnQywADAAAAAAHeAAAAAAAABY0AAAQIAAAB4AAAAAIAAAWLAAAEBgAAAAAAAAAAB4AAAAHgAAAAAgAABYsAAAQG"
+  }, 
+  "quick_start_guide_added": true, 
+  "quickview visible": false, 
+  "quickview_dialog_books_table_widths": [
+    189, 
+    189, 
+    189
+  ], 
+  "quickview_dialog_geometry": {
+    "__class__": "bytearray", 
+    "__value__": "AdnQywADAAAAAABkAAABfAAAA10AAALLAAAAZgAAAX4AAANbAAACyQAAAAAAAAAAB4AAAABmAAABfgAAA1sAAALJ"
+  }, 
+  "recently_used_languages": [
+    "English"
+  ], 
+  "replace_scene_breaks_history": [
+    "", 
+    "<hr />", 
+    "∗ ∗ ∗", 
+    "• • •", 
+    "♦ ♦ ♦", 
+    "† †", 
+    "‡ ‡ ‡", 
+    "∞ ∞ ∞", 
+    "¤ ¤ ¤"
+  ], 
+  "scheduler_dialog_geometry": {
+    "__class__": "bytearray", 
+    "__value__": "AdnQywADAAAAAAIuAAAA7gAABU0AAANFAAACMAAAAPAAAAVLAAADQwAAAAAAAAAAB4AAAAIwAAAA8AAABUsAAAND"
+  }, 
+  "search bar visible": true, 
+  "show_emblems": false, 
+  "show_layout_buttons": false, 
+  "single-cover-fetch-dialog-geometry": {
+    "__class__": "bytearray", 
+    "__value__": "AdnQywADAAAAAAH3AAAA+gAABUYAAANPAAAB+QAAAPwAAAVEAAADTQAAAAAAAAAAB4AAAAH5AAAA/AAABUQAAANN"
+  }, 
+  "tag browser search box visible": false, 
+  "tag_browser_splitter_horizontal_state": [
+    true, 
+    147
+  ], 
+  "toolbar_icon_size": "small"
+}

@@ -1,0 +1,19 @@
+{
+  "add books dialog dir": "/home/nathan/Downloads", 
+  "change cover dialog": "/home/nathan/Downloads", 
+  "database location dialog": "/home/nathan/calibre_library", 
+  "s_r_search_mode": 0, 
+  "sort_history": [
+    [
+      "timestamp", 
+      false
+    ], 
+    [
+      "timestamp", 
+      false
+    ]
+  ], 
+  "systray_msg": true, 
+  "welcome_wizard_device": "default", 
+  "welcome_wizard_was_run": true
+}
