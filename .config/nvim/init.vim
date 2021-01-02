@@ -33,7 +33,6 @@ call plug#end()
 " -- General -- "
 set hidden  "allows undo after switching buffer"
 
-
 " -- Indentation -- " 
 set autoindent
 set expandtab  "converts tabs to spaces" 
@@ -90,8 +89,6 @@ hi!  link Folded Normal
 if (has("termguicolors"))
  set termguicolors
 endif
-
-
 
 " -- Spelling/Dictionary -- "
 set spelllang=en
