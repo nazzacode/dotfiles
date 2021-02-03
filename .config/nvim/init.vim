@@ -19,13 +19,13 @@ Plug 'mhartington/oceanic-next'
 Plug 'lingnand/pandoc-preview.vim'
 Plug 'godlygeek/tabular'
 Plug 'preservim/tagbar'
-Plug 'edkolev/tmuxline.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug '907th/vim-auto-save'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 call plug#end()
+" Plug 'edkolev/tmuxline.vim'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " === Settings === "
