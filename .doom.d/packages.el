@@ -5,9 +5,25 @@
 ;; on the command line, then restart Emacs for the changes to take effect -- or
 ;; use 'M-x doom/reload'.
 
-
 ;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
-;(package! some-package)
+(package! org-noter)  ; pdf + synced notes sideby side
+(package! nov)  ; something to do with novels
+(package! spacemacs-theme)
+(package! org-ref)
+;; (package! org-roam) ; do (org +roam instead)
+(package! graphviz-dot-mode)
+(package! org-roam-bibtex
+  :recipe (:host github :repo "org-roam/org-roam-bibtex"))
+(package! ob-typescript)
+(package! tide) ;; alternative: lsp-mode
+(package! org-appear) ;; show emphasis markers when inside fragment
+
+;; When using org-roam via the `+roam` flag
+(unpin! org-roam)
+
+;; (package! org-pomodoro) ;
+
+;;(package! math-preview)
 
 ;; To install a package directly from a remote git repo, you must specify a
 ;; `:recipe'. You'll find documentation on what `:recipe' accepts here:
@@ -48,22 +64,3 @@
 ;(unpin! pinned-package another-pinned-package)
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
-(package! all-the-icons-dired)
-(package! async)
-(package! dired-open)
-(package! dmenu)
-(package! elfeed)
-(package! emms)
-(package! emojify)
-(package! evil-tutor)
-(package! ivy-posframe)
-(package! mastodon)
-(package! md4rd)
-(package! org-bullets)
-(package! peep-dired)
-(package! rainbow-mode)
-(package! resize-window)
-(package! sublimity)
-(package! tldr)
-(package! wc-mode)
-(package! writeroom-mode)

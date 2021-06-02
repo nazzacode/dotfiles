@@ -1,365 +1,189 @@
-(map! :leader
-      :desc "List bookmarks"
-      "b L" #'list-bookmarks
-      :leader
-      :desc "Save current bookmarks to bookmark file"
-      "b w" #'bookmark-save)
+;; Here are some additional functions/macros that could help you configure Doom:
+;;
+;; - `load!' for loading external *.el files relative to this one
+;; - `use-package!' for configuring packages
+;; - `after!' for running code after a package has loaded
+;; - `add-load-path!' for adding directories to the `load-path', relative to
+;;   this file. Emacs searches the `load-path' when you load packages with
+;;   `require' or `use-package'.
+;; - `map!' for binding new keys
+;;
+;; To get information about any of these functions/macros, move the cursor over
+;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
+;; This will open documentation for it, including demos of how they are used.
+;;
+;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
+;; they are implemented.
 
-(setq centaur-tabs-set-bar 'over
-      centaur-tabs-set-icons t
-      centaur-tabs-gray-out-icons 'buffer
-      centaur-tabs-height 24
-      centaur-tabs-set-modified-marker t
-      centaur-tabs-style "bar"
-      centaur-tabs-modified-marker "•")
-(map! :leader
-      :desc "Toggle tabs on/off"
-      "t c" #'centaur-tabs-local-mode)
-(evil-define-key 'normal centaur-tabs-mode-map (kbd "g <right>") 'centaur-tabs-forward        ; default Doom binding is 'g t'
-                                               (kbd "g <left>")  'centaur-tabs-backward       ; default Doom binding is 'g T'
-                                               (kbd "g <down>")  'centaur-tabs-forward-group
-                                               (kbd "g <up>")    'centaur-tabs-backward-group)
+(setq auto-save-default t
+      make-backup-files t)
 
-(map! :leader
-      :desc "Dired"
-      "d d" #'dired
-      :leader
-      :desc "Dired jump to current"
-      "d j" #'dired-jump
-      (:after dired
-        (:map dired-mode-map
-         :leader
-         :desc "Peep-dired image previews"
-         "d p" #'peep-dired
-         :leader
-         :desc "Dired view file"
-         "d v" #'dired-view-file)))
-;; Make 'h' and 'l' go back and forward in dired. Much faster to navigate the directory structure!
-(evil-define-key 'normal dired-mode-map
-  (kbd "h") 'dired-up-directory
-  (kbd "l") 'dired-open-file) ; use dired-find-file instead if not using dired-open package
-;; If peep-dired is enabled, you will get image previews as you go up/down with 'j' and 'k'
-(evil-define-key 'normal peep-dired-mode-map
-  (kbd "j") 'peep-dired-next-file
-  (kbd "k") 'peep-dired-prev-file)
-(add-hook 'peep-dired-hook 'evil-normalize-keymaps)
-;; Get file icons in dired
-(add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
-;; With dired-open plugin, you can launch external programs for certain extensions
-;; For example, I set all .png files to open in 'sxiv' and all .mp4 files to open in 'mpv'
-(setq dired-open-extensions '(("gif" . "sxiv")
-                              ("jpg" . "sxiv")
-                              ("png" . "sxiv")
-                              ("mkv" . "mpv")
-                              ("mp4" . "mpv")))
+(setq doom-theme 'doom-gruvbox)
+;; TODO customise my own theme
+;; TODO easy switch to light theme!
 
-(setq doom-theme 'doom-one)
-(map! :leader
-      :desc "Load new theme"
-      "h t" #'counsel-load-theme)
+;; `doom-font` and 'variable-pitch' are the important ones!
+(setq doom-font (font-spec :family "Agave Nerd Font Mono")
+;;      doom-unicode-font (font-spec :family "Input Mono Narrow" :size 12)
+;;      doom-big-font (font-spec :family "Fira Mono" :size 19))
+      doom-variable-pitch-font (font-spec :family "ETBookOT"))  ; inherits `doom-font''s :size
 
-(custom-set-variables
- '(elfeed-feeds
-   (quote
-    (("https://www.reddit.com/r/linux.rss" reddit linux)
-     ("https://www.gamingonlinux.com/article_rss.php" gaming linux)
-     ("https://hackaday.com/blog/feed/" hackaday linux)
-     ("https://opensource.com/feed" opensource linux)
-     ("https://linux.softpedia.com/backend.xml" softpedia linux)
-     ("https://itsfoss.com/feed/" itsfoss linux)
-     ("https://www.zdnet.com/topic/linux/rss.xml" zdnet linux)
-     ("https://www.phoronix.com/rss.php" phoronix linux)
-     ("http://feeds.feedburner.com/d0od" omgubuntu linux)
-     ("https://www.computerworld.com/index.rss" computerworld linux)
-     ("https://www.networkworld.com/category/linux/index.rss" networkworld linux)
-     ("https://www.techrepublic.com/rssfeeds/topic/open-source/" techrepublic linux)
-     ("https://betanews.com/feed" betanews linux)
-     ("http://lxer.com/module/newswire/headlines.rss" lxer linux)
-     ("https://distrowatch.com/news/dwd.xml" distrowatch linux)))))
+;; This determines the style of line numbers in effect. If set to `nil', line
+;; numbers are disabled. For relative line numbers, set this to `relative'.
+(setq display-line-numbers-type 'relative
+      header-line-format " ")  ;; header padding
+;; TODO Side padding
 
-(require 'emms-setup)
-(require 'emms-info)
-(require 'emms-cue)
-(require 'emms-mode-line)
-(require 'emms-playing-time)
-(emms-all)
-(emms-default-players)
-(emms-mode-line 1)
-(emms-playing-time 1)
-(setq emms-source-file-default-directory "~/Music/Non-Classical/70s-80s/"
-      emms-playlist-buffer-name "*Music*"
-      emms-info-asynchronously t
-      emms-source-file-directory-tree-function 'emms-source-file-directory-tree-find)
-(map! :leader
-      :desc "Go to emms playlist"
-      "a a" #'emms-playlist-mode-go
-      :leader
-      :desc "Emms pause track"
-      "a x" #'emms-pause
-      :leader
-      :desc "Emms stop track"
-      "a s" #'emms-stop
-      :leader
-      :desc "Emms play previous track"
-      "a p" #'emms-previous
-      :leader
-      :desc "Emms play next track"
-      "a n" #'emms-next)
+(setq doom-modeline-height 15)
 
-(map! :leader
-      :desc "Evaluate elisp in buffer"
-      "e b" #'eval-buffer
-      :leader
-      :desc "Evaluate defun"
-      "e d" #'eval-defun
-      :leader
-      :desc "Evaluate elisp expression"
-      "e e" #'eval-expression
-      :leader
-      :desc "Evaluate last sexpression"
-      "e l" #'eval-last-sexp
-      :leader
-      :desc "Evaluate elisp in region"
-      "e r" #'eval-region)
+;; (setq doom-modeline-major-mode-color-icon nil  ;; FIXME not working :(
+;;        all-the-icons-color-icons nil)
 
-(setq browse-url-browser-function 'eww-browse-url)
-(map! :leader
-      :desc "Eww web browser"
-      "e w" #'eww
-      :leader
-      :desc "Eww reload page"
-      "e R" #'eww-reload
-      :leader
-      :desc "Search web for text between BEG/END"
-      "s w" #'eww-search-words)
-
-(setq doom-font (font-spec :family "UbuntuMono Nerd Font" :size 16)
-      doom-variable-pitch-font (font-spec :family "Ubuntu" :size 15)
-      doom-big-font (font-spec :family "UbuntuMono Nerd Font" :size 24))
-(after! doom-themes
-  (setq doom-themes-enable-bold t
-        doom-themes-enable-italic t))
-(custom-set-faces!
-  '(font-lock-comment-face :slant italic)
-  '(font-lock-keyword-face :slant italic))
-
-(require 'ivy-posframe)
-(setq ivy-posframe-display-functions-alist
-      '((swiper                     . ivy-posframe-display-at-point)
-        (complete-symbol            . ivy-posframe-display-at-point)
-        (counsel-M-x                . ivy-display-function-fallback)
-        (counsel-esh-history        . ivy-posframe-display-at-window-center)
-        (counsel-describe-function  . ivy-display-function-fallback)
-        (counsel-describe-variable  . ivy-display-function-fallback)
-        (counsel-find-file          . ivy-display-function-fallback)
-        (counsel-recentf            . ivy-display-function-fallback)
-        (counsel-register           . ivy-posframe-display-at-frame-bottom-window-center)
-        (dmenu                      . ivy-posframe-display-at-frame-top-center)
-        (nil                        . ivy-posframe-display))
-      ivy-posframe-height-alist
-      '((swiper . 20)
-        (dmenu . 20)
-        (t . 10)))
-(ivy-posframe-mode 1) ; 1 enables posframe-mode, 0 disables it.
-
-(map! :leader
-      :desc "Ivy push view"
-      "v p" #'ivy-push-view
-      :leader
-      :desc "Ivy switch view"
-      "v s" #'ivy-switch-view)
-
-(setq display-line-numbers-type t)
-(map! :leader
-      :desc "Toggle truncate lines"
-      "t t" #'toggle-truncate-lines)
-
-(require 'ox-groff)
-
-(after! mastodon
-  (setq mastodon-instance-url "https://mastodon.technology/"))
-
-;; (require 'md4rd)
-;; (md4rd)
-(setq md4rd-subs-active '(archlinux commandline DistroTube DoomEmacs emacs freesoftware lbry linux linux4noobs linuxmasterrace linuxquestions orgmode qutebrowser suckless Ubuntu unixporn UsabilityPorn vim xmonad))
-
-(add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu4e")
-(require 'mu4e)
-(require 'smtpmail)
-(setq mu4e-get-mail-command "mbsync -c ~/.emacs.d/mu4e/.mbsyncrc -a"
-      mu4e-update-interval  300
-      user-mail-address "derek@distrotube.com"
-      user-full-name  "Derek Taylor"
-      mu4e-compose-signature
-       (concat
-         "Derek Taylor\n"
-         "http://www.youtube.com/DistroTube\n")
-      message-send-mail-function 'smtpmail-send-it
-      starttls-use-gnutls t
-      smtpmail-starttls-credentials '(("smtp.1and1.com" 587 nil nil))
-      smtpmail-auth-credentials '(("smtp.1and1.com" 587 "derek@distrotube.com" nil))
-      smtpmail-default-smtp-server "smtp.1and1.com"
-      smtpmail-smtp-server "smtp.1and1.com"
-      smtpmail-smtp-service 587
-      mu4e-sent-folder "/Sent"
-      mu4e-drafts-folder "/Drafts"
-      mu4e-trash-folder "/Trash"
-      mu4e-refile-folder "/All Mail"
-      mu4e-maildir-shortcuts
-      '(("/derek-distrotube/Inbox"    . ?i)
-        ("/derek-distrotube/Sent"     . ?s)
-        ("/derek-distrotube/All Mail" . ?a)
-        ("/derek-distrotube/Trash"    . ?t)))
-
-(after! neotree
-  (setq neo-smart-open t
-        neo-window-fixed-size nil))
-(after! doom-themes
-  (setq doom-neotree-enable-variable-pitch t))
-(map! :leader
-      :desc "Toggle neotree file viewer"
-      "t n" #'neotree-toggle
-      :leader
-      :desc "Open directory in neotree"
-      "d n" #'neotree-dir)
-
-(map! :leader
-      :desc "Edit agenda file"
-      "- a" #'(lambda () (interactive) (find-file "~/Org/agenda.org"))
-      :leader
-      :desc "Edit doom config.org"
-      "- c" #'(lambda () (interactive) (find-file "~/.doom.d/config.org"))
-      :leader
-      :desc "Edit eshell aliases"
-      "- e" #'(lambda () (interactive) (find-file "~/.doom.d/aliases"))
-      :leader
-      :desc "Edit doom init.el"
-      "- i" #'(lambda () (interactive) (find-file "~/.doom.d/init.el"))
-      :leader
-      :desc "Edit doom packages.el"
-      "- p" #'(lambda () (interactive) (find-file "~/.doom.d/packages.el")))
+;; (setq doom-modeline-height 1)
+;; (set-face-attribute 'mode-line nil :family "Agave Nerd Font Mono" :height 100)
+;;  (set-face-attribute 'mode-line-inactive nil :family "Noto Sans" :height 100)
 
 (after! org
-  (require 'org-bullets)  ; Nicer bullets in org-mode
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
-  (setq org-directory "~/Org/"
-        org-agenda-files '("~/Org/agenda.org")
-        org-default-notes-file (expand-file-name "notes.org" org-directory)
-        org-ellipsis " ▼ "
-        org-log-done 'time
-        org-journal-dir "~/Org/journal/"
-        org-journal-date-format "%B %d, %Y (%A) "
-        org-journal-file-format "%Y-%m-%d.org"
-        org-hide-emphasis-markers t
-        ;; ex. of org-link-abbrev-alist in action
-        ;; [[arch-wiki:Name_of_Page][Description]]
-        org-link-abbrev-alist    ; This overwrites the default Doom org-link-abbrev-list
-          '(("google" . "http://www.google.com/search?q=")
-            ("arch-wiki" . "https://wiki.archlinux.org/index.php/")
-            ("ddg" . "https://duckduckgo.com/?q=")
-            ("wiki" . "https://en.wikipedia.org/wiki/"))
-        org-todo-keywords        ; This overwrites the default Doom org-todo-keywords
-          '((sequence
-             "TODO(t)"           ; A task that is ready to be tackled
-             "BLOG(b)"           ; Blog writing assignments
-             "GYM(g)"            ; Things to accomplish at the gym
-             "PROJ(p)"           ; A project that contains other tasks
-             "VIDEO(v)"          ; Video assignments
-             "WAIT(w)"           ; Something is holding up this task
-             "|"                 ; The pipe necessary to separate "active" states and "inactive" states
-             "DONE(d)"           ; Task has been completed
-             "CANCELLED(c)" )))) ; Task has been cancelled
 
-(defun dt/org-babel-tangle-async (file)
-  "Invoke `org-babel-tangle-file' asynchronously."
-  (message "Tangling %s..." (buffer-file-name))
-  (async-start
-   (let ((args (list file)))
-  `(lambda ()
-        (require 'org)
-        ;;(load "~/.emacs.d/init.el")
-        (let ((start-time (current-time)))
-          (apply #'org-babel-tangle-file ',args)
-          (format "%.2f" (float-time (time-since start-time))))))
-   (let ((message-string (format "Tangling %S completed after " file)))
-     `(lambda (tangle-time)
-        (message (concat ,message-string
-                         (format "%s seconds" tangle-time)))))))
+  (add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode)
+  (add-hook! 'org-mode-hook 'org-num-mode) ; latex style numbered headings
 
-(defun dt/org-babel-tangle-current-buffer-async ()
-  "Tangle current buffer asynchronously."
-  (dt/org-babel-tangle-async (buffer-file-name)))
+  (setq org-directory "~/org/"        ; important emacs directory for things like agenda
+        org-pretty-entities t         ; unicode/emoji rendering etc.
+        org-num-skip-unnumbered t     ; skip `:UNNUMBERED:` from onumbering
+        org-ellipsis "  "
+        org-hide-emphasis-markers t   ; hide bold, italics etc...
+        global-org-pretty-table-mode t
+        display-line-numbers-type 'nil
+        org-fontify-whole-heading-line t  ; ?
+        org-fontify-done-headline t
+        org-fontify-quote-and-verse-blocks t
+        hl-line-mode nil
+  )
+)
 
-(map! :leader
-      :desc "Copy to register"
-      "r c" #'copy-to-register
-      :leader
-      :desc "Frameset to register"
-      "r f" #'frameset-to-register
-      :leader
-      :desc "Insert contents of register"
-      "r i" #'insert-register
-      :leader
-      :desc "Jump to register"
-      "r j" #'jump-to-register
-      :leader
-      :desc "List registers"
-      "r l" #'list-registers
-      :leader
-      :desc "Number to register"
-      "r n" #'number-to-register
-      :leader
-      :desc "Interactively choose a register"
-      "r r" #'counsel-register
-      :leader
-      :desc "View a register"
-      "r v" #'view-register
-      :leader
-      :desc "Window configuration to register"
-      "r w" #'window-configuration-to-register
-      :leader
-      :desc "Increment register"
-      "r +" #'increment-register
-      :leader
-      :desc "Point to register"
-      "r SPC" #'point-to-register)
+  ;; (add-hook! 'org-mode-hook 'org-superstar-mode)  ; fancy unicode symbols (e.g headings)
 
-(map! :leader
-      :desc "Ssh into distrotube.com"
-      "\\ d" #'(lambda () (interactive) (find-file "/scp:derek@distrotube.com"))
-      :leader
-      :desc "Ssh into my nextcloud"
-      "\\ n" #'(lambda () (interactive) (find-file "/scp:derek@distrotube.net")))
+(custom-set-faces!
+  '(outline-1 :weight semi-bold      :height 1.12)
+  '(outline-2 :weight semi-bold      :height 1.08)
+  '(outline-3 :weight semi-bold      :height 1.05)
+  '(outline-4 :weight semi-bold      :height 1.03)
+  '(outline-5 :weight normal         :height 1.02)
+  '(outline-6 :weight normal         :height 1.01)
+  '(outline-7 :weight normal)
+  '(outline-8 :weight normal)
+  '(org-document-title :height 1.2))
 
-(setq shell-file-name "/bin/fish"
-      eshell-aliases-file "~/.doom.d/aliases"
-      eshell-history-size 5000
-      eshell-buffer-maximum-lines 5000
-      eshell-hist-ignoredups t
-      eshell-scroll-to-bottom-on-input t
-      eshell-destroy-buffer-when-process-dies t
-      eshell-visual-commands'("bash" "fish" "htop" "ssh" "top" "zsh")
-      vterm-max-scrollback 5000)
-(map! :leader
-      :desc "Counsel eshell history"
-      "e h" #'counsel-esh-history)
+;; (after! haskell-mode
+;;  (set-ligatures! haskell-mode
+;;  :lambda "\"
+;;  )
+;;)
 
-(defun prefer-horizontal-split ()
-  (set-variable 'split-height-threshold nil t)
-  (set-variable 'split-width-threshold 40 t)) ; make this as low as needed
-(add-hook 'markdown-mode-hook 'prefer-horizontal-split)
-(map! :leader
-      :desc "Clone indirect buffer other window"
-      "b c" #'clone-indirect-buffer-other-window)
+(add-to-list 'exec-path "path/to/sqlite3")
 
-(require 'sublimity-scroll)
-(require 'sublimity-map)
-;; (require 'sublimity-attractive)
-(sublimity-mode 0)
+(setq org-roam-directory "~/org-roam")  ; set org-roam dir
 
-(map! :leader
-      :desc "Winner redo"
-      "w <right>" #'winner-redo
-      :leader
-      :desc "Winner undo"
-      "w <left>" #'winner-undo)
+(add-hook 'after-init-hook 'org-roam-mode) ; start on start-up
+
+(setq org-roam-tag-sources '(prop vanilla all-directories))
+
+(use-package! org-roam-bibtex
+  :after (org-roam)
+  :hook (org-roam-mode . org-roam-bibtex-mode)
+  :config
+  (require 'org-ref) ; optional: if Org Ref is not loaded anywhere else, load it here
+
+  (setq orb-preformat-keywords
+      '("citekey" "title" "url" "author-or-editor" "keywords" "file")
+      orb-process-file-keyword t
+      orb-file-field-extensions '("pdf"))
+  ;; (setq orb-preformat-keywords
+  ;; '("=key=" "title" "url" "file" "author-or-editor" "keywords"))
+    (setq orb-templates
+            '(("r" "ref" plain (function org-roam-capture--get-point)
+            ""
+            :file-name "${slug}"
+            :head "#+TITLE: ${citekey}: ${title}\n#+roam_key: ${ref}\n#+roam_tags:
+
+- keywords :: ${keywords}
+
+\n* ${title}
+:PROPERTIES:
+:Custom_ID: ${citekey}
+:URL: ${url}
+:AUTHOR: ${author-or-editor}
+:NOTER_DOCUMENT: ${file}
+:NOTER_PAGE:
+:END:"
+     :unnarrowed t))))
+
+(use-package org-noter
+  :after (:any org pdf-view)
+  :config
+  (setq
+   ;; The WM can handle splits
+   ;; org-noter-notes-window-location 'other-frame
+   ;; Please stop opening frames
+   org-noter-always-create-frame nil
+   ;; I want to see the whole file
+   ;; org-noter-hide-other nil
+   ;; Everything is relative to the main notes file
+   ;; org-noter-notes-search-path (list org_notes)
+   )
+  )
+
+(add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
+
+;; TODO is this needed?
+;;(add-to-list 'org-latex-packages-alist '("" "natbib"))
+;;(add-to-list 'org-latex-packages-alist '("" "cleveref"))
+
+;; Latex Fragments in orgmode
+(setq org-format-latex-options
+        (list :foreground 'default  ;;auto
+              :background 'auto
+              :scale 2.2              ;; bigger latex fragments
+              :html-foreground "Black"
+              :html-background "Transparent"
+              :html-scale 1.0
+              :matchers '("begin" "$1" "$" "$$" "\\(" "\\[")))
+
+(map! "C-q"  ; example
+      (cmd! (previous-line)
+            (kill-line)
+            (forward-line)))
+
+(map! "M-o" (cmd! (org-noter-insert-note)))  ;; TODO map only in noter
+
+;; TODO natural window resizing
+
+(setq lisp-indent-offset 2)
+
+;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
+
+;; For GPG configuration, email clients, file templates and snippets.
+(setq user-full-name "Nathan Sharp"
+      my-name "nazzacode"
+      user-mail-address "nasharp@outlook.com")
+
+(require 'doi-utils)
+;; TODO ^ do for others?
+
+(setq reftex-default-bibliography '("~/org-roam/bibliography.bib"))
+
+;; see org-ref for use of these variables
+(setq org-ref-default-bibliography '("~/org-roam/bibliography.bib")
+      org-ref-bibliography-notes "~/org-roam/"   ; TODO not in use
+      org-ref-pdf-directory "~/org-roam/PDFs/"
+      org-ref-completion-library 'org-ref-ivy-cite
+      org-ref-get-pdf-filename-function 'org-ref-get-pdf-filename-helm-bibtex
+      org-ref-bibliography-notes "~/org-roam"
+      org-ref-notes-directory "~/org-roam"
+      org-ref-notes-function 'orb-edit-notes)
+
+(after! org
+    (setq bibtex-completion-bibliography "~/org-roam/bibliography.bib"
+          bibtex-completion-library-path "~/org-roam/PDFs/"
+          bibtex-completion-notes-path "~/org-roam/"))
