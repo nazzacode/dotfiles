@@ -6,6 +6,7 @@
 ;; use 'M-x doom/reload'.
 
 ;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
+<<<<<<< HEAD
 (package! org-noter)  ; pdf + synced notes sideby side
 (package! nov)  ; something to do with novels
 (package! spacemacs-theme)
@@ -24,6 +25,9 @@
 ;; (package! org-pomodoro) ;
 
 ;;(package! math-preview)
+=======
+(package! org-noter)
+>>>>>>> 2d8191b67236fd920a5dd96cc6366e7e0116124f
 
 ;; To install a package directly from a remote git repo, you must specify a
 ;; `:recipe'. You'll find documentation on what `:recipe' accepts here:
