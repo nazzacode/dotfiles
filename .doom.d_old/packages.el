@@ -5,26 +5,29 @@
 ;; on the command line, then restart Emacs for the changes to take effect -- or
 ;; use 'M-x doom/reload'.
 
-
 ;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
-;(package! some-package)
-(package! org-noter)         ; pdf + synced notes sideby side
-(package! nov)               ; something to do with novels
+<<<<<<< HEAD
+(package! org-noter)  ; pdf + synced notes sideby side
+(package! nov)  ; something to do with novels
+(package! spacemacs-theme)
 (package! org-ref)
+;; (package! org-roam) ; do (org +roam instead)
 (package! graphviz-dot-mode)
 (package! org-roam-bibtex
   :recipe (:host github :repo "org-roam/org-roam-bibtex"))
 (package! ob-typescript)
-(package! org-appear)        ; show emphasis markers when inside fragment
-(package! valign)            ; pretty tables
-(package! justify-kp
-  :recipe (:host github :repo "Fuco1/justify-kp"))        ; fancy justification (using for epubs)
-;;(package! tide)            ; alternative: lsp-mode
-;;
-;; (package! org-roam) ; do (org +roam instead)
+(package! tide) ;; alternative: lsp-mode
+(package! org-appear) ;; show emphasis markers when inside fragment
+
 ;; When using org-roam via the `+roam` flag
 (unpin! org-roam)
 
+;; (package! org-pomodoro) ;
+
+;;(package! math-preview)
+=======
+(package! org-noter)
+>>>>>>> 2d8191b67236fd920a5dd96cc6366e7e0116124f
 
 ;; To install a package directly from a remote git repo, you must specify a
 ;; `:recipe'. You'll find documentation on what `:recipe' accepts here:

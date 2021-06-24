@@ -1,136 +1,145 @@
-<<<<<<< HEAD
-=======
-;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
-;;;
-
-;; Place your private configuration here! Remember, you do not need to run 'doom
-;; sync' after modifying this file!
-
-
-;; Some functionality uses this to identify you, e.g. GPG configuration, email
-;; clients, file templates and snippets.
-(setq user-full-name "John Doe"
-      user-mail-address "john@doe.com")
-
-;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
-;; are the three important ones:
-;;
-;; + `doom-font'
-;; + `doom-variable-pitch-font'
-;; + `doom-big-font' -- used for `doom-big-font-mode'; use this for
-;;   presentations or streaming.
-;;
-;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
-;; font string. You generally only need these two:
-;; (setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
-;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
-
-;; There are two ways to load a theme. Both assume the theme is installed and
-;; available. You can either set `doom-theme' or manually load a theme with the
-;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one)
-
-;; If you use `org' and don't want your org files in the default location below,
-;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/org/")
-
-;; This determines the style of line numbers in effect. If set to `nil', line
-;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
-
-
->>>>>>> 2d8191b67236fd920a5dd96cc6366e7e0116124f
-;; Here are some additional functions/macros that could help you configure Doom:
-;;
-;; - `load!' for loading external *.el files relative to this one
-;; - `use-package!' for configuring packages
-;; - `after!' for running code after a package has loaded
-;; - `add-load-path!' for adding directories to the `load-path', relative to
-;;   this file. Emacs searches the `load-path' when you load packages with
-;;   `require' or `use-package'.
-;; - `map!' for binding new keys
-;;
-;; To get information about any of these functions/macros, move the cursor over
-;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
-;; This will open documentation for it, including demos of how they are used.
-;;
-;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
-;; they are implemented.
-<<<<<<< HEAD
+;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
+;; For GPG configuration, email clients, file templates and snippets.
+(setq user-full-name "Nathan Sharp"
+      my-name "nazzacode"
+      user-mail-address "nasharp@outlook.com")
 
 (setq auto-save-default t
       make-backup-files t)
 
-(setq doom-theme 'doom-gruvbox)
-;; TODO customise my own theme
-;; TODO easy switch to light theme!
+(setq display-line-numbers-type 'relative  ; or `nil'
+      header-line-format " "              ; header padding
+      fringe-mode 'default)
 
-;; `doom-font` and 'variable-pitch' are the important ones!
-(setq doom-font (font-spec :family "Agave Nerd Font Mono")
-;;      doom-unicode-font (font-spec :family "Input Mono Narrow" :size 12)
-;;      doom-big-font (font-spec :family "Fira Mono" :size 19))
-      doom-variable-pitch-font (font-spec :family "ETBookOT"))  ; inherits `doom-font''s :size
+(setq doom-theme 'doom-dark+)  ; FIXME Breaks Latex fragments background
 
-;; This determines the style of line numbers in effect. If set to `nil', line
-;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type 'relative
-      header-line-format " ")  ;; header padding
-;; TODO Side padding
+;;(setq doom-dark+-padded-modeline nil)
 
-(setq doom-modeline-height 15)
-
-;; (setq doom-modeline-major-mode-color-icon nil  ;; FIXME not working :(
-;;        all-the-icons-color-icons nil)
-
-;; (setq doom-modeline-height 1)
-;; (set-face-attribute 'mode-line nil :family "Agave Nerd Font Mono" :height 100)
-;;  (set-face-attribute 'mode-line-inactive nil :family "Noto Sans" :height 100)
-
-(after! org
-
-  (add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode)
-  (add-hook! 'org-mode-hook 'org-num-mode) ; latex style numbered headings
-
-  (setq org-directory "~/org/"        ; important emacs directory for things like agenda
-        org-pretty-entities t         ; unicode/emoji rendering etc.
-        org-num-skip-unnumbered t     ; skip `:UNNUMBERED:` from onumbering
-        org-ellipsis "  "
-        org-hide-emphasis-markers t   ; hide bold, italics etc...
-        global-org-pretty-table-mode t
-        display-line-numbers-type 'nil
-        org-fontify-whole-heading-line t  ; ?
-        org-fontify-done-headline t
-        org-fontify-quote-and-verse-blocks t
-        hl-line-mode nil
-  )
+(setq doom-font (font-spec :family "Agave Nerd Font Mono")     ; Agave Nerd Font Mono
+      doom-variable-pitch-font (font-spec :family "ETBookOT")
+      doom-unicode-font (font-spec :family "Symbola")          ; good unicode support
+      ;; doom-big-font (font-spec :family "Fira Mono" :size 19))
+      ;; doom-variable-pitch-font (font-spec :family "TSCu_Comic")
 )
 
-  ;; (add-hook! 'org-mode-hook 'org-superstar-mode)  ; fancy unicode symbols (e.g headings)
+(custom-set-faces!
+    '(mode-line :family "Terminus" :height 1.0)
+    '(mode-line-inactive :family "Terminus" :height 1.0))
+
+(setq doom-modeline-height 9)
+
+;; TODO move to top aka `header-line-format'
+;; (setq header-line-format mode-line-format)
+;; (setq mode-line-format nil)
+;; FIXME Not loading on start and breaking writeroom
+
+;; TODO increase font less
+(setq writeroom-mode-line t)
+
+(setq emojify-emoji-set "emojione-v2.2.6") ; increase resolution from default "emojione-v2.2.6-22"
+
+(add-hook! 'org-mode-hook 'org-appear-mode)
+
+(after! org
+  (add-hook! 'org-mode-hook #'+org-pretty-mode
+                            #'mixed-pitch-mode)  ; uses var-pitch font for text
+  ;; (add-hook! 'org-mode-hook 'org-num-mode)   ; numbered headings
+  (setq org-directory "~/org"             ; dir for agenda etc.
+        org-num-skip-unnumbered t               ; skip `:UNNUMBERED:` from onumbering
+        org-ellipsis "  "
+        display-line-numbers-type 'nil
+        hl-line-mode 'nil
+        org-startup-with-inline-images 't
+        org-startup-with-latex-preview 't
+        org-startup-shrink-all-tables 't
+        org-startup-folded 'fold))
+
+;; Multiline Emphasis
+;; FIXME casuing depreciated errors?
+;; (setcar (nthcdr 4 org-emphasis-regexp-components) 10)
+;;(org-set-emph-re 'org-emphasis-regexp-components org-emphasis-regexp-components)
 
 (custom-set-faces!
-  '(outline-1 :weight semi-bold      :height 1.12)
-  '(outline-2 :weight semi-bold      :height 1.08)
-  '(outline-3 :weight semi-bold      :height 1.05)
-  '(outline-4 :weight semi-bold      :height 1.03)
-  '(outline-5 :weight normal         :height 1.02)
-  '(outline-6 :weight normal         :height 1.01)
+  '(outline-1 :weight semi-bold  :height 1.12)
+  '(outline-2 :weight semi-bold  :height 1.08)
+  '(outline-3 :weight semi-bold  :height 1.05)
+  '(outline-4 :weight semi-bold  :height 1.03)
+  '(outline-5 :weight normal     :height 1.02)
+  '(outline-6 :weight normal     :height 1.01)
   '(outline-7 :weight normal)
   '(outline-8 :weight normal)
   '(org-document-title :height 1.2))
 
-;; (after! haskell-mode
-;;  (set-ligatures! haskell-mode
-;;  :lambda "\"
-;;  )
-;;)
+;; Typescript
+(org-babel-do-load-languages
+  'org-babel-load-languages
+    '((typescript . t)
+      (jupyter . t)))
 
-(add-to-list 'exec-path "path/to/sqlite3")
+;; (require 'typescript-mode)
+;; (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode))
+;; (require 'tide)
 
-(setq org-roam-directory "~/org-roam")  ; set org-roam dir
+(defun org-babel-execute:typescript (body params)
+  (let ((org-babel-js-cmd "npx ts-node < "))
+    (org-babel-execute:js body params)))
 
-(add-hook 'after-init-hook 'org-roam-mode) ; start on start-up
+(defalias 'org-babel-execute:ts 'org-babel-execute:typescript) ; FIXME
 
-(setq org-roam-tag-sources '(prop vanilla all-directories))
+; this seems to add syntax-highlighting to jupyter-python and jupyter-typescript blocks
+(after! org-src
+  (dolist (lang '(python typescript jupyter))
+  (cl-pushnew (cons (format "jupyter-%s" lang) lang)
+                org-src-lang-modes :key #'car))
+
+  ;;(org-babel-jupyter-override-src-block "python") ;; alias all python to jupyter-python
+  ;;(org-babel-jupyter-override-src-block "typescript") ;; alias all python to jupyter-python
+ )
+
+;; TypeScript
+(setq org-babel-default-header-args:jupyter-typescript '(
+  (:session . "ts")
+  (:kernel . "tslab")))
+
+;; Python
+(setq org-babel-default-header-args:jupyter-python '(
+   (:session . "py")
+   (:kernel . "python")))
+
+(add-to-list 'exec-path "/usr/bin/sqlite3")
+(add-hook 'after-init-hook 'org-roam-mode)   ; start on start-up
+(setq org-roam-directory "~/org/roam")       ; set org-roam dir
+(setq org-roam-tag-sources '(prop all-directories))
+
+(setq org-roam-capture-templates
+    '(("d" "default" plain (function org-roam--capture-get-point)
+        "%?"
+        :file-name "%<%Y%m%d%H%M%S>-${slug}"
+        :head
+"#+title: ${title}
+#+roam_tags:"
+        :unnarrowed t)
+
+    ("c" "Code Challange" plain (function org-roam--capture-get-point)
+        "%?"
+        :file-name "codeChallanges/%<%Y%m%d%H%M%S>-${slug}"
+        :head
+"#+title: ${title}
+#+roam_tags: code-challange
+:PROPERTIES:
+:Source:
+:END:
+
+\n* Question
+\n** Example
+~Input: ~
+~Output: ~
+"
+        :unnarrowed t)
+))
+
+;; TODO Note
+;; TODO Code Challange
 
 (use-package! org-roam-bibtex
   :after (org-roam)
@@ -144,11 +153,11 @@
       orb-file-field-extensions '("pdf"))
   ;; (setq orb-preformat-keywords
   ;; '("=key=" "title" "url" "file" "author-or-editor" "keywords"))
-    (setq orb-templates
-            '(("r" "ref" plain (function org-roam-capture--get-point)
-            ""
-            :file-name "${slug}"
-            :head "#+TITLE: ${citekey}: ${title}\n#+roam_key: ${ref}\n#+roam_tags:
+  (setq orb-templates
+    '(("r" "ref" plain (function org-roam-fapture--get-point)
+     ""
+     :file-name "${slug}"
+     :head "#+TITLE: ${citekey}: ${title}\n#+roam_key: ${ref}\n#+roam_tags:
 
 - keywords :: ${keywords}
 
@@ -165,70 +174,39 @@
 (use-package org-noter
   :after (:any org pdf-view)
   :config
-  (setq
-   ;; The WM can handle splits
-   ;; org-noter-notes-window-location 'other-frame
-   ;; Please stop opening frames
-   org-noter-always-create-frame nil
-   ;; I want to see the whole file
-   ;; org-noter-hide-other nil
-   ;; Everything is relative to the main notes file
-   ;; org-noter-notes-search-path (list org_notes)
-   )
-  )
+  (setq org-noter-always-create-frame nil))  ; stop opening frames
 
-(add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
+(add-hook 'org-mode-hook #'valign-mode)
+(setq valign-fancy-bar 'non-nil)
 
-;; TODO is this needed?
-;;(add-to-list 'org-latex-packages-alist '("" "natbib"))
-;;(add-to-list 'org-latex-packages-alist '("" "cleveref"))
-
-;; Latex Fragments in orgmode
+;; FIXME Latex fragments in org mode
 (setq org-format-latex-options
-        (list :foreground 'default  ;;auto
-              :background 'auto
-              :scale 2.2              ;; bigger latex fragments
-              :html-foreground "Black"
-              :html-background "Transparent"
-              :html-scale 1.0
-              :matchers '("begin" "$1" "$" "$$" "\\(" "\\[")))
-
-(map! "C-q"  ; example
-      (cmd! (previous-line)
-            (kill-line)
-            (forward-line)))
-
-(map! "M-o" (cmd! (org-noter-insert-note)))  ;; TODO map only in noter
-
-;; TODO natural window resizing
+  (list
+        ;; :foreground 'default  ;;auto
+        ;; :background 'auto
+        :scale 3.0              ;; bigger latex fragment
+        ;; :html-foreground "Black"
+        ;; :html-background "Transparent"
+        ;; :html-scale 1.0
+        :matchers '("begin" "$1" "$" "$$" "\\(" "\\[")))
 
 (setq lisp-indent-offset 2)
 
-;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
-
-;; For GPG configuration, email clients, file templates and snippets.
-(setq user-full-name "Nathan Sharp"
-      my-name "nazzacode"
-      user-mail-address "nasharp@outlook.com")
-
 (require 'doi-utils)
-;; TODO ^ do for others?
 
-(setq reftex-default-bibliography '("~/org-roam/bibliography.bib"))
+(setq reftex-default-bibliography '("~/org/roam/bibliography.bib"))
 
 ;; see org-ref for use of these variables
 (setq org-ref-default-bibliography '("~/org-roam/bibliography.bib")
-      org-ref-bibliography-notes "~/org-roam/"   ; TODO not in use
-      org-ref-pdf-directory "~/org-roam/PDFs/"
+      org-ref-bibliography-notes "~/org/roam/"   ; TODO not in use
+      org-ref-pdf-directory "~/org/roam/PDFs/"
       org-ref-completion-library 'org-ref-ivy-cite
       org-ref-get-pdf-filename-function 'org-ref-get-pdf-filename-helm-bibtex
-      org-ref-bibliography-notes "~/org-roam"
-      org-ref-notes-directory "~/org-roam"
+      org-ref-bibliography-notes "~/org/roam"
+      org-ref-notes-directory "~/org/roam"
       org-ref-notes-function 'orb-edit-notes)
 
 (after! org
-    (setq bibtex-completion-bibliography "~/org-roam/bibliography.bib"
-          bibtex-completion-library-path "~/org-roam/PDFs/"
-          bibtex-completion-notes-path "~/org-roam/"))
-=======
->>>>>>> 2d8191b67236fd920a5dd96cc6366e7e0116124f
+    (setq bibtex-completion-bibliography "~/org/roam/bibliography.bib"
+          bibtex-completion-library-path "~/org/roam/PDFs/"
+          bibtex-completion-notes-path "~/org/roam/"))
