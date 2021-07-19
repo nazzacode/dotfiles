@@ -11,22 +11,28 @@
       header-line-format " "              ; header padding
       fringe-mode 'default)
 
-(setq doom-theme 'doom-dark+)  ; FIXME Breaks Latex fragments background
+(setq doom-theme 'my-doom-dark+)  ; FIXME Breaks Latex fragments background
 
 ;;(setq doom-dark+-padded-modeline nil)
 
-(setq doom-font (font-spec :family "Agave Nerd Font Mono")     ; Agave Nerd Font Mono
-      doom-variable-pitch-font (font-spec :family "ETBookOT")
+;; (use-package! mixed-pitch
+;;   :hook (org-mode . mixed-pitch-mode)
+;;   :config
+;;   (setq variable-pitch-set-heigth 't)
+;;   (set-face-attribute 'variable-pitch nil :height 1.5))
+
+(setq doom-font (font-spec :family "Hasklug Nerd Font Mono") ;  :size 26 :height 1.0)     ; Agave Nerd Font Mono
+      doom-variable-pitch-font (font-spec :family "Iosevka Aile") ; :size 32 :height 1.5)  ; ETBookOT
       doom-unicode-font (font-spec :family "Symbola")          ; good unicode support
       ;; doom-big-font (font-spec :family "Fira Mono" :size 19))
       ;; doom-variable-pitch-font (font-spec :family "TSCu_Comic")
 )
 
 (custom-set-faces!
-    '(mode-line :family "Terminus" :height 1.0)
-    '(mode-line-inactive :family "Terminus" :height 1.0))
+    '(mode-line :family "Iosevka Aile")  ; :height 0.85)
+    '(mode-line-inactive :family "Iosevka Aile"))  ; :height 0.85))
 
-(setq doom-modeline-height 9)
+(setq doom-modeline-height 90)
 
 ;; TODO move to top aka `header-line-format'
 ;; (setq header-line-format mode-line-format)
@@ -34,7 +40,7 @@
 ;; FIXME Not loading on start and breaking writeroom
 
 ;; TODO increase font less
-(setq writeroom-mode-line t)
+;;(setq writeroom-mode-line t)
 
 (setq emojify-emoji-set "emojione-v2.2.6") ; increase resolution from default "emojione-v2.2.6-22"
 
@@ -60,15 +66,15 @@
 ;;(org-set-emph-re 'org-emphasis-regexp-components org-emphasis-regexp-components)
 
 (custom-set-faces!
-  '(outline-1 :weight semi-bold  :height 1.12)
-  '(outline-2 :weight semi-bold  :height 1.08)
-  '(outline-3 :weight semi-bold  :height 1.05)
-  '(outline-4 :weight semi-bold  :height 1.03)
-  '(outline-5 :weight normal     :height 1.02)
-  '(outline-6 :weight normal     :height 1.01)
+  '(outline-1 :weight semi-bold  :height 1.24) ;1.12)
+  '(outline-2 :weight semi-bold  :height 1.16) ;1.08)
+  '(outline-3 :weight semi-bold  :height 1.10) ;1.05)
+  '(outline-4 :weight semi-bold  :height 1.06) ;1.03)
+  '(outline-5 :weight normal     :height 1.04) ; 1.02
+  '(outline-6 :weight normal     :height 1.02) ;1.01)
   '(outline-7 :weight normal)
   '(outline-8 :weight normal)
-  '(org-document-title :height 1.2))
+  '(org-document-title :height 1.4)) ; 1.2
 
 ;; Typescript
 (org-babel-do-load-languages
@@ -112,6 +118,7 @@
 (setq org-roam-tag-sources '(prop all-directories))
 
 (setq org-roam-capture-templates
+;; Default
     '(("d" "default" plain (function org-roam--capture-get-point)
         "%?"
         :file-name "%<%Y%m%d%H%M%S>-${slug}"
@@ -120,6 +127,7 @@
 #+roam_tags:"
         :unnarrowed t)
 
+;; Code Challange
     ("c" "Code Challange" plain (function org-roam--capture-get-point)
         "%?"
         :file-name "codeChallanges/%<%Y%m%d%H%M%S>-${slug}"
@@ -128,12 +136,31 @@
 #+roam_tags: code-challange
 :PROPERTIES:
 :Source:
+:Rating:
+:Difficulty:
 :END:
 
 \n* Question
 \n** Example
 ~Input: ~
 ~Output: ~
+
+\n* Solution
+\n* Testing
+\n* Runtime Analysis
+"
+        :unnarrowed t)
+
+;; Debug/Troubleshoot
+("t" "Debug/Troubleshoot" plain (function org-roam--capture-get-point)
+    "%?"
+    :file-name "%<%Y%m%d%H%M%S>-${slug}"
+    :head
+"#+title: ${title}
+#+roam_tags: debug fixMe
+
+\n* Problem
+\n* Solution
 "
         :unnarrowed t)
 ))
@@ -182,7 +209,7 @@
 ;; FIXME Latex fragments in org mode
 (setq org-format-latex-options
   (list
-        ;; :foreground 'default  ;;auto
+        :foreground 'default  ;;auto
         ;; :background 'auto
         :scale 3.0              ;; bigger latex fragment
         ;; :html-foreground "Black"
@@ -191,6 +218,16 @@
         :matchers '("begin" "$1" "$" "$$" "\\(" "\\[")))
 
 (setq lisp-indent-offset 2)
+
+;; Pulling up the buffer menu when splitting windows
+(setq evil-vsplit-window-right t
+      evil-split-window-below t)
+
+(defadvice! prompt-for-buffer (&rest _)
+  :after '(evil-window-split evil-window-vsplit)
+  (+ivy/switch-buffer))
+
+(setq +ivy-buffer-preview t)
 
 (require 'doi-utils)
 

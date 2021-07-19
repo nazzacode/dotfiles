@@ -74,7 +74,7 @@ set noshowmode
 let mapleader=" "
 
 " -- Colorscheme -- "
-colorscheme darcula
+"colorscheme darcula
 
 hi normal ctermbg=NONE guibg=NONE
 

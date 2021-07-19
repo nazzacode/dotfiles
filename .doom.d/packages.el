@@ -19,6 +19,7 @@
 (package! valign)            ; pretty tables
 (package! justify-kp
   :recipe (:host github :repo "Fuco1/justify-kp"))        ; fancy justification (using for epubs)
+(package! mini-modeline)     ; modeline embedded in minibuffer
 ;;(package! tide)            ; alternative: lsp-mode
 ;;
 ;; (package! org-roam) ; do (org +roam instead)
