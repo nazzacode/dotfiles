@@ -1,30 +1,20 @@
+# Crash (19/07/2021) Cmdline Outputs and Commentary for Manjaro Forum Post
 
-# Crash (19/07/2021) Cmdline Outputs
+TITLE: Black screen of death while working aborad: "Failed to start Simple Desktop Display Manager" (kde)
+
+Please help, I'm working but abroad and have broken my display manager (SSDM) such that I can only access my desktop through tty. I have looked though number of similar posts but none of the solutions seem to work for me. Some guideance would be really appriciated.
+
 # Description
-# Possible Cause
-- `optimus-manager`
-# References 
+On startup: 
 
-> `systemctl status sddm.service status`
+```“Error: Failed to start Simple Desktop Display Manager”``` 
 
-```
-Unit status.service could not be found.
-● sddm.service - Simple Desktop Display Manager
-     Loaded: loaded (/usr/lib/systemd/system/sddm.service; enabled; vendor preset: disabled)
-     Active: failed (Result: exit-code) since Mon 2021-07-19 11:22:01 AST; 6min ago
-       Docs: man:sddm(1)
-             man:sddm.conf(5)
-    Process: 1513 ExecStart=/usr/bin/sddm (code=exited, status=1/FAILURE)
-   Main PID: 1513 (code=exited, status=1/FAILURE)
+(Note: sometimes it doesnt even show this message)
 
-Jul 19 11:22:01 nathans-x1-laptop systemd[1]: sddm.service: Scheduled restart job, restart counter is at 2.
-Jul 19 11:22:01 nathans-x1-laptop systemd[1]: Stopped Simple Desktop Display Manager.
-Jul 19 11:22:01 nathans-x1-laptop systemd[1]: sddm.service: Start request repeated too quickly.
-Jul 19 11:22:01 nathans-x1-laptop systemd[1]: sddm.service: Failed with result 'exit-code'.
-Jul 19 11:22:01 nathans-x1-laptop systemd[1]: Failed to start Simple Desktop Display Manager.
-```
+# System State (via tty1 (Ctrl + Alt + F4))
 
 `> inxi -FZ`
+
 ```
 system:    Host: nathans-x1-laptop Kernel: 5.10.36-2-MANJARO x86_64 bits: 64 Console: tty pts/0 (vt 2)
            Distro: Manjaro Linux
@@ -229,23 +219,58 @@ nathan@nathans-x1-laptop:pts/0-> /home > nathan (0)
 Warning: no configs for USB devices found!
 ```
 
-`> startplasma-x11`
+`> systemctl status sddm.service status`
 
 ```
-$DISPLAY is not set or cannot connect to the X server.
+Unit status.service could not be found.
+● sddm.service - Simple Desktop Display Manager
+     Loaded: loaded (/usr/lib/systemd/system/sddm.service; enabled; vendor preset: disabled)
+     Active: failed (Result: exit-code) since Mon 2021-07-19 11:22:01 AST; 6min ago
+       Docs: man:sddm(1)
+             man:sddm.conf(5)
+    Process: 1513 ExecStart=/usr/bin/sddm (code=exited, status=1/FAILURE)
+   Main PID: 1513 (code=exited, status=1/FAILURE)
+
+Jul 19 11:22:01 nathans-x1-laptop systemd[1]: sddm.service: Scheduled restart job, restart counter is at 2.
+Jul 19 11:22:01 nathans-x1-laptop systemd[1]: Stopped Simple Desktop Display Manager.
+Jul 19 11:22:01 nathans-x1-laptop systemd[1]: sddm.service: Start request repeated too quickly.
+Jul 19 11:22:01 nathans-x1-laptop systemd[1]: sddm.service: Failed with result 'exit-code'.
+Jul 19 11:22:01 nathans-x1-laptop systemd[1]: Failed to start Simple Desktop Display Manager.
 ```
+
+
 
 # Tried
 
-- `> sudo mhwd -r pci video-vesa`
-```
-Error: config 'video-vesa' is not installed!
-```
+- Removing video-vesa: `> sudo mhwd -r pci video-vesa`
+```Error: config 'video-vesa' is not installed!```
 
-- `> sudo mhwd -i pci video-modesetting -f`
+- Reinstalling video-modesetting: `> sudo mhwd -i pci video-modesetting -f`
 
-- checking `~/.xinitrc` 
+- checking `DEFAULT_SESSION` in `~/.xinitrc`: `DEFAULT_SESSION=startplasma-x11`
 
-```
-DEFAULT_SESSION=startplasma-x11
-```
+- Restarting display: `> startplasma-x11`
+```$DISPLAY is not set or cannot connect to the X server.```
+
+- Reinstalling graphics drivers: `sudo mhwd -a pci nonfree 0300 -f` (successful but no change)
+
+- Deleting `/etc/X11/xorg.conf` 
+
+# Possible Causes
+
+- `optimus-manager` related (have tried uninstalling and reinstalling to no avail)
+- kde ricing (was playing at time of break)
+- kernel update (recently updated)  (how would I go about rolling this back?)
+- `set-intel.tty` file missing (how can I generate?) 
+
+
+# Bonus
+Looking for an intermediate-friendly explaination of whats going wrong and possible fixes! 
+
+Also if not possible to easily fix, how would I go about backing up whatever I can (e.g. home dir) an fresh installing?
+
+Thx :) 
+
+
+# References
+- https://forum.manjaro.org/t/failed-to-start-simple-desktop-display-manager/1031
