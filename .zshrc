@@ -8,7 +8,7 @@ export ZSH="/home/nathan/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="half-life"
+ZSH_THEME="trapd00r"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -70,32 +70,33 @@ HYPHEN_INSENSITIVE="true"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-
-# command to git clone zsh plugins to the correct directory
-# $ sudo git clone https://github.com/zsh-users/<zsh-plugin-name> ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/<zsh-plugin-name>
-
-
 plugins=(
-	git
-	vi-mode
-	zsh-autosuggestions
+    git
+    vi-mode
+    zsh-autosuggestions
+    zsh-syntax-highlighting
+
 )
 
 source $ZSH/oh-my-zsh.sh
 
-# User configuration
+# -- User configuration --
+
+# PATH
 path+=('/home/nathan/.gem/ruby/2.7.0/bin')
+path+=('/home/nathan/.emacs.d/bin')
+path+=('/home/nathan/.local/bin')
 
 export PATH
 
-export MANPATH="/usr/local/man:$MANPATH"
+# -- MAN --
+# export MANPATH="/usr/local/man:$MANPATH"
 
 # -- Plugin Settings --
 
 # vi-mode
 VI_MODE_RESET_PROMPT_ON_MODE_CHANGE=true
 VI_MODE_SET_CURSOR=true
-
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
@@ -114,8 +115,38 @@ VI_MODE_SET_CURSOR=true
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
-#
-# Example aliases
-alias zshconfig="nvim ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# --- ALIASES ---
+
+# cd    
+alias ..='cd ..'
+alias ...='cd ../..'
+alias .3='cd ../../..'
+alias .4='cd ../../../..'
+
+# package mangagment
+alias pacsyu='sudo pacman -Syu'
+alias pacss='sudo pacman -Ss'
+alias yaysyu='yay -Syu --noconfirm'
+alias yayss='yay -Ss'
+
+# taskell
+task () { taskell ~/Documents/Taskell/$1 }
+# alias tskl='taskell ~/Documents/Taskell/$1'
+
+# make and move into direcotry
+mkcd () { mkdir -p $1; cd $1 }
+
+
+# sudo
+alias please='sudo !!'
+
+# yeet 
+alias yeet="rm -rf"
+
+# clear
+alias cl='clear'
+
+# Haskell
 [ -f "/home/nathan/.ghcup/env" ] && source "/home/nathan/.ghcup/env" # ghcup-env
+[ -f /opt/miniconda3/etc/profile.d/conda.sh ] && source /opt/miniconda3/etc/profile.d/conda.sh
