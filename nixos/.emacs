@@ -1,28 +1,37 @@
+;; $./configuration.nix -*- lexical-binding: t; -*-
+
+# TESTING 1
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, ... }: {
 
-{
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      # TODO home man
     ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # Create backup configuration.nix in /run/current-system
+  system.copySystemConfiguration = true;
+
+  # automatically periodically  run `nixos-rebuild switch --upgrade`
+  system.autoUpgrade.enable = true;
+
   # Netowking (wifi)
   networking.hostName = "nixos"; # Define your hostname.
-  networking.networkmanager.enable = true; 
-  
+  networking.networkmanager.enable = true;
+
   # Bluetooth
   hardware.bluetooth.enable = true;
   # services.blueman.enable = true;  # blueman applet
 
-  # Brightness 
+  # Brightness
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config
@@ -46,37 +55,48 @@
 
   # Allow unfree Packages
   nixpkgs.config.allowUnfree = true;
-  
+
+
+  services.xserver.xkbOptions = "caps:swapescape";
+console.useXkbConfig = true;  # apply to external consoles such as tty
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    wget 
-    gcc
-    zsh
-    vim
-    firefox
-    dmenu
-    picom
-    alacritty
-    calibre
-    #emacs deps
-    git
+    # General
     emacs
+    firefox
+    calibre
+    # Command Line Tools
+    wget
+    gcc  # C++ Compiler
+    zsh  #
+    neovim
+    direnv
+    bat
+    tmux
+    git
     ripgrep
     coreutils
     fd
-    clang
-    # Haskell for Xmonad
-    haskellPackages.xmonad 
-    haskellPackages.xmobar
-    haskellPackages.xmonad-contrib
-    haskellPackages.xmonad-extras
+    # Nix
+    nox
+    # Kde
+    yakuake
   ];
-  
-  # Enable packages 
+
+  # Emacs
+   services.emacs.package = pkgs.emacsGcc;
+
+  nixpkgs.overlays = [
+    (import (builtins.fetchTarball {
+      url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
+    }))
+  ];
+
+  # Enable packages
   programs.zsh.enable = true;
 
-  # -- 4. Font scaling --
   # Set font scaling
   fonts.fontconfig.dpi=180;
 
@@ -114,7 +134,6 @@
   # Enable the X11 windowing system.
   services.xserver.enable = true;
   services.xserver.layout = "gb";
-  # services.xserver.xkbOptions = "eurosign:e";
 
   # Enable touchpad support.
   services.xserver.libinput.enable = true;
@@ -124,8 +143,8 @@
   services.xserver.desktopManager.plasma5.enable = true;
 
   # Enable Nvidia
-  services.xserver.videoDrivers = [ "nvidia" ];
- 
+  # services.xserver.videoDrivers = [ "nvidia" ];
+
   # Enable Xmonad Tiling Window Manager
   #services.xserver = {
   #  windowManager.xmonad = {
@@ -138,9 +157,9 @@
   #    ];
   #  };
     # commented for kde run
-    # displayManager.defaultSession = "none+xmonad"; 
+    # displayManager.defaultSession = "none+xmonad";
     # desktopManager.xterm.enable = false;
-    
+
     # displayManager.sessionCommands = with pkgs; lib.mkAfter
     #   ''
     #   xmodmap /path/to/.Xmodmap
@@ -166,4 +185,3 @@
   system.stateVersion = "20.03"; # Did you read the comment?
 
 }
-

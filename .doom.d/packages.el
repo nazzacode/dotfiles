@@ -8,23 +8,27 @@
 
 ;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
 ;(package! some-package)
-(package! org-noter)         ; pdf + synced notes sideby side
-(package! nov)               ; something to do with novels
-(package! org-ref)
-(package! graphviz-dot-mode)
-(package! org-roam-bibtex
-  :recipe (:host github :repo "org-roam/org-roam-bibtex"))
+(package! org-noter)         ; pdf + synced notes; side by side
+(package! nov)               ; something to do with novels. TODO check if working?
+(package! org-ref)           ; academic referencing in org mode
+(package! graphviz-dot-mode) ; graph diagrams
+(package! org-roam-bibtex)
+  ;; :recipe (:host github :repo "org-roam/org-roam-bibtex"))
 (package! ob-typescript)
 (package! org-appear)        ; show emphasis markers when inside fragment
 (package! valign)            ; pretty tables
-(package! justify-kp
-  :recipe (:host github :repo "Fuco1/justify-kp"))        ; fancy justification (using for epubs)
 (package! mini-modeline)     ; modeline embedded in minibuffer
-;;(package! tide)            ; alternative: lsp-mode
-;;
-;; (package! org-roam) ; do (org +roam instead)
-;; When using org-roam via the `+roam` flag
-(unpin! org-roam)
+(package! org-superstar)     ; fnacy headings and bullets
+(package! direnv)            ; dev environments per filepath
+(package! all-the-icons-dired)  ; file icons fordired
+(package! rainbow-mode)      ; sets background color for color names
+(package! websocket)
+(package! org-roam-ui :recipe (:host github :repo "org-roam/org-roam-ui" :files ("*.el" "out")))
+(package! highlight-indent-guides)
+(package! ts-comint)         ; typescript REPL
+(package! request)           ;
+(package! hypothesis
+  :recipe (:host github :repo "Kungsgeten/hypothesis"))
 
 
 ;; To install a package directly from a remote git repo, you must specify a

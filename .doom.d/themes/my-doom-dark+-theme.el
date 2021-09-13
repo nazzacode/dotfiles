@@ -26,7 +26,7 @@ Can be an integer to determine the exact padding."
    (bg-alt     '("#252526" "#222222"  nil))
    (base0      '("#171F24" "#111122"   "black"))
    (base1      '("#1d1d1d" "#1C1C1C" "brightblack"))
-   (base2      '("#121212" "#626262" "brightblack"))
+   (base2      '("#262626" "#626262" "brightblack")) ;; src_block_backgroud
    (base3      '("#313131" "#3a3a3a" "brightblack"))
    (base4      '("#4b474c" "#444444" "brightblack"))
    (base5      '("#37474F" "#585858" "brightblack"))
@@ -55,7 +55,7 @@ F7B" "#114477" "blue"))
 
    ;; face categories -- required for all themes
    (highlight      base6)
-   (vertical-bar   fg)
+   (vertical-bar   base4) ; fg
    (selection      base4)
    (builtin        magenta)
    (comments       green)
