@@ -24,7 +24,7 @@
 - [[#other-hardware][Other Hardware]]
 - [[#backup][Backup]]
 - [[#internationalisation--localisation--time][Internationalisation / Localisation / Time]]
-- [[#auto-upgrade][Auto Upgrade]]
+- [[#auto-upgrade---better-defaults-][Auto Upgrade (-> better defaults )]]
 - [[#wifi--bluetooth][WiFi & Bluetooth]]
 - [[#fixme-sound][FIXME Sound]]
 - [[#networking][Networking]]
@@ -41,7 +41,7 @@
 
 * Begin
 #+begin_src nix
-{ config, pkgs, callPackage ... }: {
+{ config, pkgs, callPackage, ... }: {
   # ...
 #+end_src
 * Imports
@@ -63,27 +63,23 @@
 #+end_src
 * Other Hardware
 #+begin_src nix
-  # Enable touchpad support.
-  services.xserver.libinput.enable = true;
+  services.xserver.libinput.enable = true; # Enable touchpad
 #+end_src
 * Backup
 #+begin_src nix
-  # Create backup configuration.nix in /run/current-system
-  system.copySystemConfiguration = true;
+  system.copySystemConfiguration = true;  # backup in /run/current-system
 #+end_src
 * Internationalisation / Localisation / Time
 #+begin_src nix
-  # Select internationalisation properties.
   i18n.defaultLocale = "en_GB.UTF-8";
   # console = {
   #   font = "Lat2-Terminus16";
   #   keyMap = "us";
   # };
 
-  # Set your time zone.
-  time.timeZone = "Europe/London";
+  time.timeZone = "Europe/London";  # Set your time zone.
 #+end_src
-* Auto Upgrade
+* Auto Upgrade (-> better defaults )
 #+begin_src nix
   system.autoUpgrade.enable = true;
 #+end_src
@@ -92,12 +88,10 @@
   networking.hostName = "nixos";  # Define hostname.
   networking.networkmanager.enable = true;
 
-  # Bluetooth
   hardware.bluetooth.enable = true;
 #+end_src
 * FIXME Sound
 #+begin_src nix
-  # Enable sound.
   sound.enable = true;
   hardware.pulseaudio.enable = true;
 #+end_src
@@ -109,8 +103,6 @@
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-
 #+end_src
 
 * Fonts & Scaling
@@ -133,19 +125,23 @@
     neovim                       # flamewars babay
     firefox vivaldi google-chrome      # browsers (all shite)
     calibre                            # book ting
-    # Command Line
-    wget                               # fetch web protocols (e.g HTTP)
-    gcc                                # C++ Compiler
+    # Shell
     zsh                                # shell
+    # TUI
+    taskell                            # vim kanban <3
+    tmux                               # terminal multiplexer
+    # Command Line
     direnv                             # virtual envs
     coreutils bat ripgrep fd           # cli utils
     git                                # version control
-    taskell
+    # Background
+    wget                               # fetch web protocols (e.g HTTP)
+    gcc                                # C++ Compiler
     # Not rice
     neofetch htop
     # Rice
     cmatrix
-   # Nix
+    # Nix
     nox                                # better package search
     # Kde
     yakuake                            # REPLACE dropdown terminal
@@ -153,11 +149,12 @@
   ];
 
   # Emacs
-   services.emacs.package = pkgs.emacsGcc;
+  services.emacs.package = pkgs.emacsGcc;
 
   nixpkgs.overlays = [
     (import (builtins.fetchTarball {
-      url = https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
+      url =
+       https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
     }))
   ];
 
@@ -167,12 +164,11 @@
 #+begin_src nix
   programs.zsh = {
     enable = true;
-    autocd = true;
   # TODO replace with zsh way!
     shellInit = ''
       export PATH="$PATH":"$HOME/.emacs.d/bin"
-    ''
-  }
+    '';
+  };
 #+end_src
 * Printing
 #+begin_src nix
@@ -201,14 +197,18 @@
     shell = pkgs.zsh;
     extraGroups = [ "wheel" "network manager" "network"
                                   "video" "vboxusers" "audio" ];
-  }; #+end_src
+  };
+#+end_src
 * Home Manager
 #+begin_src nix
   home-manager.users.nathan = { pkgs, ... }: {
+
     # home.packages = [ pkgs.atool pkgs.httpie ];
-    programs.zsh {
+
+    programs.zsh = {
       enable = true;
-    }
+      autocd = true;
+    };
     # TODO config!
 
     programs.git = {
@@ -216,8 +216,6 @@
       userName  = "nazzacode";
       userEmail = "nasharp@outlook.com";
     };
-
-
   };
 #+end_src
 
@@ -239,7 +237,7 @@
   #  windowManager.xmonad = {
   #    enable = true;
   #    enableContribAndExtras = true;
-  #    extraPackages = haskellPackages: [
+  #   extraPackages = haskellPackages: [
   #      haskellPackages.xmonad-contrib
   #      haskellPackages.xmonad-extras
   #      haskellPackages.xmonad
