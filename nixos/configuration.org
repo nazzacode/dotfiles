@@ -6,27 +6,20 @@
 #+options: toc:2
 #+property: header-args :tangle yes :padline yes
 
-* TODO
-** TODO home magager
-** TODO Zsh
 * Table of Content :toc:
 :PROPERTIES:
 :UNNUMBERED:
 :END:
-
-- [[#todo][TODO]]
-  - [[#home-magager][home magager]]
-  - [[#zsh][Zsh]]
 - [[#begin][Begin]]
 - [[#imports][Imports]]
 - [[#fixme-bootloader][FIXME Bootloader]]
--  [[#gpu][GPU]]
+- [[#fixme-gpu][FIXME GPU]]
 - [[#other-hardware][Other Hardware]]
 - [[#backup][Backup]]
-- [[#interntionalisation--localisation--time][Interntionalisation / Localisation / Time]]
-- [[#auto-upgrade---better-defaults-][Auto Upgrade (-> better defaults )]]
+-  [[#time--interntional-localisation][Time / Interntional Localisation]]
+- [[#auto-upgrade][Auto Upgrade]]
+- [[#sound--audio][Sound / Audio]]
 - [[#wifi--bluetooth][WiFi & Bluetooth]]
-- [[#fixme-sound][FIXME Sound]]
 - [[#networking][Networking]]
 - [[#fonts--scaling][Fonts & Scaling]]
 - [[#keyboard-layout][Keyboard Layout]]
@@ -37,9 +30,9 @@
 - [[#display-manager--desktop-environment][Display Manager / Desktop Environment]]
 - [[#users][Users]]
 - [[#home-manager][Home Manager]]
-- [[#end--state-version][End (& state version)]]
+- [[#system-version--end][System Version (& End)]]
 - [[#proj-xmonad][PROJ XMonad]]
-- [[#bibliography][Bibliography]]
+- [[#references][References]]
 
 * Begin
 #+begin_src nix
@@ -57,8 +50,10 @@
 #+begin_src  nix
   boot.loader.systemd-boot.enable = true;  # Use the systemd-boot EFI boot loader
   boot.loader.efi.canTouchEfiVariables = true;  # no idea
+  # TODO remove grub
+  # TODO getwindows 10 back!!
 #+end_src
-*  TODO GPU
+* FIXME GPU
 #+begin_src nix
   # Enable Nvidia
   # services.xserver.videoDrivers = [ "nvidia" ];
@@ -122,12 +117,15 @@
 * Other Hardware
 #+begin_src nix
   services.xserver.libinput.enable = true; # Enable touchpad
+
+
+  # hardware.enableAllFirmware = true; # EXPERIMENTAL (fixing sound)
 #+end_src
 * Backup
 #+begin_src nix
   system.copySystemConfiguration = true;  # backup in /run/current-system
 #+end_src
-* Interntionalisation / Localisation / Time
+*  Time / Interntional Localisation
 #+begin_src nix
   i18n.defaultLocale = "en_GB.UTF-8";
 
@@ -138,9 +136,29 @@
 
   time.timeZone = "Europe/London";  # Set your time zone.
 #+end_src
-* Auto Upgrade (-> better defaults )
+* Auto Upgrade
 #+begin_src nix
   system.autoUpgrade.enable = true;
+#+end_src
+* Sound / Audio
+#+begin_src nix
+  sound.enable = true;
+  hardware.pulseaudio.enable = true;
+  # hardware.pulseaudio.support32Bit = true;    ## If compatibility with 32-bit applications is desired.
+  hardware.pulseaudio.package = pkgs.pulseaudioFull;
+
+  # IMPORTANT Fixed Broken Audio!
+  hardware.pulseaudio.configFile = pkgs.runCommand "default.pa" {} ''
+    sed 's/module-udev-detect$/module-udev-detect tsched=0/' \
+      ${pkgs.pulseaudio}/etc/pulse/default.pa > $out
+  '';
+
+  # # TRY fixing sound
+  # let
+  #   unstable = import <nixos-unstable> {};
+  # in {
+  #   hardware.pulseaudio.package = unstable.pulseaudioFull;
+  # }
 #+end_src
 * WiFi & Bluetooth
 #+begin_src  nix
@@ -148,18 +166,6 @@
   networking.networkmanager.enable = true;
 
   hardware.bluetooth.enable = true;
-#+end_src
-* FIXME Sound
-#+begin_src nix
-  sound.enable = true;
-  hardware.pulseaudio.enable = true;
-
-  # TRY fixing sound
-  let
-    unstable = import <nixos-unstable> {};
-  in {
-    hardware.pulseaudio.package = unstable.pulseaudioFull;
-  }
 #+end_src
 * Networking
 #+begin_src nix
@@ -205,11 +211,12 @@
     # CLI
     direnv                             # virtual envs
     coreutils pciutils                 # selection of fine wines
+    lsof                               # files opened by other procedures
     unzip                              # why u no default?
     bat                                # better cat
     ripgrep                            # rg: better grep
     exa                                # better ls
-    fd
+    fd                                 # better, faster find
     git gh                             # version control
     fzf                                # fuzzy finder
     xclip                              # copy pasta to cmd line
@@ -294,7 +301,7 @@
   services.xserver.displayManager.sddm.enable = true;
   services.xserver.desktopManager.plasma5.enable = true;
 #+end_src
-* [#B] Users
+* Users
 #+begin_src nix
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.nathan = {
@@ -364,8 +371,7 @@
   #  '';
   # };
 #+end_src
-
-* End (& state version)
+* System Version (& End)
 #+begin_src nix
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -399,4 +405,4 @@
     #   '';
   # };
 #+end_src
-* Bibliography
+* References

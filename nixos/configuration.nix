@@ -8,6 +8,8 @@
 
   boot.loader.systemd-boot.enable = true;  # Use the systemd-boot EFI boot loader
   boot.loader.efi.canTouchEfiVariables = true;  # no idea
+  # TODO remove grub
+  # TODO getwindows 10 back!!
 
   # Enable Nvidia
   # services.xserver.videoDrivers = [ "nvidia" ];
@@ -70,6 +72,9 @@
 
   services.xserver.libinput.enable = true; # Enable touchpad
 
+
+  # hardware.enableAllFirmware = true; # EXPERIMENTAL (fixing sound)
+
   system.copySystemConfiguration = true;  # backup in /run/current-system
 
   i18n.defaultLocale = "en_GB.UTF-8";
@@ -83,20 +88,28 @@
 
   system.autoUpgrade.enable = true;
 
+  sound.enable = true;
+  hardware.pulseaudio.enable = true;
+  # hardware.pulseaudio.support32Bit = true;    ## If compatibility with 32-bit applications is desired.
+  hardware.pulseaudio.package = pkgs.pulseaudioFull;
+
+  # IMPORTANT Fixed Broken Audio!
+  hardware.pulseaudio.configFile = pkgs.runCommand "default.pa" {} ''
+    sed 's/module-udev-detect$/module-udev-detect tsched=0/' \
+      ${pkgs.pulseaudio}/etc/pulse/default.pa > $out
+  '';
+
+  # # TRY fixing sound
+  # let
+  #   unstable = import <nixos-unstable> {};
+  # in {
+  #   hardware.pulseaudio.package = unstable.pulseaudioFull;
+  # }
+
   networking.hostName = "nixos";  # Define hostname.
   networking.networkmanager.enable = true;
 
   hardware.bluetooth.enable = true;
-
-  sound.enable = true;
-  hardware.pulseaudio.enable = true;
-
-  # TRY fixing sound
-  let
-    unstable = import <nixos-unstable> {};
-  in {
-    hardware.pulseaudio.package = unstable.pulseaudioFull;
-  }
 
   networking.useDHCP = false;
   networking.interfaces.wlp0s20f3.useDHCP = true;
@@ -129,11 +142,12 @@
     # CLI
     direnv                             # virtual envs
     coreutils pciutils                 # selection of fine wines
+    lsof                               # files opened by other procedures
     unzip                              # why u no default?
     bat                                # better cat
     ripgrep                            # rg: better grep
     exa                                # better ls
-    fd
+    fd                                 # better, faster find
     git gh                             # version control
     fzf                                # fuzzy finder
     xclip                              # copy pasta to cmd line
