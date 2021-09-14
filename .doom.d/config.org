@@ -64,6 +64,8 @@ Harnes the performance advantages of lexical-binding. See:
 (setq auto-save-default t
       make-backup-files t
       tab-width 2)
+
+(setq-default tab-width 2)
 #+end_src
 
 * UI
@@ -280,11 +282,16 @@ See: [[https://www.orgroam.com/manual.html][org-roam manual]]
 
     :unnarrowed t)
 
+;; Cheatsheet
   ("C" "cheatsheet" plain "%?"
     :if-new (file+head "cheatsheets/%<%Y%m%d%H%M%S>-${slug}.org"
 
 "#+title: ${title}
-,#+filetags: :cheatsheat:\n")
+,#+filetags: :cheatsheat:\n
+
+| Command | Description |
+|---------+-------------|
+|         |             |")
 
     :unnarrowed t)
 
@@ -301,8 +308,6 @@ See: [[https://www.orgroam.com/manual.html][org-roam manual]]
 \n* Done")
 
     :unnarrowed t)
-
-
   )
 )
 #+end_src

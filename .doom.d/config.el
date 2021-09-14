@@ -1,13 +1,22 @@
+;; [[file:config.org::*Magic Incantation][Magic Incantation:1]]
 ;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
+;; Magic Incantation:1 ends here
 
+;; [[file:config.org::*User Info][User Info:1]]
 (setq user-full-name "Nathan Sharp"
       my-name "nazzacode"
       user-mail-address "nasharp@outlook.com")
+;; User Info:1 ends here
 
+;; [[file:config.org::*Better Defaults][Better Defaults:1]]
 (setq auto-save-default t
       make-backup-files t
       tab-width 2)
 
+(setq-default tab-width 2)
+;; Better Defaults:1 ends here
+
+;; [[file:config.org::*UI][UI:1]]
 (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)      ; icons in dired
 
 ;; highlight-indent-guide
@@ -26,9 +35,13 @@
   (lambda () (rainbow-mode 1)))
 
 (global-rainbow-mode 1)
+;; UI:1 ends here
 
+;; [[file:config.org::*Theme][Theme:1]]
 (setq doom-theme 'my-doom-dark+)
+;; Theme:1 ends here
 
+;; [[file:config.org::*Fonts][Fonts:1]]
 ;; (use-package! mixed-pitch
 ;;   :hook (org-mode . mixed-pitch-mode)
 ;;   :config
@@ -41,14 +54,18 @@
 ;;       ;; doom-big-font (font-spec :family "Fira Mono" :size 19))
 ;;       ;; doom-variable-pitch-font (font-spec :family "TSCu_Comic")
 ;;)
+;; Fonts:1 ends here
 
+;; [[file:config.org::*Window Divider][Window Divider:1]]
 ;; (defun my-change-window-divider ()
 ;;   (let ((display-table (or buffer-display-table standard-display-table)))
 ;;     (set-display-table-slot display-table 5 ?│)
 ;;     (set-window-display-table (selected-window) display-table)))
 
 ;; (add-hook 'window-configuration-change-hook 'my-change-window-divider)
+;; Window Divider:1 ends here
 
+;; [[file:config.org::*Modeline][Modeline:1]]
 ;; TODO minibuffer modeline + centaur
 
 ;; (custom-set-faces!
@@ -56,10 +73,14 @@
 ;;     '(mode-line-inactive :family "Iosevka Aile"))  ; :height 0.85))
 
 ;; (setq doom-modeline-height 90)
+;; Modeline:1 ends here
 
+;; [[file:config.org::*Writeroom Mode][Writeroom Mode:1]]
 ;; TODO increase font less
 ;;(setq writeroom-mode-line t)
+;; Writeroom Mode:1 ends here
 
+;; [[file:config.org::*General][General:1]]
 (after! org
   (add-hook! 'org-mode-hook #'+org-pretty-mode   ; hides emphasis markers and toggles "pretty entities"
                             #'org-appear-mode    ; expand invisible emphasis markers etc.
@@ -78,7 +99,9 @@
 (require 'org-superstar)  ; NEEDED?
 
 (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
+;; General:1 ends here
 
+;; [[file:config.org::*Headings][Headings:1]]
 ;; TODO increase sizes?
 (custom-set-faces!
   '(outline-1 :weight semi-bold  :height 1.24) ;1.12)
@@ -90,7 +113,9 @@
   '(outline-7 :weight normal)
   '(outline-8 :weight normal)
   '(org-document-title :height 1.4)) ; 1.2
+;; Headings:1 ends here
 
+;; [[file:config.org::*Todo's][Todo's:1]]
 (setq org-todo-keywords '(
   (sequence "TODO(t)" "DOING(d)" "STRT(s)" "NEXT(n)" "PROJ(p)" "WAIT(w)" "MAYBE(m)" "ERROR(e)" "FIXME(f)" "|" "DONE(D)" "CANCL(c)")
   (sequence "[ ](T)" "[-](-)" "[?](?)" "|" "[X](x)")
@@ -113,7 +138,9 @@
   ("[?]" . +org-todo-onhold)
   ("NO" . +org-todo-cancel)
 ))
+;; Todo's:1 ends here
 
+;; [[file:config.org::*Tags][Tags:1]]
 (setq org-tag-persistent-alist
       '((:startgroup . nil)
         ("uni" . ?u)
@@ -128,15 +155,21 @@
         (:endgroup . nil)
         ("noexport" . ?x)
 ))
+;; Tags:1 ends here
 
+;; [[file:config.org::*Tables][Tables:1]]
 (add-hook 'org-mode-hook #'valign-mode)
 (setq valign-fancy-bar 'non-nil)
+;; Tables:1 ends here
 
+;; [[file:config.org::*Org-roam][Org-roam:1]]
 ;; (add-hook 'after-init-hook 'org-roam-setup)   ; FIXME start on start-up BREAKING CONFIG ON REDOWNLOAD
 (setq org-roam-directory "~/org/roam"       ; set org-roam dir
       +org-roam-open-buffer-on-find-file nil
 )
+;; Org-roam:1 ends here
 
+;; [[file:config.org::*Org Roam Capture Templates][Org Roam Capture Templates:1]]
 (setq org-roam-capture-templates
 
 ;; Default
@@ -183,11 +216,16 @@
 
     :unnarrowed t)
 
+;; Cheatsheet
   ("C" "cheatsheet" plain "%?"
     :if-new (file+head "cheatsheets/%<%Y%m%d%H%M%S>-${slug}.org"
 
 "#+title: ${title}
-#+filetags: :cheatsheat:\n")
+#+filetags: :cheatsheat:\n
+
+| Command | Description |
+|---------+-------------|
+|         |             |")
 
     :unnarrowed t)
 
@@ -204,11 +242,11 @@
 \n* Done")
 
     :unnarrowed t)
-
-
   )
 )
+;; Org Roam Capture Templates:1 ends here
 
+;; [[file:config.org::*org-roam-ui][org-roam-ui:1]]
 (use-package! websocket
     :after org-roam)
 
@@ -223,7 +261,9 @@
           org-roam-ui-follow t
           org-roam-ui-update-on-save t
           org-roam-ui-open-on-start t))
+;; org-roam-ui:1 ends here
 
+;; [[file:config.org::*Hiding the Properties Drawer][Hiding the Properties Drawer:1]]
 ;; Funtion to hide/unhide the properties drawer
 (defun org-hide-properties ()
   "Hide all org-mode headline property drawers in buffer. Could be slow if it has a lot of overlays."
@@ -249,7 +289,9 @@
   (if (eq (get 'org-toggle-properties-hide-state 'state) 'hidden)
       (org-show-properties)
     (org-hide-properties)))
+;; Hiding the Properties Drawer:1 ends here
 
+;; [[file:config.org::*Org-roam-bibtex (ORB)][Org-roam-bibtex (ORB):1]]
 (use-package! org-roam-bibtex
   :after (org-roam)
   :hook (org-roam-mode . org-roam-bibtex-mode)
@@ -279,27 +321,9 @@
 ;; :NOTER_PAGE:
 ;; :END:"
 ;;      :unnarrowed t))))
+;; Org-roam-bibtex (ORB):1 ends here
 
-;; FIXME startup error
-(require 'doi-utils)
-
-(setq reftex-default-bibliography '("~/org/roam/bibliography.bib"))
-
-;; see org-ref for use of these variables
-(setq org-ref-default-bibliography '("~/org/roam/PDFs/bibliography.bib")
-      org-ref-bibliography-notes "~/org/roam/PDFs"   ; TODO not in use
-      org-ref-pdf-directory "~/org/roam/PDFs/"       ; academic papers
-      org-ref-completion-library 'org-ref-ivy-cite
-      org-ref-get-pdf-filename-function 'org-ref-get-pdf-filename-helm-bibtex
-      org-ref-bibliography-notes "~/org/roam/PDFs"
-      org-ref-notes-directory "~/org/roam/PDFs"
-      org-ref-notes-function 'orb-edit-notes)
-
-(after! org
-    (setq bibtex-completion-bibliography "~/org/roam/PDFs/bibliography.bib"
-          bibtex-completion-library-path "~/org/roam/PDFs/"
-          bibtex-completion-notes-path "~/org/roam/PDFs"))
-
+;; [[file:config.org::*Org-Babel (src blocks)][Org-Babel (src blocks):1]]
 ;; typescript
 (org-babel-do-load-languages
   'org-babel-load-languages
@@ -315,7 +339,9 @@
     (org-babel-execute:js body params)))
 
 ;; (defalias 'org-babel-execute:ts 'org-babel-execute:typescript) ; FIXME
+;; Org-Babel (src blocks):1 ends here
 
+;; [[file:config.org::*Jupyter][Jupyter:1]]
 ; this seems to add syntax-highlighting to jupyter-python and jupyter-typescript blocks
 (after! org-src
   (dolist (lang '(python typescript jupyter))
@@ -335,15 +361,21 @@
 ;; (setq org-babel-default-header-args:jupyter-python '(
 ;;    (:session . "py")
 ;;    (:kernel . "python")))
+;; Jupyter:1 ends here
 
+;; [[file:config.org::*Org-noter][Org-noter:1]]
 (use-package org-noter
   :after (:any org pdf-view)
   :config
   (setq org-noter-always-create-frame nil))  ; stop opening frames
+;; Org-noter:1 ends here
 
+;; [[file:config.org::*Hypothesis][Hypothesis:1]]
 (setq hypothesis-username "nazzacode"
       hypothesis-token "6879-DJYjeV3gat2emzWKlSGkQu20tQTvQK3s7xVSepSdjfA")
+;; Hypothesis:1 ends here
 
+;; [[file:config.org::*Clean category column garbage][Clean category column garbage:1]]
 (setq org-agenda-prefix-format
       '((agenda . " %i %-12(vulpea-agenda-category)%?-12t% s")
         (todo . " %i %-12(vulpea-agenda-category) ")
@@ -386,7 +418,9 @@ Refer to `org-agenda-prefix-format' for more information."
       (buffer-substring-no-properties
        (match-beginning 1)
        (match-end 1)))))
+;; Clean category column garbage:1 ends here
 
+;; [[file:config.org::*Latex][Latex:1]]
 ;; FIXME Latex fragments in org mode
 (setq org-format-latex-options
   (list
@@ -397,11 +431,15 @@ Refer to `org-agenda-prefix-format' for more information."
         ;; :html-background "Transparent"
         ;; :html-scale 1.0
         :matchers '("begin" "$1" "$" "$$" "\\(" "\\[")))
+;; Latex:1 ends here
 
+;; [[file:config.org::*Direnv (Nix)][Direnv (Nix):1]]
 (use-package direnv
  :config
  (direnv-mode))
+;; Direnv (Nix):1 ends here
 
+;; [[file:config.org::*Typescript][Typescript:1]]
 (defun setup-tide-mode ()
   (interactive)
   (tide-setup)
@@ -424,5 +462,32 @@ Refer to `org-agenda-prefix-format' for more information."
 
 
 (setq tide-completion-detailed t)
+;; Typescript:1 ends here
 
+;; [[file:config.org::*Misc][Misc:1]]
 (setq lisp-indent-offset 2)
+;; Misc:1 ends here
+
+;; [[file:config.org::*Org-ref][Org-ref:1]]
+;; FIXME startup error
+(require 'doi-utils)
+
+(setq reftex-default-bibliography '("~/org/roam/bibliography.bib"))
+
+;; see org-ref for use of these variables
+(setq org-ref-default-bibliography '("~/org/roam/PDFs/bibliography.bib")
+      org-ref-bibliography-notes "~/org/roam/PDFs"   ; TODO not in use
+      org-ref-pdf-directory "~/org/roam/PDFs/"       ; academic papers
+      org-ref-completion-library 'org-ref-ivy-cite
+      org-ref-get-pdf-filename-function 'org-ref-get-pdf-filename-helm-bibtex
+      org-ref-bibliography-notes "~/org/roam/PDFs"
+      org-ref-notes-directory "~/org/roam/PDFs"
+      org-ref-notes-function 'orb-edit-notes)
+;; Org-ref:1 ends here
+
+;; [[file:config.org::*Helm-bibtex][Helm-bibtex:1]]
+(after! org
+    (setq bibtex-completion-bibliography "~/org/roam/PDFs/bibliography.bib"
+          bibtex-completion-library-path "~/org/roam/PDFs/"
+          bibtex-completion-notes-path "~/org/roam/PDFs"))
+;; Helm-bibtex:1 ends here

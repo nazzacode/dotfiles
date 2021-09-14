@@ -12,11 +12,68 @@
   # Enable Nvidia
   # services.xserver.videoDrivers = [ "nvidia" ];
 
+# # from: https://github.com/NixOS/nixos-hardware/issues/105
+#   services.xserver = {
+#     videoDrivers = [ "intel" ];
+#     deviceSection = ''BusID "PCI:0:2:0"'';
+#   };
+
+#   hardware.bumblebee = {
+#     enable = true;
+#     connectDisplay = true;
+#   };
+
+#   nixpkgs.config.packageOverrides = pkgs: rec {
+#     bumblebee = pkgs.bumblebee.override {
+#     extraNvidiaDeviceOptions = ''
+#       Option "ProbeAllGpus" "false"
+#       Option "AllowEmptyInitialConfiguration"
+#     EndSection
+
+#     Section "Screen"
+#       Identifier "Default Screen"
+#       Device "DiscreteNvidia"
+#     '';
+#     };
+#   };
+
+# # From: https://github.com/rycee/nixos-hardware/blob/thinkpad-x1-extreme-gen2/lenovo/thinkpad/x1-extreme/gen2/default.nix
+# # NOTE: if doesnt work go to original file as there are some additoinal header arguments
+# # Since the HDMI port is connected to the NVIDIA card.
+#   hardware.bumblebee.connectDisplay = true;
+
+#   nixpkgs.overlays = [
+#     (self: super: {
+#       bumblebee = super.bumblebee.override {
+#         extraNvidiaDeviceOptions = ''
+#           Option "AllowEmptyInitialConfiguration"
+#         '';
+#       };
+#     })
+#   ];
+
+#   services.xserver = mkMerge [
+#       {
+#         # Set the right DPI. xdpyinfo says the screen is 508×285 mm but
+#         # it actually is 344×193 mm.
+#         monitorSection = ''
+#           DisplaySize 344 193
+#         '';
+#       }
+
+#       # To support intel-virtual-output when using Bumblebee.
+#       (mkIf config.hardware.bumblebee.enable {
+#         deviceSection = ''Option "VirtualHeads" "1"'';
+#         videoDrivers = [ "intel" ];
+#       })
+#   ];
+
   services.xserver.libinput.enable = true; # Enable touchpad
 
   system.copySystemConfiguration = true;  # backup in /run/current-system
 
   i18n.defaultLocale = "en_GB.UTF-8";
+
   # console = {
   #   font = "Lat2-Terminus16";
   #   keyMap = "us";
@@ -34,6 +91,13 @@
   sound.enable = true;
   hardware.pulseaudio.enable = true;
 
+  # TRY fixing sound
+  let
+    unstable = import <nixos-unstable> {};
+  in {
+    hardware.pulseaudio.package = unstable.pulseaudioFull;
+  }
+
   networking.useDHCP = false;
   networking.interfaces.wlp0s20f3.useDHCP = true;
 
@@ -43,32 +107,43 @@
 
   fonts.fontconfig.dpi=180;  # font scaling
 
-  nixpkgs.config.allowUnfree = true;  # Allow unfree Packages
-
   services.xserver.xkbOptions = "caps:swapescape";
   console.useXkbConfig = true;  # apply to external consoles (e.g tty)
+
+  nixpkgs.config.allowUnfree = true;  # Allow unfree Packages
 
   environment.systemPackages = with pkgs; [
     # General
     neovim                       # flamewars babay
     firefox vivaldi google-chrome      # browsers (all shite)
     calibre                            # book ting
+    okular                             # pdf viewer
+    spotify                            # moosic REPLACE
+    # TODO nextcloud-client OR syncthing?
     # Shell
     zsh                                # shell
     # TUI
     taskell                            # vim kanban <3
     tmux                               # terminal multiplexer
-    # Command Line
+    pass                               # password manager
+    # CLI
     direnv                             # virtual envs
-    coreutils bat ripgrep fd           # cli utils
-    git                                # version control
+    coreutils pciutils                 # selection of fine wines
+    unzip                              # why u no default?
+    bat                                # better cat
+    ripgrep                            # rg: better grep
+    exa                                # better ls
+    fd
+    git gh                             # version control
+    fzf                                # fuzzy finder
+    xclip                              # copy pasta to cmd line
     # Background
     wget                               # fetch web protocols (e.g HTTP)
     gcc                                # C++ Compiler
     # Not rice
     neofetch htop
     # Rice
-    cmatrix
+    cmatrix                            # above your paygrade mate
     # Nix
     nox                                # better package search
     # Kde
@@ -79,20 +154,48 @@
   # Emacs
   services.emacs.package = pkgs.emacsGcc;
 
+  # TODO Update Periodically
   nixpkgs.overlays = [
     (import (builtins.fetchTarball {
       url =
-       https://github.com/nix-community/emacs-overlay/archive/master.tar.gz;
+       https://github.com/nix-community/emacs-overlay/archive/bd9091685e329ddeff1084604e7b2ba6a3b300c2.tar.gz;
+      sha256 = "1vasm5f4gzlwjgjw9ggrbmkajxkfnqc2hxl0hdkfcq0857id8mhd";
     }))
   ];
 
   services.emacs.enable = true;  # daemon/server mode
 
+  # TODO trezord (crypto wallet)
+  # services.trezord.enable = true;
+
   programs.zsh = {
     enable = true;
-  # TODO replace with zsh way!
+    autosuggestions.enable = true;
+    enableCompletion = true;
+
+    shellAliases = {
+      snrs = "sudo nixos-rebuild switch";
+      vim  = "nvim";
+      yeet = "rm -rf";
+      cl   = "clear";
+      # ls (exa)
+      l    = "exa";                 # original (grid)
+      ls   = "exa -lF --icons";     # new defualt
+      lT   = "exa -lFT";            # recursive tree
+      ldot = "exa -lFd .* --icons"; # dotfiles
+    };
+
     shellInit = ''
-      export PATH="$PATH":"$HOME/.emacs.d/bin"
+      path+=("$HOME/.emacs.d/bin")   # doom to PATH
+
+      export KEYTIMEOUT=1            # faster vi-mode switching
+
+      mkcd () { mkdir -p $1; cd $1 } # make and move into directory
+
+      # ? zsh-system-clipboard permission
+      source "$HOME/.zplug/repos/kutsan/zsh-system-clipboard/zsh-system-clipboard.zsh"
+
+      export PATH
     '';
   };
 
@@ -118,20 +221,59 @@
 
   home-manager.users.nathan = { pkgs, ... }: {
 
-    # home.packages = [ pkgs.atool pkgs.httpie ];
+    # TODO home.packages = [ pkgs.atool pkgs.httpie ];
 
     programs.zsh = {
       enable = true;
       autocd = true;
+
+      zplug = {
+        enable = true;
+
+        plugins = [
+          { name = "plugins/colored-man-pages"; tags = [from:oh-my-zsh]; }
+          { name = "plugins/colorize";          tags = [from:oh-my-zsh]; }
+          { name = "plugins/command-not-found"; tags = [from:oh-my-zsh]; }
+          { name = "plugins/fd";                tags = [from:oh-my-zsh]; }
+          { name = "plugins/fzf";               tags = [from:oh-my-zsh]; }
+          { name = "plugins/git";               tags = [from:oh-my-zsh]; }
+          { name = "plugins/ripgrep";           tags = [from:oh-my-zsh]; }
+          { name = "plugins/tmux";              tags = [from:oh-my-zsh]; }
+          { name = "plugins/tmux";              tags = [from:oh-my-zsh]; }
+          { name = "plugins/vi-mode";           tags = [from:oh-my-zsh]; }
+          # { name = "plugins/cargo";             tags = [from:oh-my-zsh]; }
+          # { name = "plugins/direnv";            tags = [from:oh-my-zsh]; }
+          # { name = "plugins/pass";              tags = [from:oh-my-zsh]; }
+          # { name = "plugins/rsync";             tags = [from:oh-my-zsh]; }
+          # { name = "plugins/"; tags = [from:oh-my-zsh]; }
+          { name = "kutsan/zsh-system-clipboard"; }  # IMPORTANT
+          # DECAP { name = "romkatv/powerlevel10k"; tags = [ as:theme depth:1 ]; }
+        ];
+      };
     };
-    # TODO config!
+
+    programs.fzf = {
+      enable = true;
+      enableZshIntegration = true;
+    };
 
     programs.git = {
       enable = true;
       userName  = "nazzacode";
       userEmail = "nasharp@outlook.com";
     };
+
   };
+
+  # TODO
+  # ".tmux.conf" = {
+  #  text = ''
+  #  set-option -g default-shell /run/current-system/sw/bin/fish
+  #  set-window-option -g mode-keys vi
+  #  set -g default-terminal "screen-256color"
+  #  set -ga terminal-overrides ',screen-256color:Tc'
+  #  '';
+  # };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
