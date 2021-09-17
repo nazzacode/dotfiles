@@ -18,6 +18,7 @@
   - [[#window-divider][Window Divider]]
   - [[#modeline][Modeline]]
   - [[#writeroom-mode][Writeroom Mode]]
+  - [[#fixing-end_src-background-bleeding][Fixing ~#+end_src~ background bleeding]]
 - [[#org][Org]]
   - [[#general][General]]
   - [[#headings][Headings]]
@@ -89,7 +90,6 @@ Harnes the performance advantages of lexical-binding. See:
 
 (global-rainbow-mode 1)
 #+end_src
-
 ** Theme
 #+BEGIN_SRC elisp
 (setq doom-theme 'my-doom-dark+)
@@ -136,6 +136,13 @@ Harnes the performance advantages of lexical-binding. See:
 #+begin_src elisp
 ;; TODO increase font less
 ;;(setq writeroom-mode-line t)
+#+end_src
+** Fixing ~#+end_src~ background bleeding
+#+begin_src elisp
+;; TODO move to my custom theme!
+;; (custom-set-faces
+;;  '(org-block-begin-line ((t (:background "#1e1e1e"))))
+;;  '(org-block-end-line   ((t (:background "#1e1e1e")))))
 #+end_src
 
 * Org

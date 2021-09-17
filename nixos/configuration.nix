@@ -7,73 +7,28 @@
   ];
 
   boot.loader.systemd-boot.enable = true;  # Use the systemd-boot EFI boot loader
+
   boot.loader.efi.canTouchEfiVariables = true;  # no idea
+
+  # boot.loader.efi.efiSysMountPoint = "/boot/EFI";
+
   # TODO remove grub
   # TODO getwindows 10 back!!
 
   # Enable Nvidia
-  # services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver.videoDrivers = [ "nvidia" ];
+  # NOTE: `modesetting` alows NixOS to find the primary display
 
-# # from: https://github.com/NixOS/nixos-hardware/issues/105
-#   services.xserver = {
-#     videoDrivers = [ "intel" ];
-#     deviceSection = ''BusID "PCI:0:2:0"'';
-#   };
-
-#   hardware.bumblebee = {
-#     enable = true;
-#     connectDisplay = true;
-#   };
-
-#   nixpkgs.config.packageOverrides = pkgs: rec {
-#     bumblebee = pkgs.bumblebee.override {
-#     extraNvidiaDeviceOptions = ''
-#       Option "ProbeAllGpus" "false"
-#       Option "AllowEmptyInitialConfiguration"
-#     EndSection
-
-#     Section "Screen"
-#       Identifier "Default Screen"
-#       Device "DiscreteNvidia"
-#     '';
-#     };
-#   };
-
-# # From: https://github.com/rycee/nixos-hardware/blob/thinkpad-x1-extreme-gen2/lenovo/thinkpad/x1-extreme/gen2/default.nix
-# # NOTE: if doesnt work go to original file as there are some additoinal header arguments
-# # Since the HDMI port is connected to the NVIDIA card.
-#   hardware.bumblebee.connectDisplay = true;
-
-#   nixpkgs.overlays = [
-#     (self: super: {
-#       bumblebee = super.bumblebee.override {
-#         extraNvidiaDeviceOptions = ''
-#           Option "AllowEmptyInitialConfiguration"
-#         '';
-#       };
-#     })
-#   ];
-
-#   services.xserver = mkMerge [
-#       {
-#         # Set the right DPI. xdpyinfo says the screen is 508×285 mm but
-#         # it actually is 344×193 mm.
-#         monitorSection = ''
-#           DisplaySize 344 193
-#         '';
-#       }
-
-#       # To support intel-virtual-output when using Bumblebee.
-#       (mkIf config.hardware.bumblebee.enable {
-#         deviceSection = ''Option "VirtualHeads" "1"'';
-#         videoDrivers = [ "intel" ];
-#       })
-#   ];
+  hardware.nvidia = {
+    optimus_prime = {
+      enable = true;
+      nvidiaBusId = "PCI:1:0:0";
+      intelBusId = "PCI:0:2:0";
+    };
+    modesetting.enable = false;
+  };
 
   services.xserver.libinput.enable = true; # Enable touchpad
-
-
-  # hardware.enableAllFirmware = true; # EXPERIMENTAL (fixing sound)
 
   system.copySystemConfiguration = true;  # backup in /run/current-system
 
@@ -94,17 +49,11 @@
   hardware.pulseaudio.package = pkgs.pulseaudioFull;
 
   # IMPORTANT Fixed Broken Audio!
+  # ++ run: > pulseaudio -k     # TODO automate!
   hardware.pulseaudio.configFile = pkgs.runCommand "default.pa" {} ''
     sed 's/module-udev-detect$/module-udev-detect tsched=0/' \
       ${pkgs.pulseaudio}/etc/pulse/default.pa > $out
   '';
-
-  # # TRY fixing sound
-  # let
-  #   unstable = import <nixos-unstable> {};
-  # in {
-  #   hardware.pulseaudio.package = unstable.pulseaudioFull;
-  # }
 
   networking.hostName = "nixos";  # Define hostname.
   networking.networkmanager.enable = true;
@@ -127,7 +76,7 @@
 
   environment.systemPackages = with pkgs; [
     # General
-    neovim                       # flamewars babay
+    neovim                             # flamewars babay
     firefox vivaldi google-chrome      # browsers (all shite)
     calibre                            # book ting
     okular                             # pdf viewer
@@ -163,6 +112,8 @@
     # Kde
     yakuake                            # REPLACE dropdown terminal
     # TODO Cloud/File Storage
+    # Grpahics (Nvidia)
+    linuxPackages.nvidia_x11           # allows nvidia-smi
   ];
 
   # Emacs
@@ -275,6 +226,11 @@
       enable = true;
       userName  = "nazzacode";
       userEmail = "nasharp@outlook.com";
+    };
+
+
+    programs.autorandr = {
+      enable = true;
     };
 
   };

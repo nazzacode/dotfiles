@@ -45,8 +45,7 @@ Can be an integer to determine the exact padding."
    (yellow       '("#D7BA7D" "#DDBB77" "brightyellow"))
    (light-yellow '("#D9DAA2" "#DDDDAA" "brightyellow"))
    (blue         '("#339CDB" "#3399DD" "brightblue"))
-   (dark-blue    '("#124
-F7B" "#114477" "blue"))
+   (dark-blue    '("#124F7B" "#114477" "blue"))
    (magenta      '("#C586C0" "#CC88CC" "brightmagenta"))
    (violet       '("#BB80B3" "#BB88BB" "magenta"))
    (dark-violet  '("#68217A" "#662277" "magenta"))
@@ -80,12 +79,12 @@ F7B" "#114477" "blue"))
    ;; custom categories
    (modeline-bg     (doom-darken bg 0.1)) ;; HACK PRIME OFFENDER WHEN IN PURPLE!
    (modeline-bg-alt (doom-darken bg 0.1))
-   (modeline-fg     fg)
-   (modeline-fg-alt (doom-darken fg 0.4))
+   (modeline-fg     (doom-darken fg 0.4))
+   (modeline-fg-alt (doom-darken fg 0.6))
 
    (-modeline-pad
     (when doom-dark+-padded-modeline
-      (if (integerp doom-dark+-padded-modeline) doom-dark+-padded-modeline 4))))
+      (if (integerp doom-dark+-padded-modeline) doom-dark+-padded-modeline 1)))) ;; 4
 
   ;;;; Base theme face overrides
   ((lazy-highlight :background base4 :foreground fg :distant-foreground fg :weight 'bold)
@@ -96,9 +95,9 @@ F7B" "#114477" "blue"))
     :background modeline-bg-alt :foreground modeline-fg-alt
     :box (if -modeline-pad `(:line-width ,-modeline-pad :color ,modeline-bg-alt)))
    (mode-line-emphasis
-    :foreground fg
-    :weight 'bold)
-   (fringe :background bg-alt)
+    :foreground modeline-fg
+    :weight 'normal)
+   (fringe :background bg)
 
    ;;;; all-the-icons
    (all-the-icons-dblue :foreground blue)

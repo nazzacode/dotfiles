@@ -1,6 +1,5 @@
 #+title: nazzacodes NixOS Config
 #+author: Nathan Sharp (@nazzacode)
-
 #+description: Nathan's (nazzacode's) Personal NixOS config.
 #+startup: num
 #+options: toc:2
@@ -49,77 +48,33 @@
 * FIXME Bootloader
 #+begin_src  nix
   boot.loader.systemd-boot.enable = true;  # Use the systemd-boot EFI boot loader
+
   boot.loader.efi.canTouchEfiVariables = true;  # no idea
+
+  # boot.loader.efi.efiSysMountPoint = "/boot/EFI";
+
   # TODO remove grub
   # TODO getwindows 10 back!!
 #+end_src
 * FIXME GPU
 #+begin_src nix
   # Enable Nvidia
-  # services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver.videoDrivers = [ "nvidia" ];
+  # NOTE: `modesetting` alows NixOS to find the primary display
 
-# # from: https://github.com/NixOS/nixos-hardware/issues/105
-#   services.xserver = {
-#     videoDrivers = [ "intel" ];
-#     deviceSection = ''BusID "PCI:0:2:0"'';
-#   };
-
-#   hardware.bumblebee = {
-#     enable = true;
-#     connectDisplay = true;
-#   };
-
-#   nixpkgs.config.packageOverrides = pkgs: rec {
-#     bumblebee = pkgs.bumblebee.override {
-#     extraNvidiaDeviceOptions = ''
-#       Option "ProbeAllGpus" "false"
-#       Option "AllowEmptyInitialConfiguration"
-#     EndSection
-
-#     Section "Screen"
-#       Identifier "Default Screen"
-#       Device "DiscreteNvidia"
-#     '';
-#     };
-#   };
-
-# # From: https://github.com/rycee/nixos-hardware/blob/thinkpad-x1-extreme-gen2/lenovo/thinkpad/x1-extreme/gen2/default.nix
-# # NOTE: if doesnt work go to original file as there are some additoinal header arguments
-# # Since the HDMI port is connected to the NVIDIA card.
-#   hardware.bumblebee.connectDisplay = true;
-
-#   nixpkgs.overlays = [
-#     (self: super: {
-#       bumblebee = super.bumblebee.override {
-#         extraNvidiaDeviceOptions = ''
-#           Option "AllowEmptyInitialConfiguration"
-#         '';
-#       };
-#     })
-#   ];
-
-#   services.xserver = mkMerge [
-#       {
-#         # Set the right DPI. xdpyinfo says the screen is 508×285 mm but
-#         # it actually is 344×193 mm.
-#         monitorSection = ''
-#           DisplaySize 344 193
-#         '';
-#       }
-
-#       # To support intel-virtual-output when using Bumblebee.
-#       (mkIf config.hardware.bumblebee.enable {
-#         deviceSection = ''Option "VirtualHeads" "1"'';
-#         videoDrivers = [ "intel" ];
-#       })
-#   ];
+  hardware.nvidia = {
+    optimus_prime = {
+      enable = true;
+      nvidiaBusId = "PCI:1:0:0";
+      intelBusId = "PCI:0:2:0";
+    };
+    modesetting.enable = false;
+  };
 #+end_src
+
 * Other Hardware
 #+begin_src nix
   services.xserver.libinput.enable = true; # Enable touchpad
-
-
-  # hardware.enableAllFirmware = true; # EXPERIMENTAL (fixing sound)
 #+end_src
 * Backup
 #+begin_src nix
@@ -148,17 +103,11 @@
   hardware.pulseaudio.package = pkgs.pulseaudioFull;
 
   # IMPORTANT Fixed Broken Audio!
+  # ++ run: > pulseaudio -k     # TODO automate!
   hardware.pulseaudio.configFile = pkgs.runCommand "default.pa" {} ''
     sed 's/module-udev-detect$/module-udev-detect tsched=0/' \
       ${pkgs.pulseaudio}/etc/pulse/default.pa > $out
   '';
-
-  # # TRY fixing sound
-  # let
-  #   unstable = import <nixos-unstable> {};
-  # in {
-  #   hardware.pulseaudio.package = unstable.pulseaudioFull;
-  # }
 #+end_src
 * WiFi & Bluetooth
 #+begin_src  nix
@@ -182,6 +131,7 @@
   fonts.fontconfig.dpi=180;  # font scaling
 #+end_src
 * Keyboard Layout
+
 #+begin_src nix
   services.xserver.xkbOptions = "caps:swapescape";
   console.useXkbConfig = true;  # apply to external consoles (e.g tty)
@@ -196,7 +146,7 @@
 
   environment.systemPackages = with pkgs; [
     # General
-    neovim                       # flamewars babay
+    neovim                             # flamewars babay
     firefox vivaldi google-chrome      # browsers (all shite)
     calibre                            # book ting
     okular                             # pdf viewer
@@ -232,6 +182,8 @@
     # Kde
     yakuake                            # REPLACE dropdown terminal
     # TODO Cloud/File Storage
+    # Grpahics (Nvidia)
+    linuxPackages.nvidia_x11           # allows nvidia-smi
   ];
 
   # Emacs
@@ -251,6 +203,7 @@
   # TODO trezord (crypto wallet)
   # services.trezord.enable = true;
 #+end_src
+
 * Shell (Zsh)
 #+begin_src nix
   programs.zsh = {
@@ -359,6 +312,11 @@
       userEmail = "nasharp@outlook.com";
     };
 
+
+    programs.autorandr = {
+      enable = true;
+    };
+
   };
 
   # TODO
@@ -371,6 +329,7 @@
   #  '';
   # };
 #+end_src
+
 * System Version (& End)
 #+begin_src nix
   # This value determines the NixOS release from which the default
