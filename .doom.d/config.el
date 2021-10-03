@@ -14,6 +14,8 @@
       tab-width 2)
 
 (setq-default tab-width 2)
+
+(pixel-scroll-mode 1) ; smooth scrolling
 ;; Better Defaults:1 ends here
 
 ;; [[file:../dotfiles/.doom.d/config.org::*UI][UI:1]]
@@ -38,7 +40,8 @@
 ;; UI:1 ends here
 
 ;; [[file:../dotfiles/.doom.d/config.org::*Theme][Theme:1]]
-(setq doom-theme 'my-doom-dark+)
+;; (setq doom-theme 'my-doom-dark+)
+(setq doom-theme 'my-doom-gruvbox)
 ;; Theme:1 ends here
 
 ;; [[file:../dotfiles/.doom.d/config.org::*Fonts][Fonts:1]]
@@ -72,7 +75,8 @@
 ;;     '(mode-line :family "Iosevka Aile")  ; :height 0.85)
 ;;     '(mode-line-inactive :family "Iosevka Aile"))  ; :height 0.85))
 
-;; (setq doom-modeline-height 90)
+(setq doom-modeline-height 35
+      doom-modeline-major-mode-icon t)
 ;; Modeline:1 ends here
 
 ;; [[file:../dotfiles/.doom.d/config.org::*Writeroom Mode][Writeroom Mode:1]]
@@ -80,12 +84,16 @@
 ;;(setq writeroom-mode-line t)
 ;; Writeroom Mode:1 ends here
 
-;; [[file:../dotfiles/.doom.d/config.org::*Fixing ~#+end_src~ background bleeding][Fixing ~#+end_src~ background bleeding:1]]
-;; TODO move to my custom theme!
+;; [[file:../dotfiles/.doom.d/config.org::*Fix ~#+end_src~ background bleeding][Fix ~#+end_src~ background bleeding:1]]
+;; HELP The following code seems to be lasting on theme change (even when commented)!
 ;; (custom-set-faces
 ;;  '(org-block-begin-line ((t (:background "#1e1e1e"))))
 ;;  '(org-block-end-line   ((t (:background "#1e1e1e")))))
-;; Fixing ~#+end_src~ background bleeding:1 ends here
+;; (custom-theme-set-faces
+;;  'gruvbox-dark
+;;  '(org-block-begin-line ((t (:background "#713adf"))))
+;;  '(org-block-end-line   ((t (:background "#aaaaaa")))))
+;; Fix ~#+end_src~ background bleeding:1 ends here
 
 ;; [[file:../dotfiles/.doom.d/config.org::*General][General:1]]
 (after! org
@@ -104,29 +112,32 @@
         org-startup-folded 't))            ; FIXME not working
 
 (require 'org-superstar)  ; NEEDED?
-
 (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
+
+;; (setq org-blank-before-new-entry
+;;   '((heading . t) (plain-list-item . t)))
 ;; General:1 ends here
 
 ;; [[file:../dotfiles/.doom.d/config.org::*Headings][Headings:1]]
 ;; TODO increase sizes?
+;; line weights: normal, semi-bold, bold
 (custom-set-faces!
-  '(outline-1 :weight semi-bold  :height 1.24) ;1.12)
-  '(outline-2 :weight semi-bold  :height 1.16) ;1.08)
-  '(outline-3 :weight semi-bold  :height 1.10) ;1.05)
-  '(outline-4 :weight semi-bold  :height 1.06) ;1.03)
-  '(outline-5 :weight normal     :height 1.04) ; 1.02
-  '(outline-6 :weight normal     :height 1.02) ;1.01)
+  '(outline-1 :weight normal :height 1.24) ;1.12)
+  '(outline-2 :weight normal :height 1.16) ;1.08)
+  '(outline-3 :weight normal :height 1.10) ;1.05)
+  '(outline-4 :weight normal :height 1.06) ;1.03)
+  '(outline-5 :weight normal :height 1.04) ; 1.02
+  '(outline-6 :weight normal :height 1.02) ;1.01)
   '(outline-7 :weight normal)
   '(outline-8 :weight normal)
-  '(org-document-title :height 1.4)) ; 1.2
+  '(org-document-title :weight normal :height 1.8)) ; 1.2
 ;; Headings:1 ends here
 
 ;; [[file:../dotfiles/.doom.d/config.org::*Todo's][Todo's:1]]
 (setq org-todo-keywords '(
-  (sequence "TODO(t)" "DOING(d)" "STRT(s)" "NEXT(n)" "PROJ(p)" "WAIT(w)" "MAYBE(m)" "ERROR(e)" "FIXME(f)" "|" "DONE(D)" "CANCL(c)")
-  (sequence "[ ](T)" "[-](-)" "[?](?)" "|" "[X](x)")
-  (sequence "|" "OKAY(o)" "YES(y)" "NO(n)")
+  (sequence "TODO(t)" "DOING(d)" "STRT(s)" "NEXT(n)" "PROJ(p)" "WAIT(w)" "MAYBE(m)" "ERROR(e)" "FIXME(f)" "UPDATE(u)" "(x)" "|" "DONE(D)" "CANCL(c)" "DEPRECATED(E)")
+  (sequence "[ ](T)" "[-](-)" "[?](?)" "|" "[X](X)")
+  (sequence "|" "OKAY(o)" "YES(y)" "NO(N)")
 ))
 
 (setq org-todo-keyword-faces '(
@@ -165,8 +176,8 @@
 ;; Tags:1 ends here
 
 ;; [[file:../dotfiles/.doom.d/config.org::*Tables][Tables:1]]
-(add-hook 'org-mode-hook #'valign-mode)
-(setq valign-fancy-bar 'non-nil)
+;; (add-hook 'org-mode-hook #'valign-mode)
+;; (setq valign-fancy-bar 'non-nil)
 ;; Tables:1 ends here
 
 ;; [[file:../dotfiles/.doom.d/config.org::*Org-roam][Org-roam:1]]
@@ -205,7 +216,7 @@
 ~Input: ~
 ~Output: ~
 
-\n* TODO Solution
+\n* [ ] Solution
 \n* Testing
 \n* Runtime Analysis")
 
@@ -241,10 +252,9 @@
     :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
 
 "#+title: ${title}
-#+filetags: :todo:
+#+filetags:
 #+startup: show2levels
 
-\n* Doing
 \n* Todo
 \n* Done")
 
@@ -361,8 +371,10 @@
     '((typescript . t)
       (nix . t)
       (python . t)
+      (dot . t)
       ;; (sh . t)
       ;; (js . t)
+      (haskell . t)
       (jupyter . t)))
 
 (defun org-babel-execute:typescript (body params)
@@ -374,24 +386,29 @@
 
 ;; [[file:../dotfiles/.doom.d/config.org::*Jupyter][Jupyter:1]]
 ; this seems to add syntax-highlighting to jupyter-python and jupyter-typescript blocks
-(after! org-src
-  (dolist (lang '(python typescript jupyter))
-  (cl-pushnew (cons (format "jupyter-%s" lang) lang)
-                org-src-lang-modes :key #'car))
+;; (after! org-src
+;;   (dolist (lang '(python typescript jupyter))
+;;   (cl-pushnew (cons (format "jupyter-%s" lang) lang)
+;;                 org-src-lang-modes :key #'car))
 
-  ;;(org-babel-jupyter-override-src-block "python") ;; alias all python to jupyter-python
-  ;;(org-babel-jupyter-override-src-block "typescript") ;; alias all python to jupyter-python
- )
+;;   ;;(org-babel-jupyter-override-src-block "python") ;; alias all python to jupyter-python
+;;   ;;(org-babel-jupyter-override-src-block "typescript") ;; alias all python to jupyter-python
+;;  )
 
 ;; TypeScript
-(setq org-babel-default-header-args:jupyter-typescript '(
-  (:session . "ts")
-  (:kernel . "tslab")))
+;; (setq org-babel-default-header-args:jupyter-typescript '(
+;;   (:session . "ts")
+;;   (:kernel . "tslab")))
 
-;; ;; Python
-;; (setq org-babel-default-header-args:jupyter-python '(
-;;    (:session . "py")
-;;    (:kernel . "python")))
+;; Python
+(setq org-babel-default-header-args:jupyter-python '(
+   (:session . "py")
+   (:kernel . "python")))
+
+;; Haskell
+(setq org-babel-default-header-args:jupyter-haskell '(
+   (:session . "hs")
+   (:kernel . "haskell")))
 ;; Jupyter:1 ends here
 
 ;; [[file:../dotfiles/.doom.d/config.org::*Org-noter][Org-noter:1]]
@@ -405,6 +422,41 @@
 (setq hypothesis-username "nazzacode"
       hypothesis-token "6879-DJYjeV3gat2emzWKlSGkQu20tQTvQK3s7xVSepSdjfA")
 ;; Hypothesis:1 ends here
+
+;; [[file:../dotfiles/.doom.d/config.org::*Show Properties (Drawer)][Show Properties (Drawer):1]]
+(defun org+-show-drawers ()
+  "Show all property drawers in current buffer."
+  (interactive)
+  (let ((data (org-element-parse-buffer)))
+    (org-element-map
+    data
+    'property-drawer
+      (lambda (drawer)
+    (let ((b (org-element-property :begin drawer))
+          (e (org-element-property :end drawer)))
+      (org-flag-region b e nil 'org-hide-drawer))))))
+
+(put 'org+-show-drawers 'safe-local-eval-function t)
+;; Show Properties (Drawer):1 ends here
+
+;; [[file:../dotfiles/.doom.d/config.org::*peep-dired][peep-dired:1]]
+(setq peep-dired-cleanup-eagerly t)
+(setq peep-dired-enable-on-directories t)
+
+(evil-define-key 'normal peep-dired-mode-map (kbd "<SPC>") 'peep-dired-scroll-page-down
+                                             (kbd "C-<SPC>") 'peep-dired-scroll-page-up
+                                             (kbd "<backspace>") 'peep-dired-scroll-page-up
+                                             (kbd "j") 'peep-dired-next-file
+                                             (kbd "k") 'peep-dired-prev-file)
+(add-hook 'peep-dired-hook 'evil-normalize-keymaps)
+
+(setq peep-dired-ignored-extensions '("mkv" "iso" "mp4"))
+;; peep-dired:1 ends here
+
+;; [[file:../dotfiles/.doom.d/config.org::*Agenda][Agenda:1]]
+;; (custom-set-variables '(org-agenda-files (list "~/org/roam/gcal.org")))
+ (setq org-agenda-files '("~/org/roam/gcal.org"))
+;; Agenda:1 ends here
 
 ;; [[file:../dotfiles/.doom.d/config.org::*Clean category column garbage][Clean category column garbage:1]]
 (setq org-agenda-prefix-format
@@ -451,13 +503,143 @@ Refer to `org-agenda-prefix-format' for more information."
        (match-end 1)))))
 ;; Clean category column garbage:1 ends here
 
+;; [[file:../dotfiles/.doom.d/config.org::*Calender][Calender:1]]
+;; gcal integration
+(require 'calfw)
+(require 'org-gcal)
+
+(setq org-gcal-client-id "189857002612-bei34shug7gu4ft5ssi5mfedl1kb50u2.apps.googleusercontent.com"
+      org-gcal-client-secret "jMCbPjcHaUWrGu02yUVwIi1m"
+      org-gcal-fetch-file-alist '(("nathansharp03@gmail.com" .  "~/org/roam/gcal.org")))
+
+                                  ;; ("another-mail@gmail.com" .  "~/task.org")))
+;; NOTE: requires gpg (gnupg)
+
+;; Pull into single calender
+;; (require 'calfw-cal)
+(require 'calfw-ical)
+;;(require 'calfw-howm)
+(require 'calfw-org)
+
+(defun my-open-calendar ()
+  (interactive)
+  (cfw:open-calendar-buffer
+   :contents-sources
+   (list
+    (cfw:org-create-source  )  ; orgmode source
+    ;; (cfw:cal-create-source "Orange") ; diary source
+    ;; (cfw:ical-create-source "Moon" "~/moon.ics" "Gray")  ; ICS source1
+    ;; ↓ google calendar ICS
+    ;; (cfw:ical-create-source "gcal"
+      ;; "https://calendar.google.com/calendar/ical/nathansharp03%40gmail.com/private-5984779a038e5ab68ee283c744922c8a/basic.ics"
+      ;; "#339CDB")
+)))
+
+(setq package-check-signature nil)
+
+;; duplication of defualt behavior
+;; TODO on startup?
+;; (add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync) ))
+;; (add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync) ))
+;; Calender:1 ends here
+
+;; [[file:../dotfiles/.doom.d/config.org::*Treemacs][Treemacs:1]]
+;; (after! treemacs
+;;   (setq doom-themes-treemacs-enable-variable-pitch nil)) ; TODO try '
+;; Treemacs:1 ends here
+
+;; [[file:../dotfiles/.doom.d/config.org::*Pdf (tools)][Pdf (tools):1]]
+;; Double page spread
+
+(defun my-pdf-view-double-scroll-up-or-next-page (&optional arg)
+  "Scroll page up ARG lines if possible, else go to the next page.
+
+When `pdf-view-continuous' is non-nil, scrolling upward at the
+bottom edge of the page moves to the next page.  Otherwise, go to
+next page only on typing SPC (ARG is nil)."
+  (interactive "P")
+  (if (or pdf-view-continuous (null arg))
+      (let ((hscroll (window-hscroll))
+            (cur-page (pdf-view-current-page)))
+        (when (or (= (window-vscroll) (image-scroll-up arg))
+                  ;; Workaround rounding/off-by-one issues.
+                  (memq pdf-view-display-size
+                        '(fit-height fit-page)))
+          (pdf-view-next-page 2)
+          (when (/= cur-page (pdf-view-current-page))
+            (image-bob)
+            (image-bol 1))
+          (set-window-hscroll (selected-window) hscroll)))
+    (image-scroll-up arg)))
+
+(defun my-pdf-view-double-scroll-horizontal-view ()
+  (interactive)
+  (my-pdf-view-double-scroll-up-or-next-page)
+  (other-window 1)
+  (my-pdf-view-double-scroll-up-or-next-page)
+  (other-window 1))
+
+(defun my-pdf-view-double-scroll-vertical-view ()
+  (interactive)
+  (my-pdf-view-double-scroll-up-or-next-page)
+  (shrink-window 1)
+  (other-window 1)
+  (my-pdf-view-double-scroll-up-or-next-page)
+  (enlarge-window 1)
+  (other-window 1))
+;; Pdf (tools):1 ends here
+
+;; [[file:../dotfiles/.doom.d/config.org::*Nov.el][Nov.el:1]]
+(add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
+
+;; Font
+(defun my-nov-font-setup ()
+  (face-remap-add-relative 'variable-pitch :family "Liberation Serif"
+                                           :height 1.0))
+(add-hook 'nov-mode-hook 'my-nov-font-setup)
+
+
+(setq nov-text-width t)
+(setq visual-fill-column-center-text t)
+(add-hook 'nov-mode-hook 'visual-line-mode)
+(add-hook 'nov-mode-hook 'visual-fill-column-mode)
+
+;; Justified Text
+;; ERROR causing chaos with org-noter
+(require 'justify-kp)
+;; (defun my-nov-window-configuration-change-hook ()
+;;   (my-nov-post-html-render-hook)
+;;   (remove-hook 'window-configuration-change-hook
+;;                'my-nov-window-configuration-change-hook
+;;                t))
+
+;; (defun my-nov-post-html-render-hook ()
+;;   (if (get-buffer-window)
+;;       (let ((max-width (pj-line-width))
+;;             buffer-read-only)
+;;         (save-excursion
+;;           (goto-char (point-min))
+;;           (while (not (eobp))
+;;             (when (not (looking-at "^[[:space:]]*$"))
+;;               (goto-char (line-end-position))
+;;               (when (> (shr-pixel-column) max-width)
+;;                 (goto-char (line-beginning-position))
+;;                 (pj-justify)))
+;;             (forward-line 1))))
+;;     (add-hook 'window-configuration-change-hook
+;;               'my-nov-window-configuration-change-hook
+;;               nil t)))
+
+;; (add-hook 'nov-post-html-render-hook 'my-nov-post-html-render-hook)
+;; Nov.el:1 ends here
+
 ;; [[file:../dotfiles/.doom.d/config.org::*Latex][Latex:1]]
 ;; FIXME Latex fragments in org mode
 (setq org-format-latex-options
   (list
-;;        :foreground 'default  ;;auto
+        :foreground 'default  ;;auto
         ;; :background 'auto
-        :scale 3.0              ;; bigger latex fragment
+        :scale 1.7              ;; bigger latex fragment
         ;; :html-foreground "Black"
         ;; :html-background "Transparent"
         ;; :html-scale 1.0

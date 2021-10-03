@@ -8,30 +8,35 @@
 
 ;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
 ;(package! some-package)
-(package! org-noter)         ; pdf + synced notes; side by side
-(package! nov)               ; something to do with novels. TODO check if working?
-(package! org-ref)           ; academic referencing in org mode
-(package! graphviz-dot-mode) ; graph diagrams
-(package! org-roam-bibtex)
   ;; :recipe (:host github :repo "org-roam/org-roam-bibtex"))
+(package! alert)             ; notification interface
+(package! all-the-icons-dired) ; file icons fordired
+(package! direnv)            ; dev environments per filepath
+(package! doom-modeline)
+(package! eldoc-eval)
+(package! graphviz-dot-mode) ; graph diagrams
+(package! highlight-indent-guides)
+(package! hypothesis :recipe (:host github :repo "Kungsgeten/hypothesis")) ; webpage highlighting and notes
+(package! justify-kp :recipe (:host github :repo "Fuco1/justify-kp"))  ; nice paragraph justification for novel mode
+(package! mini-modeline)     ; modeline embedded in minibuffer
+(package! nov)               ; epub reader
 (package! ob-typescript)
 (package! org-appear)        ; show emphasis markers when inside fragment
-(package! valign)            ; pretty tables
-(package! mini-modeline)     ; modeline embedded in minibuffer
-(package! org-superstar)     ; fnacy headings and bullets
-(package! direnv)            ; dev environments per filepath
-(package! all-the-icons-dired)  ; file icons fordired
+(package! org-noter)         ; pdf + synced notes; side by side
+(package! org-ref)           ; academic referencing in org mode
+(package! org-roam-bibtex)   ; org + roam + bibtex
+(package! org-roam-ui :recipe (:host github :repo "org-roam/org-roam-ui" :files ("*.el" "out"))) ; graph explorer for org roam
+(package! org-superstar)     ; fancy headings and bullets
+(package! peep-dired)        ; preview popup for dired
+(package! persist)           ; variables that persist across sessions
 (package! rainbow-mode)      ; sets background color for color names
-(package! websocket)
-(package! org-roam-ui :recipe (:host github :repo "org-roam/org-roam-ui" :files ("*.el" "out")))
-(package! highlight-indent-guides)
+(package! request)           ; elisp http
 (package! ts-comint)         ; typescript REPL
-(package! request)           ;
-(package! hypothesis
-  :recipe (:host github :repo "Kungsgeten/hypothesis"))
+(package! valign)            ; pretty tables
+(package! websocket)
 (package! winum)
-(package! eldoc-eval)
-(package! doom-modeline)
+(package! pdf-continuous-scroll-mode :recipe (:host github :repo "dalanicolai/pdf-continuous-scroll-mode.el"))
+
 
 
 ;; To install a package directly from a remote git repo, you must specify a

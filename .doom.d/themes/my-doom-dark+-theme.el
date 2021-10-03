@@ -118,7 +118,7 @@ Can be an integer to determine the exact padding."
    (css-property             :foreground green)
    (css-selector             :foreground blue)
    ;;;; dashboard
-   (dashboard-heading :foreground green :weight 'bold)
+   (dashboard-heading :foreground green :weight 'semi-bold)
    ;;;; dired-k
    (dired-k-commited :foreground base4)
    (dired-k-modified :foreground vc-modified)
@@ -154,10 +154,21 @@ Can be an integer to determine the exact padding."
    ;;;; man <built-in>
    (Man-overstrike :inherit 'bold :foreground magenta)
    (Man-underline :inherit 'underline :foreground blue)
+   ;; outline / heading
+   ;;;; outline <built-in>
+   ((outline-1 &override) :foreground (doom-lighten cyan 0.3))
+   ((outline-2 &override) :foreground (doom-lighten blue 0.3))
+   ((outline-3 &override) :foreground (doom-lighten teal 0.3))
+   ((outline-4 &override) :foreground (doom-lighten dark-cyan 0.3))
+   ((outline-5 &override) :foreground (doom-lighten dark-blue 0.3))
+   ((outline-6 &override) :foreground (doom-lighten light-green 0.3))
+   ((outline-7 &override) :foreground (doom-lighten grey 0.3))
+   ((outline-8 &override) :foreground (doom-lighten cyan 0.6))
    ;;;; org <built-in>
-   ((org-block &override) :background base2)
-   ((org-block-background &override) :background base2)
-   ((org-block-begin-line &override) :background base2)
+   ((org-block &override) :background (doom-lighten base2 0.02))
+   ;; ((org-block-background &override)  bg)
+   ((org-block-begin-line &override) :background bg)
+   ((org-block-end-line &override) :background bg)
    ;;;; org-pomodoro
    (org-pomodoro-mode-line :inherit 'mode-line-emphasis) ; unreadable otherwise
    (org-pomodoro-mode-line-overtime :inherit 'org-pomodoro-mode-line)

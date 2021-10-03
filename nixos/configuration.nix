@@ -20,13 +20,15 @@
   # NOTE: `modesetting` alows NixOS to find the primary display
 
   hardware.nvidia = {
-    optimus_prime = {
-      enable = true;
+    prime = {
+      sync.enable = true;
       nvidiaBusId = "PCI:1:0:0";
       intelBusId = "PCI:0:2:0";
     };
     modesetting.enable = false;
   };
+  # Link for fixing dual monitors: ↓
+  # https://discourse.nixos.org/t/need-some-help-getting-nvidia-working-properly/8281/7
 
   services.xserver.libinput.enable = true; # Enable touchpad
 
@@ -72,49 +74,120 @@
   services.xserver.xkbOptions = "caps:swapescape";
   console.useXkbConfig = true;  # apply to external consoles (e.g tty)
 
-  nixpkgs.config.allowUnfree = true;  # Allow unfree Packages
+nixpkgs.config.allowUnfree = true;  # Allow unfree Packages
 
-  environment.systemPackages = with pkgs; [
-    # General
-    neovim                             # flamewars babay
-    firefox vivaldi google-chrome      # browsers (all shite)
-    calibre                            # book ting
-    okular                             # pdf viewer
-    spotify                            # moosic REPLACE
-    # TODO nextcloud-client OR syncthing?
-    # Shell
-    zsh                                # shell
-    # TUI
-    taskell                            # vim kanban <3
-    tmux                               # terminal multiplexer
-    pass                               # password manager
-    # CLI
-    direnv                             # virtual envs
-    coreutils pciutils                 # selection of fine wines
-    lsof                               # files opened by other procedures
-    unzip                              # why u no default?
-    bat                                # better cat
-    ripgrep                            # rg: better grep
-    exa                                # better ls
-    fd                                 # better, faster find
-    git gh                             # version control
-    fzf                                # fuzzy finder
-    xclip                              # copy pasta to cmd line
-    # Background
-    wget                               # fetch web protocols (e.g HTTP)
-    gcc                                # C++ Compiler
-    # Not rice
-    neofetch htop
-    # Rice
-    cmatrix                            # above your paygrade mate
-    # Nix
-    nox                                # better package search
-    # Kde
-    yakuake                            # REPLACE dropdown terminal
-    # TODO Cloud/File Storage
-    # Grpahics (Nvidia)
-    linuxPackages.nvidia_x11           # allows nvidia-smi
-  ];
+environment.systemPackages =
+  let
+    python = pkgs.python39.withPackages(ps: with ps; [
+      jupyter_core
+      # jupyter_console
+      # jupyter_client
+      # jupyter
+      # jupyterlab
+      # pip
+      # nix-kernel
+    ]);
+
+    # # FIXME not working :(
+    # jupyter = import (builtins.fetchGit {
+    #   url = https://github.com/tweag/jupyterWith;
+    #   rev = "";
+    # }) {};
+
+    # iPython = jupyter.kernels.iPythonWith {
+    #   name = "data-python-env";
+    #   packages = p: with p; [ numpy ];
+    # };
+
+    # iHaskell = jupyter.kernels.iHaskellWith {
+    #   name = "data-haskell-env";
+    #   packages = p: with p; [ hvega formatting ];
+    # };
+
+    # jupyterEnvironment = jupyter.jupyterlabWith {
+    #   kernels = [ iPython iHaskell ];
+    # };
+
+  in
+    with pkgs; [
+      # GUI
+      firefox vivaldi google-chrome      # browsers
+      calibre                            # book ting
+      zotero                             # reference management!
+      okular                             # pdf viewer
+      spotify                            # moosic # TODO replace!
+      vscode                             # guilty pleasure
+      teams                              # microsoft junk
+      thunderbird-91                     # email ting
+      etcher                             # flashing ISO's
+      # TODO Cloud/File Storage: nextcloud-client OR syncthing?
+      # Shell
+      zsh                                # shell
+      # Lang
+      nodejs                             # javascript
+      nodePackages.typescript            # typescript
+      nodePackages.typescript-language-server
+      python
+      python39Packages.pip               # impure af
+      python39Packages.ipython           # impure af
+      python39Packages.virtualenv
+      ihaskell
+      # jupyterEnvironment                 # jupyter <3
+      ghc
+      ghcid
+      # TUI
+      neovim                             # editor flamewars babay
+      taskell                            # vim kanban <3
+      tmux                               # terminal multiplexer
+      pass                               # password manager
+      # CLI (used)
+      cachix
+      direnv                             # virtual envs
+      coreutils pciutils                 # selection of fine wines
+      lsof                               # files opened by other procedures
+      unzip                              # why u no default?
+      bat                                # better cat
+      ripgrep                            # rg: better grep
+      exa                                # better ls
+      fd                                 # better, faster find
+      git gh                             # version control
+      fzf                                # fuzzy finder
+      xclip                              # copy pasta to cmd line
+      pandoc                             # converting between document filetypes
+      networkmanager-l2tp                # Edinburgh university VPN
+      pdftk                              # working with PDFs
+      # CLI (background)
+      texlive.combined.scheme-full       # tex (including pdflatex)
+      gnupg                              # encrypt and sign data and communication
+      wget                               # fetch web protocols (e.g HTTP)
+      gcc                                # C++ Compiler
+      mu                                 # email: malidir utilites
+      isync                              # mailbox sync
+      gdb                                # gnu c++ debugger
+      # networkmanager_strongswan          # Edinburgh Uni vpn
+      # libreswan
+      # strongswan
+      # strongswanNM
+      # strongswanTNC
+      # Emacs deps
+      aspell ispell aspellDicts.en       # multilingual dictionary
+
+      # Not rice
+      neofetch
+      htop
+      # Rice
+      cmatrix                            # green pill pls
+      # Nix
+      nox                                # better package search
+      # TODO nix fmt
+      nixfmt
+      nixops
+      # Kde
+      yakuake                            # REPLACE dropdown terminal
+
+      # Grpahics (Nvidia)
+      linuxPackages.nvidia_x11           # allows nvidia-smi
+    ];
 
   # Emacs
   services.emacs.package = pkgs.emacsGcc;
@@ -123,8 +196,8 @@
   nixpkgs.overlays = [
     (import (builtins.fetchTarball {
       url =
-       https://github.com/nix-community/emacs-overlay/archive/bd9091685e329ddeff1084604e7b2ba6a3b300c2.tar.gz;
-      sha256 = "1vasm5f4gzlwjgjw9ggrbmkajxkfnqc2hxl0hdkfcq0857id8mhd";
+        https://github.com/nix-community/emacs-overlay/archive/bd9091685e329ddeff1084604e7b2ba6a3b300c2.tar.gz;
+        sha256 = "1vasm5f4gzlwjgjw9ggrbmkajxkfnqc2hxl0hdkfcq0857id8mhd";
     }))
   ];
 
@@ -132,6 +205,11 @@
 
   # TODO trezord (crypto wallet)
   # services.trezord.enable = true;
+
+  # Strongswan (move to networking)
+  networking.networkmanager.enableStrongSwan = true;
+  # service.xl2tpd.enable = true;
+  # service.strongswan.enable = true;
 
   programs.zsh = {
     enable = true;
@@ -145,7 +223,8 @@
       cl   = "clear";
       # ls (exa)
       l    = "exa";                 # original (grid)
-      ls   = "exa -lF --icons";     # new defualt
+      ls   = "exa -lF --icons --group-directories-first"; # new defualt
+      lsd  = "ls -d */";             # directories only
       lT   = "exa -lFT";            # recursive tree
       ldot = "exa -lFd .* --icons"; # dotfiles
     };
@@ -198,12 +277,11 @@
         plugins = [
           { name = "plugins/colored-man-pages"; tags = [from:oh-my-zsh]; }
           { name = "plugins/colorize";          tags = [from:oh-my-zsh]; }
-          { name = "plugins/command-not-found"; tags = [from:oh-my-zsh]; }
+          # { name = "plugins/command-not-found"; tags = [from:oh-my-zsh]; }
           { name = "plugins/fd";                tags = [from:oh-my-zsh]; }
           { name = "plugins/fzf";               tags = [from:oh-my-zsh]; }
           { name = "plugins/git";               tags = [from:oh-my-zsh]; }
           { name = "plugins/ripgrep";           tags = [from:oh-my-zsh]; }
-          { name = "plugins/tmux";              tags = [from:oh-my-zsh]; }
           { name = "plugins/tmux";              tags = [from:oh-my-zsh]; }
           { name = "plugins/vi-mode";           tags = [from:oh-my-zsh]; }
           # { name = "plugins/cargo";             tags = [from:oh-my-zsh]; }
