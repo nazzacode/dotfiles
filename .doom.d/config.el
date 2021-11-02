@@ -1,57 +1,62 @@
-;; [[file:../dotfiles/.doom.d/config.org::*Magic Incantation][Magic Incantation:1]]
+;; [[file:config.org::*Magic Incantation][Magic Incantation:1]]
 ;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 ;; Magic Incantation:1 ends here
 
-;; [[file:../dotfiles/.doom.d/config.org::*User Info][User Info:1]]
+;; [[file:config.org::*User Info][User Info:1]]
 (setq user-full-name "Nathan Sharp"
       my-name "nazzacode"
       user-mail-address "nasharp@outlook.com")
 ;; User Info:1 ends here
 
-;; [[file:../dotfiles/.doom.d/config.org::*Better Defaults][Better Defaults:1]]
+;; [[file:config.org::*Better Defaults][Better Defaults:1]]
 (setq auto-save-default t
-      make-backup-files t
-      tab-width 2)
+      initial-major-mode 'org-mode
+      make-backup-files t)
+
+(menu-bar-mode 1)  ;; temp
 
 (setq-default tab-width 2)
+(setq straight-allow-recipe-inheritance nil)
 
-(pixel-scroll-mode 1) ; smooth scrolling
+;; (pixel-scroll-mode 1) ; smooth scrolling ; FAULT causes severe lag
 ;; Better Defaults:1 ends here
 
-;; [[file:../dotfiles/.doom.d/config.org::*UI][UI:1]]
-(add-hook 'dired-mode-hook 'all-the-icons-dired-mode)      ; icons in dired
-
-;; highlight-indent-guide
-(add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
-;; (add-hook 'org-mode-hook 'highlight-indent-guides-mode) ; FIXME background color
-
-(setq highlight-indent-guides-method 'character
-      highlight-indent-guides-responsive 'stack)
+;; [[file:config.org::*General][General:1]]
+(setq-default line-spacing 0.1)
 
 (setq display-line-numbers-type 'relative  ; or `nil'
       +ivy-buffer-preview t                ; preview buffer on switch
-      emojify-emoji-set "emojione-v2.2.6")  ; increase resolution from default "emojione-v2.2.6-22"
+      emojify-emoji-set "emojione-v2.2.6") ; increase resolution from default "emojione-v2.2.6-22"
 
-;; Rainbow mode :: colorise strings that represent colors
+(global-hl-line-mode -1)  ; dont highlight the line
+
+(add-hook 'dired-mode-hook 'all-the-icons-dired-mode) ; icons in dired
+
+;; Highlight-indent-guide
+(add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
+(setq highlight-indent-guides-method 'character
+      highlight-indent-guides-responsive 'stack)
+
+;; Rainbow mode: colorise strings that represent colors
 (define-globalized-minor-mode global-rainbow-mode rainbow-mode
   (lambda () (rainbow-mode 1)))
-
 (global-rainbow-mode 1)
-;; UI:1 ends here
+;; General:1 ends here
 
-;; [[file:../dotfiles/.doom.d/config.org::*Theme][Theme:1]]
-;; (setq doom-theme 'my-doom-dark+)
-(setq doom-theme 'my-doom-gruvbox)
+;; [[file:config.org::*Theme][Theme:1]]
+(setq doom-theme 'my-doom-dark+)
+;; TODO highlight src block heads and footers a different color? (without bleed? (end foot early)
+;; (setq doom-theme 'my-doom-gruvbox)
 ;; Theme:1 ends here
 
-;; [[file:../dotfiles/.doom.d/config.org::*Fonts][Fonts:1]]
+;; [[file:config.org::*Fonts][Fonts:1]]
 ;; (use-package! mixed-pitch
 ;;   :hook (org-mode . mixed-pitch-mode)
 ;;   :config
 ;;   (setq variable-pitch-set-heigth 't)
-;;   (set-face-attribute 'variable-pitch nil :height 1.5))
+;   (set-face-attribute 'variable-pitch nil :height 1.5))
 
-;; (setq doom-font (font-spec :family "Hasklug Nerd Font Mono") ;  :size 26 :height 1.0)     ; Agave Nerd Font Mono
+;;(setq doom-font (font-spec :family "Hasklug Nerd Font Mono")) :size 26 :height 1.0))     ; Agave Nerd Font Mono
 ;;       doom-variable-pitch-font (font-spec :family "Iosevka Aile") ; :size 32 :height 1.5)  ; ETBookOT
 ;;       doom-unicode-font (font-spec :family "Symbola")          ; good unicode support
 ;;       ;; doom-big-font (font-spec :family "Fira Mono" :size 19))
@@ -59,7 +64,7 @@
 ;;)
 ;; Fonts:1 ends here
 
-;; [[file:../dotfiles/.doom.d/config.org::*Window Divider][Window Divider:1]]
+;; [[file:config.org::*Window Divider][Window Divider:1]]
 ;; (defun my-change-window-divider ()
 ;;   (let ((display-table (or buffer-display-table standard-display-table)))
 ;;     (set-display-table-slot display-table 5 ?│)
@@ -68,23 +73,27 @@
 ;; (add-hook 'window-configuration-change-hook 'my-change-window-divider)
 ;; Window Divider:1 ends here
 
-;; [[file:../dotfiles/.doom.d/config.org::*Modeline][Modeline:1]]
+;; [[file:config.org::*Modeline][Modeline:1]]
 ;; TODO minibuffer modeline + centaur
 
 ;; (custom-set-faces!
 ;;     '(mode-line :family "Iosevka Aile")  ; :height 0.85)
 ;;     '(mode-line-inactive :family "Iosevka Aile"))  ; :height 0.85))
 
-(setq doom-modeline-height 35
+(setq doom-modeline-height 25
+      doom-modeline-indent-info t
+      doom-modeline-vcs-max-length 12
       doom-modeline-major-mode-icon t)
+
+;; (defcustom doom-modeline-hud nil)
 ;; Modeline:1 ends here
 
-;; [[file:../dotfiles/.doom.d/config.org::*Writeroom Mode][Writeroom Mode:1]]
+;; [[file:config.org::*Writeroom Mode][Writeroom Mode:1]]
 ;; TODO increase font less
 ;;(setq writeroom-mode-line t)
 ;; Writeroom Mode:1 ends here
 
-;; [[file:../dotfiles/.doom.d/config.org::*Fix ~#+end_src~ background bleeding][Fix ~#+end_src~ background bleeding:1]]
+;; [[file:config.org::*STRT Fix ~#+end_src~ background bleeding][STRT Fix ~#+end_src~ background bleeding:1]]
 ;; HELP The following code seems to be lasting on theme change (even when commented)!
 ;; (custom-set-faces
 ;;  '(org-block-begin-line ((t (:background "#1e1e1e"))))
@@ -93,9 +102,27 @@
 ;;  'gruvbox-dark
 ;;  '(org-block-begin-line ((t (:background "#713adf"))))
 ;;  '(org-block-end-line   ((t (:background "#aaaaaa")))))
-;; Fix ~#+end_src~ background bleeding:1 ends here
+;; STRT Fix ~#+end_src~ background bleeding:1 ends here
 
-;; [[file:../dotfiles/.doom.d/config.org::*General][General:1]]
+;; [[file:config.org::*which key][which key:1]]
+(after! which-key
+(pushnew!
+  which-key-replacement-alist
+  '(("" . "\\`+?evil[-:]?\\(?:a-\\)?\\(.*\\)") . (nil . "◂\\1"))
+  '(("\\`g s" . "\\`evilem--?motion-\\(.*\\)") . (nil . "◃\\1"))
+  ))
+;; which key:1 ends here
+
+;; [[file:config.org::*Completion][Completion:1]]
+(require 'company-box)
+(add-hook 'company-mode-hook 'company-box-mode)
+
+;; company-math (latex unicode completions)
+(add-to-list 'company-backends 'company-math-symbols-unicode)
+(setq company-math-allow-latex-symbols-in-faces  t) ;; allow completion in org-mode text
+;; Completion:1 ends here
+
+;; [[file:config.org::*General][General:1]]
 (after! org
   (add-hook! 'org-mode-hook #'+org-pretty-mode   ; hides emphasis markers and toggles "pretty entities"
                             #'org-appear-mode    ; expand invisible emphasis markers etc.
@@ -109,16 +136,28 @@
         org-startup-with-inline-images 't  ; TODO check if working
         org-startup-with-latex-preview 't
         org-startup-shrink-all-tables 't
+        org-appear-autolinks 't            ; auto appear links
+        org-appear-autosubmarkers 't       ; auto apear subscript/superscript
+        org-appear-autoentities 't         ; auto apear \alpha etc.
+        org-appear-autokeywords 't         ; auto apear elements in `org-hidden-keywords'
+        ;;org-image-actual-width 550      ; set default width ; FIXME overrides setting inline
         org-startup-folded 't))            ; FIXME not working
 
 (require 'org-superstar)  ; NEEDED?
 (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
 
+(font-lock-add-keywords 'org-mode
+                        '(("^ *\\([-]\\) "
+                           (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+(font-lock-add-keywords 'org-mode
+                        '(("^ *\\([+]\\) "
+                           (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "◦"))))))
+
 ;; (setq org-blank-before-new-entry
 ;;   '((heading . t) (plain-list-item . t)))
 ;; General:1 ends here
 
-;; [[file:../dotfiles/.doom.d/config.org::*Headings][Headings:1]]
+;; [[file:config.org::*Headings][Headings:1]]
 ;; TODO increase sizes?
 ;; line weights: normal, semi-bold, bold
 (custom-set-faces!
@@ -133,10 +172,10 @@
   '(org-document-title :weight normal :height 1.8)) ; 1.2
 ;; Headings:1 ends here
 
-;; [[file:../dotfiles/.doom.d/config.org::*Todo's][Todo's:1]]
+;; [[file:config.org::*To-do's][To-do's:1]]
 (setq org-todo-keywords '(
-  (sequence "TODO(t)" "DOING(d)" "STRT(s)" "NEXT(n)" "PROJ(p)" "WAIT(w)" "MAYBE(m)" "ERROR(e)" "FIXME(f)" "UPDATE(u)" "(x)" "|" "DONE(D)" "CANCL(c)" "DEPRECATED(E)")
-  (sequence "[ ](T)" "[-](-)" "[?](?)" "|" "[X](X)")
+  (sequence "TODO(t)" "DOING(d)" "STRT(s)" "NEXT(n)" "PROJ(p)" "WAIT(w)" "MAYBE(m)" "ERROR(e)" "FIXME(f)" "UPDATE(u)" "MOVE(M)" "(x)" "|" "DONE(D)" "CANCL(c)" "DEPRECATED(E)")
+  (sequence "[ ](T)" "[-](-)" "[?](?)" "|" "[X](X)" "[.](.)" )
   (sequence "|" "OKAY(o)" "YES(y)" "NO(N)")
 ))
 
@@ -154,11 +193,12 @@
   ("CANCL" . (:foreground "grey11" :weight semi-bold +org-todo-cancel))
   ("[-]" . +org-todo-active)
   ("[?]" . +org-todo-onhold)
+  ("YES" . (:foreground "DarkSeaGreen3"))
   ("NO" . +org-todo-cancel)
 ))
-;; Todo's:1 ends here
+;; To-do's:1 ends here
 
-;; [[file:../dotfiles/.doom.d/config.org::*Tags][Tags:1]]
+;; [[file:config.org::*Tags][Tags:1]]
 (setq org-tag-persistent-alist
       '((:startgroup . nil)
         ("uni" . ?u)
@@ -175,24 +215,30 @@
 ))
 ;; Tags:1 ends here
 
-;; [[file:../dotfiles/.doom.d/config.org::*Tables][Tables:1]]
+;; [[file:config.org::*Tables][Tables:1]]
 ;; (add-hook 'org-mode-hook #'valign-mode)
 ;; (setq valign-fancy-bar 'non-nil)
+
+(require 'phscroll)
+
+(after! org
+ (setq org-startup-truncated nil)
+ (load "org-phscroll.el"))
 ;; Tables:1 ends here
 
-;; [[file:../dotfiles/.doom.d/config.org::*Org-roam][Org-roam:1]]
+;; [[file:config.org::*Org-roam ⤵][Org-roam ⤵:1]]
 ;; (add-hook 'after-init-hook 'org-roam-setup)   ; FIXME start on start-up BREAKING CONFIG ON REDOWNLOAD
 (setq org-roam-directory "~/org/roam"       ; set org-roam dir
       +org-roam-open-buffer-on-find-file nil
 )
-;; Org-roam:1 ends here
+;; Org-roam ⤵:1 ends here
 
-;; [[file:../dotfiles/.doom.d/config.org::*Org Roam Capture Templates][Org Roam Capture Templates:1]]
+;; [[file:config.org::*Org Roam Capture Templates][Org Roam Capture Templates:1]]
 (setq org-roam-capture-templates
 
 ;; Default
   `(("d" "default" plain "%?"
-    :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+    :if-new (file+head "${slug}.org"
 
 "#+title: ${title}
 #+filetags:\n")
@@ -201,7 +247,7 @@
 
 ;; Code Challange
   ("c" "Code Challange" plain "%?"
-    :if-new (file+head "CodeChallanges/%<%Y%m%d%H%M%S>-${slug}.org"
+    :if-new (file+head "CodeChallanges/${slug}.org"
 
 ":PROPERTIES:
 :Source:
@@ -224,7 +270,7 @@
 
 ;; Debug/Troubleshoot
   ("D" "Debug/Error/Fix-me" plain "%?"
-    :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+    :if-new (file+head "${slug}.org"
 
 "#+title: ${title}
 #+filetags: :debug:
@@ -236,7 +282,7 @@
 
 ;; Cheatsheet
   ("C" "cheatsheet" plain "%?"
-    :if-new (file+head "cheatsheets/%<%Y%m%d%H%M%S>-${slug}.org"
+    :if-new (file+head "cheatsheets/${slug}.org"
 
 "#+title: ${title}
 #+filetags: :cheatsheat:\n
@@ -248,22 +294,24 @@
     :unnarrowed t)
 
 ;; Todo (Kanban)
-  ("t" "Todo/Kanban" plain "%?"
-    :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+  ("t" "Todo" plain "%?"
+    :if-new (file+head "Todo/${slug}.org"
 
 "#+title: ${title}
 #+filetags:
 #+startup: show2levels
 
-\n* Todo
-\n* Done")
+\n* DOING
+\n* NEXT
+\n* TODO
+\n* DONE")
 
     :unnarrowed t)
   )
 )
 ;; Org Roam Capture Templates:1 ends here
 
-;; [[file:../dotfiles/.doom.d/config.org::*org-roam-ui][org-roam-ui:1]]
+;; [[file:config.org::*org-roam-ui][org-roam-ui:1]]
 (use-package! websocket
     :after org-roam)
 
@@ -280,7 +328,7 @@
           org-roam-ui-open-on-start t))
 ;; org-roam-ui:1 ends here
 
-;; [[file:../dotfiles/.doom.d/config.org::*Hiding the Properties Drawer][Hiding the Properties Drawer:1]]
+;; [[file:config.org::*Hiding the Properties Drawer][Hiding the Properties Drawer:1]]
 ;; Funtion to hide/unhide the properties drawer
 (defun org-hide-properties ()
   "Hide all org-mode headline property drawers in buffer. Could be slow if it has a lot of overlays."
@@ -308,7 +356,20 @@
     (org-hide-properties)))
 ;; Hiding the Properties Drawer:1 ends here
 
-;; [[file:../dotfiles/.doom.d/config.org::*Org-roam-bibtex (ORB)][Org-roam-bibtex (ORB):1]]
+;; [[file:config.org::*Hiding Radio Target Syntax in Node Name][Hiding Radio Target Syntax in Node Name:1]]
+(defun org-link-display-format-h (s)
+  "Replace radio links in string S with their description.
+If there is no description, use the link target."
+  (save-match-data
+    (replace-regexp-in-string
+     org-radio-target-regexp
+     (lambda (m) (or (match-string 2 m) (match-string 1 m)))
+     s nil t)))
+
+(advice-add  'org-link-display-format :filter-return 'org-link-display-format-h)
+;; Hiding Radio Target Syntax in Node Name:1 ends here
+
+;; [[file:config.org::*Org-roam-bibtex (ORB)][Org-roam-bibtex (ORB):1]]
 (use-package! org-roam-bibtex
   :after (org-roam)
   :hook (org-roam-mode . org-roam-bibtex-mode)
@@ -340,7 +401,7 @@
 ;;      :unnarrowed t))))
 ;; Org-roam-bibtex (ORB):1 ends here
 
-;; [[file:../dotfiles/.doom.d/config.org::*Org-ref][Org-ref:1]]
+;; [[file:config.org::*Org-ref][Org-ref:1]]
 ;; FIXME startup error
 (require 'doi-utils)
 
@@ -357,14 +418,14 @@
       org-ref-notes-function 'orb-edit-notes)
 ;; Org-ref:1 ends here
 
-;; [[file:../dotfiles/.doom.d/config.org::*Helm-bibtex][Helm-bibtex:1]]
+;; [[file:config.org::*Helm-bibtex][Helm-bibtex:1]]
 (after! org
     (setq bibtex-completion-bibliography "~/org/roam/PDFs/bibliography.bib"
           bibtex-completion-library-path "~/org/roam/PDFs/"
           bibtex-completion-notes-path "~/org/roam/PDFs"))
 ;; Helm-bibtex:1 ends here
 
-;; [[file:../dotfiles/.doom.d/config.org::*Org-Babel (src blocks)][Org-Babel (src blocks):1]]
+;; [[file:config.org::*Org-Babel (src blocks)][Org-Babel (src blocks):1]]
 ;; typescript
 (org-babel-do-load-languages
   'org-babel-load-languages
@@ -373,7 +434,8 @@
       (python . t)
       (dot . t)
       ;; (sh . t)
-      ;; (js . t)
+      (js . t)
+      (json . t)
       (haskell . t)
       (jupyter . t)))
 
@@ -384,7 +446,7 @@
 ;; (defalias 'org-babel-execute:ts 'org-babel-execute:typescript) ; FIXME
 ;; Org-Babel (src blocks):1 ends here
 
-;; [[file:../dotfiles/.doom.d/config.org::*Jupyter][Jupyter:1]]
+;; [[file:config.org::*Jupyter][Jupyter:1]]
 ; this seems to add syntax-highlighting to jupyter-python and jupyter-typescript blocks
 ;; (after! org-src
 ;;   (dolist (lang '(python typescript jupyter))
@@ -403,6 +465,7 @@
 ;; Python
 (setq org-babel-default-header-args:jupyter-python '(
    (:session . "py")
+   ;; (:pandoc . "t")
    (:kernel . "python")))
 
 ;; Haskell
@@ -411,19 +474,19 @@
    (:kernel . "haskell")))
 ;; Jupyter:1 ends here
 
-;; [[file:../dotfiles/.doom.d/config.org::*Org-noter][Org-noter:1]]
+;; [[file:config.org::*Org-noter][Org-noter:1]]
 (use-package org-noter
   :after (:any org pdf-view)
   :config
   (setq org-noter-always-create-frame nil))  ; stop opening frames
 ;; Org-noter:1 ends here
 
-;; [[file:../dotfiles/.doom.d/config.org::*Hypothesis][Hypothesis:1]]
+;; [[file:config.org::*Hypothesis][Hypothesis:1]]
 (setq hypothesis-username "nazzacode"
       hypothesis-token "6879-DJYjeV3gat2emzWKlSGkQu20tQTvQK3s7xVSepSdjfA")
 ;; Hypothesis:1 ends here
 
-;; [[file:../dotfiles/.doom.d/config.org::*Show Properties (Drawer)][Show Properties (Drawer):1]]
+;; [[file:config.org::*Show Properties (Drawer)][Show Properties (Drawer):1]]
 (defun org+-show-drawers ()
   "Show all property drawers in current buffer."
   (interactive)
@@ -439,7 +502,55 @@
 (put 'org+-show-drawers 'safe-local-eval-function t)
 ;; Show Properties (Drawer):1 ends here
 
-;; [[file:../dotfiles/.doom.d/config.org::*peep-dired][peep-dired:1]]
+;; [[file:config.org::*HTML Export][HTML Export:1]]
+(setq org-html-html5-fancy t
+      org-html-table-caption-above nil)
+;; HTML Export:1 ends here
+
+;; [[file:config.org::*Hide radio links][Hide radio links:1]]
+(defcustom org-hidden-links-additional-re "\\(<<<\\)[[:print:]]+?\\(>>>\\)"
+  "Regular expression that matches strings where the invisible-property of the sub-matches 1 and 2 is set to org-link."
+  :type '(choice (const :tag "Off" nil) regexp)
+  :group 'org-link)
+(make-variable-buffer-local 'org-hidden-links-additional-re)
+
+(defun org-activate-hidden-links-additional (limit)
+  "Put invisible-property org-link on strings matching `org-hide-links-additional-re'."
+  (if org-hidden-links-additional-re
+      (re-search-forward org-hidden-links-additional-re limit t)
+    (goto-char limit)
+    nil))
+
+(defun org-hidden-links-hook-function ()
+  "Add rule for `org-activate-hidden-links-additional' to `org-font-lock-extra-keywords'.
+You can include this function in `org-font-lock-set-keywords-hook'."
+  (add-to-list 'org-font-lock-extra-keywords
+                              '(org-activate-hidden-links-additional
+                                (1 '(face org-target invisible org-link))
+                (2 '(face org-target invisible org-link)))))
+
+(add-hook 'org-font-lock-set-keywords-hook #'org-hidden-links-hook-function)
+;; Hide radio links:1 ends here
+
+;; [[file:config.org::*Syntax Highlight latex fragments][Syntax Highlight latex fragments:1]]
+;; (eval-after-load 'org
+;;   '(setq org-highlight-latex-and-related '(native)))
+;; Syntax Highlight latex fragments:1 ends here
+
+;; [[file:config.org::*FIXME org-download][FIXME org-download:1]]
+(require 'org-download)
+(setq org-download-screenshot-method "xclip")
+(setq-default org-download-image-dir "~/org/roam/Images")
+
+  ;; (use-package org-download
+  ;; :after org
+  ;; :bind
+  ;; (:map org-mode-map
+  ;;       (("a-Y" . org-download-screenshot)
+  ;;        ("a-y" . org-download-yank)))
+;; FIXME org-download:1 ends here
+
+;; [[file:config.org::*peep-dired][peep-dired:1]]
 (setq peep-dired-cleanup-eagerly t)
 (setq peep-dired-enable-on-directories t)
 
@@ -453,12 +564,12 @@
 (setq peep-dired-ignored-extensions '("mkv" "iso" "mp4"))
 ;; peep-dired:1 ends here
 
-;; [[file:../dotfiles/.doom.d/config.org::*Agenda][Agenda:1]]
+;; [[file:config.org::*Agenda][Agenda:1]]
 ;; (custom-set-variables '(org-agenda-files (list "~/org/roam/gcal.org")))
  (setq org-agenda-files '("~/org/roam/gcal.org"))
 ;; Agenda:1 ends here
 
-;; [[file:../dotfiles/.doom.d/config.org::*Clean category column garbage][Clean category column garbage:1]]
+;; [[file:config.org::*Clean category column garbage][Clean category column garbage:1]]
 (setq org-agenda-prefix-format
       '((agenda . " %i %-12(vulpea-agenda-category)%?-12t% s")
         (todo . " %i %-12(vulpea-agenda-category) ")
@@ -503,7 +614,7 @@ Refer to `org-agenda-prefix-format' for more information."
        (match-end 1)))))
 ;; Clean category column garbage:1 ends here
 
-;; [[file:../dotfiles/.doom.d/config.org::*Calender][Calender:1]]
+;; [[file:config.org::*Calender][Calender:1]]
 ;; gcal integration
 (require 'calfw)
 (require 'org-gcal)
@@ -543,12 +654,12 @@ Refer to `org-agenda-prefix-format' for more information."
 ;; (add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync) ))
 ;; Calender:1 ends here
 
-;; [[file:../dotfiles/.doom.d/config.org::*Treemacs][Treemacs:1]]
+;; [[file:config.org::*Treemacs][Treemacs:1]]
 ;; (after! treemacs
 ;;   (setq doom-themes-treemacs-enable-variable-pitch nil)) ; TODO try '
 ;; Treemacs:1 ends here
 
-;; [[file:../dotfiles/.doom.d/config.org::*Pdf (tools)][Pdf (tools):1]]
+;; [[file:config.org::*Pdf (tools)][Pdf (tools):1]]
 ;; Double page spread
 
 (defun my-pdf-view-double-scroll-up-or-next-page (&optional arg)
@@ -589,7 +700,7 @@ next page only on typing SPC (ARG is nil)."
   (other-window 1))
 ;; Pdf (tools):1 ends here
 
-;; [[file:../dotfiles/.doom.d/config.org::*Nov.el][Nov.el:1]]
+;; [[file:config.org::*Nov.el][Nov.el:1]]
 (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
 
 ;; Font
@@ -633,26 +744,25 @@ next page only on typing SPC (ARG is nil)."
 ;; (add-hook 'nov-post-html-render-hook 'my-nov-post-html-render-hook)
 ;; Nov.el:1 ends here
 
-;; [[file:../dotfiles/.doom.d/config.org::*Latex][Latex:1]]
-;; FIXME Latex fragments in org mode
+;; [[file:config.org::*Latex][Latex:1]]
 (setq org-format-latex-options
   (list
-        :foreground 'default  ;;auto
+        :foreground 'default  ;; or `auto'
         ;; :background 'auto
-        :scale 1.7              ;; bigger latex fragment
+        :scale 3.0  ;; bigger latex fragment
         ;; :html-foreground "Black"
         ;; :html-background "Transparent"
         ;; :html-scale 1.0
         :matchers '("begin" "$1" "$" "$$" "\\(" "\\[")))
 ;; Latex:1 ends here
 
-;; [[file:../dotfiles/.doom.d/config.org::*Direnv (Nix)][Direnv (Nix):1]]
-(use-package direnv
- :config
- (direnv-mode))
+;; [[file:config.org::*Direnv (Nix)][Direnv (Nix):1]]
+;; (use-package direnv
+;;  :config
+;;  (direnv-mode))
 ;; Direnv (Nix):1 ends here
 
-;; [[file:../dotfiles/.doom.d/config.org::*Typescript][Typescript:1]]
+;; [[file:config.org::*Typescript][Typescript:1]]
 (defun setup-tide-mode ()
   (interactive)
   (tide-setup)
@@ -677,6 +787,18 @@ next page only on typing SPC (ARG is nil)."
 (setq tide-completion-detailed t)
 ;; Typescript:1 ends here
 
-;; [[file:../dotfiles/.doom.d/config.org::*Misc][Misc:1]]
+;; [[file:config.org::*Deft][Deft:1]]
+(use-package deft
+  :after org
+  :bind
+  ("C-c n d" . deft)
+  :custom
+  (deft-recursive t)
+  (deft-use-filter-string-for-filename t)
+  (deft-default-extension "org")
+  (deft-directory org-roam-directory))
+;; Deft:1 ends here
+
+;; [[file:config.org::*Misc][Misc:1]]
 (setq lisp-indent-offset 2)
 ;; Misc:1 ends here

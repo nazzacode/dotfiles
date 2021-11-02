@@ -11,7 +11,10 @@
   ;; :recipe (:host github :repo "org-roam/org-roam-bibtex"))
 (package! alert)             ; notification interface
 (package! all-the-icons-dired) ; file icons fordired
+(package! company-box)
+(package! company-math)      ; latex unicode completion menu
 (package! direnv)            ; dev environments per filepath
+(package! deft)              ; search buffer
 (package! doom-modeline)
 (package! eldoc-eval)
 (package! graphviz-dot-mode) ; graph diagrams
@@ -22,20 +25,25 @@
 (package! nov)               ; epub reader
 (package! ob-typescript)
 (package! org-appear)        ; show emphasis markers when inside fragment
+(package! org-download)      ; screenshots
 (package! org-noter)         ; pdf + synced notes; side by side
 (package! org-ref)           ; academic referencing in org mode
 (package! org-roam-bibtex)   ; org + roam + bibtex
 (package! org-roam-ui :recipe (:host github :repo "org-roam/org-roam-ui" :files ("*.el" "out"))) ; graph explorer for org roam
 (package! org-superstar)     ; fancy headings and bullets
+(package! pdf-continuous-scroll-mode :recipe (:host github :repo "dalanicolai/pdf-continuous-scroll-mode.el"))
 (package! peep-dired)        ; preview popup for dired
 (package! persist)           ; variables that persist across sessions
+(package! phscroll :recipe (:host github :repo "misohena/phscroll"))  ; partial horizontal scrolling in org mode (use case: wide tables)
 (package! rainbow-mode)      ; sets background color for color names
 (package! request)           ; elisp http
+(package! transpose-frame)   ; allows transposing the frame among other operations
+(package! treemacs-icons-dired)           ;
 (package! ts-comint)         ; typescript REPL
 (package! valign)            ; pretty tables
+(package! yascroll)          ; ascii scrollbar
 (package! websocket)
 (package! winum)
-(package! pdf-continuous-scroll-mode :recipe (:host github :repo "dalanicolai/pdf-continuous-scroll-mode.el"))
 
 
 

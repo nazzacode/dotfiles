@@ -194,6 +194,7 @@ background contrast. All other values default to \"medium\"."
    (ivy-posframe-border :background base1)
    ;;;; LaTeX-mode
    (font-latex-math-face :foreground dark-cyan)
+   ;; (font-latex-math-face :background yellow) ; ERROR does the wrong thing!
    ;;;; magit
    (magit-section-heading             :foreground cyan :weight 'bold)
    (magit-branch-current              :underline green :inherit 'magit-branch-local)

@@ -9,32 +9,38 @@
 :PROPERTIES:
 :UNNUMBERED:
 :END:
--  [[#magic-incantation][Magic Incantation]]
+- [[#magic-incantation][Magic Incantation]]
 - [[#user-info][User Info]]
 - [[#better-defaults][Better Defaults]]
-- [[#ui][UI]]
+- [[#ui-][UI ⤵]]
+  - [[#general][General]]
   - [[#theme][Theme]]
   - [[#fonts][Fonts]]
   - [[#window-divider][Window Divider]]
   - [[#modeline][Modeline]]
   - [[#writeroom-mode][Writeroom Mode]]
   - [[#strt-fix-end_src-background-bleeding][STRT Fix ~#+end_src~ background bleeding]]
-- [[#org][Org]]
-  - [[#general][General]]
-  - [[#collect-ui-section][Collect UI Section!]]
+  - [[#which-key][which key]]
+- [[#completion][Completion]]
+- [[#org-][Org ⤵]]
+  - [[#general-1][General]]
   - [[#headings][Headings]]
-  - [[#todos][Todo's]]
+  - [[#to-dos][To-do's]]
   - [[#tags][Tags]]
   - [[#tables][Tables]]
-  - [[#org-roam][Org-roam]]
+  - [[#org-roam-][Org-roam ⤵]]
   - [[#org-roam-bibtex-orb][Org-roam-bibtex (ORB)]]
   - [[#org-ref][Org-ref]]
   - [[#helm-bibtex][Helm-bibtex]]
   - [[#org-babel-src-blocks][Org-Babel (src blocks)]]
-  -  [[#jupyter][Jupyter]]
+  - [[#jupyter][Jupyter]]
   - [[#org-noter][Org-noter]]
   - [[#hypothesis][Hypothesis]]
   - [[#show-properties-drawer][Show Properties (Drawer)]]
+  - [[#html-export][HTML Export]]
+  - [[#hide-radio-links][Hide radio links]]
+  - [[#syntax-highlight-latex-fragments][Syntax Highlight latex fragments]]
+  - [[#fixme-org-download][FIXME org-download]]
 - [[#dired][Dired]]
   - [[#peep-dired][peep-dired]]
 - [[#agenda][Agenda]]
@@ -46,14 +52,14 @@
 - [[#latex][Latex]]
 - [[#direnv-nix][Direnv (Nix)]]
 - [[#typescript][Typescript]]
+- [[#deft][Deft]]
 - [[#misc][Misc]]
 
-*  Magic Incantation
-Harnes the performance advantages of lexical-binding. See:
+* Magic Incantation
+Harnes the performance advantages of lexical-binding (I think?). See:
   1. [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Lexical-Binding.html][GNU: Lexical Binding]]
   2. [[https://nullprogram.com/blog/2017/01/30/][How to Write Fast(er) Emacs Lisp]]
   3. [[https://nullprogram.com/blog/2016/12/22/][Some Performace Advantages of Lexical Scope]]
-
 #+BEGIN_SRC elisp
 ;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 #+END_SRC
@@ -65,56 +71,58 @@ Harnes the performance advantages of lexical-binding. See:
       my-name "nazzacode"
       user-mail-address "nasharp@outlook.com")
 #+END_SRC
-
 * Better Defaults
 #+begin_src elisp
 (setq auto-save-default t
-      make-backup-files t
-      tab-width 2)
+      initial-major-mode 'org-mode
+      make-backup-files t)
+
+(menu-bar-mode 1)  ;; temp
 
 (setq-default tab-width 2)
+(setq straight-allow-recipe-inheritance nil)
 
-(pixel-scroll-mode 1) ; smooth scrolling
-
+;; (pixel-scroll-mode 1) ; smooth scrolling ; FAULT causes severe lag
 #+end_src
-
-* UI
+* UI ⤵
+** General
 #+begin_src elisp
-(add-hook 'dired-mode-hook 'all-the-icons-dired-mode)      ; icons in dired
-
-;; highlight-indent-guide
-(add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
-;; (add-hook 'org-mode-hook 'highlight-indent-guides-mode) ; FIXME background color
-
-(setq highlight-indent-guides-method 'character
-      highlight-indent-guides-responsive 'stack)
+(setq-default line-spacing 0.1)
 
 (setq display-line-numbers-type 'relative  ; or `nil'
       +ivy-buffer-preview t                ; preview buffer on switch
-      emojify-emoji-set "emojione-v2.2.6")  ; increase resolution from default "emojione-v2.2.6-22"
+      emojify-emoji-set "emojione-v2.2.6") ; increase resolution from default "emojione-v2.2.6-22"
 
-;; Rainbow mode :: colorise strings that represent colors
+(global-hl-line-mode -1)  ; dont highlight the line
+
+(add-hook 'dired-mode-hook 'all-the-icons-dired-mode) ; icons in dired
+
+;; Highlight-indent-guide
+(add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
+(setq highlight-indent-guides-method 'character
+      highlight-indent-guides-responsive 'stack)
+
+;; Rainbow mode: colorise strings that represent colors
 (define-globalized-minor-mode global-rainbow-mode rainbow-mode
   (lambda () (rainbow-mode 1)))
-
 (global-rainbow-mode 1)
 #+end_src
 ** Theme
 #+BEGIN_SRC elisp
-;; (setq doom-theme 'my-doom-dark+)
-(setq doom-theme 'my-doom-gruvbox)
+(setq doom-theme 'my-doom-dark+)
+;; TODO highlight src block heads and footers a different color? (without bleed? (end foot early)
+;; (setq doom-theme 'my-doom-gruvbox)
 #+END_SRC
 
 ** Fonts
-
 #+BEGIN_SRC elisp
 ;; (use-package! mixed-pitch
 ;;   :hook (org-mode . mixed-pitch-mode)
 ;;   :config
 ;;   (setq variable-pitch-set-heigth 't)
-;;   (set-face-attribute 'variable-pitch nil :height 1.5))
+;   (set-face-attribute 'variable-pitch nil :height 1.5))
 
-;; (setq doom-font (font-spec :family "Hasklug Nerd Font Mono") ;  :size 26 :height 1.0)     ; Agave Nerd Font Mono
+;;(setq doom-font (font-spec :family "Hasklug Nerd Font Mono")) :size 26 :height 1.0))     ; Agave Nerd Font Mono
 ;;       doom-variable-pitch-font (font-spec :family "Iosevka Aile") ; :size 32 :height 1.5)  ; ETBookOT
 ;;       doom-unicode-font (font-spec :family "Symbola")          ; good unicode support
 ;;       ;; doom-big-font (font-spec :family "Fira Mono" :size 19))
@@ -139,8 +147,12 @@ Harnes the performance advantages of lexical-binding. See:
 ;;     '(mode-line :family "Iosevka Aile")  ; :height 0.85)
 ;;     '(mode-line-inactive :family "Iosevka Aile"))  ; :height 0.85))
 
-(setq doom-modeline-height 35
+(setq doom-modeline-height 25
+      doom-modeline-indent-info t
+      doom-modeline-vcs-max-length 12
       doom-modeline-major-mode-icon t)
+
+;; (defcustom doom-modeline-hud nil)
 #+end_src
 
 ** TODO Writeroom Mode
@@ -162,7 +174,26 @@ Harnes the performance advantages of lexical-binding. See:
 ;;  '(org-block-begin-line ((t (:background "#713adf"))))
 ;;  '(org-block-end-line   ((t (:background "#aaaaaa")))))
 #+end_src
-* Org
+** which key
+#+begin_src elisp
+(after! which-key
+(pushnew!
+  which-key-replacement-alist
+  '(("" . "\\`+?evil[-:]?\\(?:a-\\)?\\(.*\\)") . (nil . "◂\\1"))
+  '(("\\`g s" . "\\`evilem--?motion-\\(.*\\)") . (nil . "◃\\1"))
+  ))
+#+end_src
+* Completion
+#+begin_src elisp
+(require 'company-box)
+(add-hook 'company-mode-hook 'company-box-mode)
+
+;; company-math (latex unicode completions)
+(add-to-list 'company-backends 'company-math-symbols-unicode)
+(setq company-math-allow-latex-symbols-in-faces  t) ;; allow completion in org-mode text
+#+end_src
+
+* Org ⤵
 ** General
 #+begin_src elisp
 (after! org
@@ -178,15 +209,26 @@ Harnes the performance advantages of lexical-binding. See:
         org-startup-with-inline-images 't  ; TODO check if working
         org-startup-with-latex-preview 't
         org-startup-shrink-all-tables 't
+        org-appear-autolinks 't            ; auto appear links
+        org-appear-autosubmarkers 't       ; auto apear subscript/superscript
+        org-appear-autoentities 't         ; auto apear \alpha etc.
+        org-appear-autokeywords 't         ; auto apear elements in `org-hidden-keywords'
+        ;;org-image-actual-width 550      ; set default width ; FIXME overrides setting inline
         org-startup-folded 't))            ; FIXME not working
 
 (require 'org-superstar)  ; NEEDED?
 (add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
 
+(font-lock-add-keywords 'org-mode
+                        '(("^ *\\([-]\\) "
+                           (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+(font-lock-add-keywords 'org-mode
+                        '(("^ *\\([+]\\) "
+                           (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "◦"))))))
+
 ;; (setq org-blank-before-new-entry
 ;;   '((heading . t) (plain-list-item . t)))
 #+end_src
-** TODO Collect UI Section!
 ** Headings
 #+begin_src elisp
 ;; TODO increase sizes?
@@ -202,11 +244,12 @@ Harnes the performance advantages of lexical-binding. See:
   '(outline-8 :weight normal)
   '(org-document-title :weight normal :height 1.8)) ; 1.2
 #+end_src
-** Todo's
+
+** To-do's
 #+begin_src elisp
 (setq org-todo-keywords '(
-  (sequence "TODO(t)" "DOING(d)" "STRT(s)" "NEXT(n)" "PROJ(p)" "WAIT(w)" "MAYBE(m)" "ERROR(e)" "FIXME(f)" "UPDATE(u)" "(x)" "|" "DONE(D)" "CANCL(c)" "DEPRECATED(E)")
-  (sequence "[ ](T)" "[-](-)" "[?](?)" "|" "[X](X)")
+  (sequence "TODO(t)" "DOING(d)" "STRT(s)" "NEXT(n)" "PROJ(p)" "WAIT(w)" "MAYBE(m)" "ERROR(e)" "FIXME(f)" "UPDATE(u)" "MOVE(M)" "(x)" "|" "DONE(D)" "CANCL(c)" "DEPRECATED(E)")
+  (sequence "[ ](T)" "[-](-)" "[?](?)" "|" "[X](X)" "[.](.)" )
   (sequence "|" "OKAY(o)" "YES(y)" "NO(N)")
 ))
 
@@ -224,6 +267,7 @@ Harnes the performance advantages of lexical-binding. See:
   ("CANCL" . (:foreground "grey11" :weight semi-bold +org-todo-cancel))
   ("[-]" . +org-todo-active)
   ("[?]" . +org-todo-onhold)
+  ("YES" . (:foreground "DarkSeaGreen3"))
   ("NO" . +org-todo-cancel)
 ))
 #+end_src
@@ -250,9 +294,15 @@ Harnes the performance advantages of lexical-binding. See:
 #+begin_src elisp
 ;; (add-hook 'org-mode-hook #'valign-mode)
 ;; (setq valign-fancy-bar 'non-nil)
+
+(require 'phscroll)
+
+(after! org
+ (setq org-startup-truncated nil)
+ (load "org-phscroll.el"))
 #+end_src
 
-** Org-roam
+** Org-roam ⤵
 See: [[https://www.orgroam.com/manual.html][org-roam manual]]
 #+begin_src elisp
 ;; (add-hook 'after-init-hook 'org-roam-setup)   ; FIXME start on start-up BREAKING CONFIG ON REDOWNLOAD
@@ -266,7 +316,7 @@ See: [[https://www.orgroam.com/manual.html][org-roam manual]]
 
 ;; Default
   `(("d" "default" plain "%?"
-    :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+    :if-new (file+head "${slug}.org"
 
 "#+title: ${title}
 ,#+filetags:\n")
@@ -275,7 +325,7 @@ See: [[https://www.orgroam.com/manual.html][org-roam manual]]
 
 ;; Code Challange
   ("c" "Code Challange" plain "%?"
-    :if-new (file+head "CodeChallanges/%<%Y%m%d%H%M%S>-${slug}.org"
+    :if-new (file+head "CodeChallanges/${slug}.org"
 
 ":PROPERTIES:
 :Source:
@@ -298,7 +348,7 @@ See: [[https://www.orgroam.com/manual.html][org-roam manual]]
 
 ;; Debug/Troubleshoot
   ("D" "Debug/Error/Fix-me" plain "%?"
-    :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+    :if-new (file+head "${slug}.org"
 
 "#+title: ${title}
 ,#+filetags: :debug:
@@ -310,7 +360,7 @@ See: [[https://www.orgroam.com/manual.html][org-roam manual]]
 
 ;; Cheatsheet
   ("C" "cheatsheet" plain "%?"
-    :if-new (file+head "cheatsheets/%<%Y%m%d%H%M%S>-${slug}.org"
+    :if-new (file+head "cheatsheets/${slug}.org"
 
 "#+title: ${title}
 ,#+filetags: :cheatsheat:\n
@@ -322,15 +372,17 @@ See: [[https://www.orgroam.com/manual.html][org-roam manual]]
     :unnarrowed t)
 
 ;; Todo (Kanban)
-  ("t" "Todo/Kanban" plain "%?"
-    :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org"
+  ("t" "Todo" plain "%?"
+    :if-new (file+head "Todo/${slug}.org"
 
 "#+title: ${title}
 ,#+filetags:
 ,#+startup: show2levels
 
-\n* Todo
-\n* Done")
+\n* DOING
+\n* NEXT
+\n* TODO
+\n* DONE")
 
     :unnarrowed t)
   )
@@ -381,6 +433,19 @@ See: [[https://www.orgroam.com/manual.html][org-roam manual]]
   (if (eq (get 'org-toggle-properties-hide-state 'state) 'hidden)
       (org-show-properties)
     (org-hide-properties)))
+#+end_src
+*** Hiding Radio Target Syntax in Node Name
+#+begin_src elisp
+(defun org-link-display-format-h (s)
+  "Replace radio links in string S with their description.
+If there is no description, use the link target."
+  (save-match-data
+    (replace-regexp-in-string
+     org-radio-target-regexp
+     (lambda (m) (or (match-string 2 m) (match-string 1 m)))
+     s nil t)))
+
+(advice-add  'org-link-display-format :filter-return 'org-link-display-format-h)
 #+end_src
 ** TODO Org-roam-bibtex (ORB)
 #+begin_src elisp
@@ -451,7 +516,8 @@ See: [[https://www.orgroam.com/manual.html][org-roam manual]]
       (python . t)
       (dot . t)
       ;; (sh . t)
-      ;; (js . t)
+      (js . t)
+      (json . t)
       (haskell . t)
       (jupyter . t)))
 
@@ -461,7 +527,7 @@ See: [[https://www.orgroam.com/manual.html][org-roam manual]]
 
 ;; (defalias 'org-babel-execute:ts 'org-babel-execute:typescript) ; FIXME
 #+end_src
-**  Jupyter
+** Jupyter
 #+begin_src elisp
 ; this seems to add syntax-highlighting to jupyter-python and jupyter-typescript blocks
 ;; (after! org-src
@@ -481,6 +547,7 @@ See: [[https://www.orgroam.com/manual.html][org-roam manual]]
 ;; Python
 (setq org-babel-default-header-args:jupyter-python '(
    (:session . "py")
+   ;; (:pandoc . "t")
    (:kernel . "python")))
 
 ;; Haskell
@@ -488,6 +555,8 @@ See: [[https://www.orgroam.com/manual.html][org-roam manual]]
    (:session . "hs")
    (:kernel . "haskell")))
 #+end_src
+*** [ ] Link to outer scope
+
 ** Org-noter
 #+begin_src elisp
 (use-package org-noter
@@ -515,6 +584,55 @@ See: [[https://www.orgroam.com/manual.html][org-roam manual]]
       (org-flag-region b e nil 'org-hide-drawer))))))
 
 (put 'org+-show-drawers 'safe-local-eval-function t)
+#+end_src
+** HTML Export
+#+begin_src elisp
+(setq org-html-html5-fancy t
+      org-html-table-caption-above nil)
+#+end_src
+** Hide radio links
+#+begin_src elisp
+(defcustom org-hidden-links-additional-re "\\(<<<\\)[[:print:]]+?\\(>>>\\)"
+  "Regular expression that matches strings where the invisible-property of the sub-matches 1 and 2 is set to org-link."
+  :type '(choice (const :tag "Off" nil) regexp)
+  :group 'org-link)
+(make-variable-buffer-local 'org-hidden-links-additional-re)
+
+(defun org-activate-hidden-links-additional (limit)
+  "Put invisible-property org-link on strings matching `org-hide-links-additional-re'."
+  (if org-hidden-links-additional-re
+      (re-search-forward org-hidden-links-additional-re limit t)
+    (goto-char limit)
+    nil))
+
+(defun org-hidden-links-hook-function ()
+  "Add rule for `org-activate-hidden-links-additional' to `org-font-lock-extra-keywords'.
+You can include this function in `org-font-lock-set-keywords-hook'."
+  (add-to-list 'org-font-lock-extra-keywords
+                              '(org-activate-hidden-links-additional
+                                (1 '(face org-target invisible org-link))
+                (2 '(face org-target invisible org-link)))))
+
+(add-hook 'org-font-lock-set-keywords-hook #'org-hidden-links-hook-function)
+
+#+end_src
+** Syntax Highlight latex fragments
+#+begin_src elisp
+;; (eval-after-load 'org
+;;   '(setq org-highlight-latex-and-related '(native)))
+#+end_src
+** FIXME org-download :package:
+#+begin_src elisp
+(require 'org-download)
+(setq org-download-screenshot-method "xclip")
+(setq-default org-download-image-dir "~/org/roam/Images")
+
+  ;; (use-package org-download
+  ;; :after org
+  ;; :bind
+  ;; (:map org-mode-map
+  ;;       (("a-Y" . org-download-screenshot)
+  ;;        ("a-y" . org-download-yank)))
 #+end_src
 
 * Dired
@@ -714,25 +832,23 @@ next page only on typing SPC (ARG is nil)."
 
 ;; (add-hook 'nov-post-html-render-hook 'my-nov-post-html-render-hook)
 #+end_src
-* TODO Latex
+* Latex
 #+begin_src elisp
-;; FIXME Latex fragments in org mode
 (setq org-format-latex-options
   (list
-        :foreground 'default  ;;auto
+        :foreground 'default  ;; or `auto'
         ;; :background 'auto
-        :scale 1.7              ;; bigger latex fragment
+        :scale 3.0  ;; bigger latex fragment
         ;; :html-foreground "Black"
         ;; :html-background "Transparent"
         ;; :html-scale 1.0
         :matchers '("begin" "$1" "$" "$$" "\\(" "\\[")))
 #+end_src
-
 * Direnv (Nix)
 #+begin_src elisp
-(use-package direnv
- :config
- (direnv-mode))
+;; (use-package direnv
+;;  :config
+;;  (direnv-mode))
 #+end_src
 
 * Typescript
@@ -762,6 +878,18 @@ next page only on typing SPC (ARG is nil)."
 (setq tide-completion-detailed t)
 #+end_src
 
+* Deft
+#+begin_src elisp
+(use-package deft
+  :after org
+  :bind
+  ("C-c n d" . deft)
+  :custom
+  (deft-recursive t)
+  (deft-use-filter-string-for-filename t)
+  (deft-default-extension "org")
+  (deft-directory org-roam-directory))
+#+end_src
 * Misc
 #+BEGIN_SRC elisp
 (setq lisp-indent-offset 2)
