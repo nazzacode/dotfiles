@@ -1,6 +1,21 @@
-;; [[file:config.org::*Magic Incantation][Magic Incantation:1]]
+;; [[file:config.org::*Better Defaults][Better Defaults:1]]
 ;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
-;; Magic Incantation:1 ends here
+;; Better Defaults:1 ends here
+
+;; [[file:config.org::*Better Defaults][Better Defaults:2]]
+(setq auto-save-default t
+      initial-major-mode 'org-mode
+      make-backup-files t)
+
+;; (menu-bar-mode 1)  ;; good for learning
+
+(setq-default tab-width 2)
+(setq straight-allow-recipe-inheritance nil)
+
+;; (pixel-scroll-mode 1) ; smooth scrolling ; ERROR causes severe lag
+
+(setq lisp-indent-offset 2)
+;; Better Defaults:2 ends here
 
 ;; [[file:config.org::*User Info][User Info:1]]
 (setq user-full-name "Nathan Sharp"
@@ -8,27 +23,17 @@
       user-mail-address "nasharp@outlook.com")
 ;; User Info:1 ends here
 
-;; [[file:config.org::*Better Defaults][Better Defaults:1]]
-(setq auto-save-default t
-      initial-major-mode 'org-mode
-      make-backup-files t)
-
-(menu-bar-mode 1)  ;; temp
-
-(setq-default tab-width 2)
-(setq straight-allow-recipe-inheritance nil)
-
-;; (pixel-scroll-mode 1) ; smooth scrolling ; FAULT causes severe lag
-;; Better Defaults:1 ends here
-
 ;; [[file:config.org::*General][General:1]]
 (setq-default line-spacing 0.1)
 
 (setq display-line-numbers-type 'relative  ; or `nil'
       +ivy-buffer-preview t                ; preview buffer on switch
-      emojify-emoji-set "emojione-v2.2.6") ; increase resolution from default "emojione-v2.2.6-22"
+      emojify-emoji-set "emojione-v2.2.6"  ; increase resolution from default "emojione-v2.2.6-22"
+      fringe-mode 'default)  ; FIXME
 
-(global-hl-line-mode -1)  ; dont highlight the line
+(after! emacs-startup-hook
+  fringe-mode 'default
+  (global-hl-line-mode -1))  ; dont highlight the line
 
 (add-hook 'dired-mode-hook 'all-the-icons-dired-mode) ; icons in dired
 
@@ -47,6 +52,11 @@
 (setq doom-theme 'my-doom-dark+)
 ;; TODO highlight src block heads and footers a different color? (without bleed? (end foot early)
 ;; (setq doom-theme 'my-doom-gruvbox)
+;; (setq doom-theme 'doom-acario-light)
+;; (setq doom-theme 'doom-zenburn)
+
+(setq doom-themes-enable-bold t
+      doom-themes-padded-modeline nil)
 ;; Theme:1 ends here
 
 ;; [[file:config.org::*Fonts][Fonts:1]]
@@ -56,15 +66,20 @@
 ;;   (setq variable-pitch-set-heigth 't)
 ;   (set-face-attribute 'variable-pitch nil :height 1.5))
 
-;;(setq doom-font (font-spec :family "Hasklug Nerd Font Mono")) :size 26 :height 1.0))     ; Agave Nerd Font Mono
-;;       doom-variable-pitch-font (font-spec :family "Iosevka Aile") ; :size 32 :height 1.5)  ; ETBookOT
+(setq doom-font (font-spec :family "Hasklug Nerd Font Mono" :size 26 :height 1.0)
+;; (setq  doom-font (font-spec :family "Agave Nerd Font Mono")
+;; (setq  doom-font (font-spec :family "Cousine Nerd Font Mono" ) ;; TODO size
+       doom-variable-pitch-font (font-spec :family "DM Mono")
+;;       doom-variable-pitch-font (font-spec :family "Iosevka Aile") ; :size 32 :height 1.5)
+;;       doom-variable-pitch-font (font-spec :family "ETBookOT")
+;;       doom-variable-pitch-font (font-spec :family "TSCu_Comic")
 ;;       doom-unicode-font (font-spec :family "Symbola")          ; good unicode support
-;;       ;; doom-big-font (font-spec :family "Fira Mono" :size 19))
-;;       ;; doom-variable-pitch-font (font-spec :family "TSCu_Comic")
-;;)
+;;       doom-big-font (font-spec :family "Fira Mono" :size 19))
+)
 ;; Fonts:1 ends here
 
 ;; [[file:config.org::*Window Divider][Window Divider:1]]
+;; TODO better window divider for emacs in terminal
 ;; (defun my-change-window-divider ()
 ;;   (let ((display-table (or buffer-display-table standard-display-table)))
 ;;     (set-display-table-slot display-table 5 ?│)
@@ -74,52 +89,101 @@
 ;; Window Divider:1 ends here
 
 ;; [[file:config.org::*Modeline][Modeline:1]]
-;; TODO minibuffer modeline + centaur
+;; TODO minibuffer modeline + centaur (vscode-esque)
 
 ;; (custom-set-faces!
 ;;     '(mode-line :family "Iosevka Aile")  ; :height 0.85)
 ;;     '(mode-line-inactive :family "Iosevka Aile"))  ; :height 0.85))
 
-(setq doom-modeline-height 25
+(setq doom-modeline-height 10
       doom-modeline-indent-info t
       doom-modeline-vcs-max-length 12
+      doom-modeline-buffer-file-name-style 'truncate-all
+      doom-modeline-icon t
       doom-modeline-major-mode-icon t)
 
 ;; (defcustom doom-modeline-hud nil)
+
+;; (setq mini-modeline-mode t)
+;; (use-package mini-modeline
+;;   :after doom-modeline
+;;   :config
+;;   (mini-modeline-mode t))
+
+;; 2nd shot ...
+;; (use-package eldoc-eval)
+;; (use-package doom-modeline
+;;   ;; :demand t
+;;   ;; :custom
+;;   ;; (doom-modeline-buffer-file-name-style 'truncate-all)
+;;   ;; (doom-modeline-bar-width (frame-parameter nil 'left-fringe))
+;;   ;; (doom-modeline-height 10)
+;;   ;; (doom-modeline-icon t)
+;;   ;; (doom-modeline-icons-scale-factor 0.8)
+;;   ;; :config
+;;   ;; (set-face-attribute 'doom-modeline nil :inherit 'default)
+;;   ;; (set-face-attribute 'doom-modeline-inactive nil :inherit 'default)
+;;   )
+
+;; (setq doom-modeline-height 10
+;;    doom-modeline-buffer-file-name-style 'truncate-all
+;;    doom-modeline-bar-width (frame-parameter nil 'left-fringe)
+;;    doom-modeline-height 10
+;;    doom-modeline-icon nil
+;;    ;; doom-modeline-icons-scale-factor 0.8
+;; )
+
+;; (use-package mini-modeline
+;;   :after doom-modeline
+;;   :config
+;;   (doom-modeline-def-modeline 'minibuffer-line
+;;     '(modals workspace-name window-number matches buffer-info remote-host buffer-position word-count selection-info misc-info major-mode process vcs lsp checker))
+
+;;   ;; (setq mini-modeline-r-format '(:eval (doom-modeline-format--minibuffer-line)))
+
+;;   (setq mini-modeline-right-padding 1
+;;         mini-modeline-enhance-visual nil)
+
+;;   (set-face-attribute 'mode-line nil :box nil)
+;;   (set-face-attribute 'mini-modeline-mode-line nil :background (face-background 'org-code) :height 0.2)
+;;   (set-face-attribute 'mini-modeline-mode-line-inactive nil :background (face-background 'fringe) :height 0.2)
+
+;;   :hook (after-init . mini-modeline-mode)
+;;   )
 ;; Modeline:1 ends here
 
-;; [[file:config.org::*Writeroom Mode][Writeroom Mode:1]]
-;; TODO increase font less
-;;(setq writeroom-mode-line t)
-;; Writeroom Mode:1 ends here
+;; [[file:config.org::*UPDATE scroll bar (yascroll)][UPDATE scroll bar (yascroll):1]]
+(global-yascroll-bar-mode 1)
+(setq yascroll-scroll-bar "right-fringe")
 
-;; [[file:config.org::*STRT Fix ~#+end_src~ background bleeding][STRT Fix ~#+end_src~ background bleeding:1]]
-;; HELP The following code seems to be lasting on theme change (even when commented)!
-;; (custom-set-faces
-;;  '(org-block-begin-line ((t (:background "#1e1e1e"))))
-;;  '(org-block-end-line   ((t (:background "#1e1e1e")))))
-;; (custom-theme-set-faces
-;;  'gruvbox-dark
-;;  '(org-block-begin-line ((t (:background "#713adf"))))
-;;  '(org-block-end-line   ((t (:background "#aaaaaa")))))
-;; STRT Fix ~#+end_src~ background bleeding:1 ends here
+;; FIXME disapperaing when not moving
+;; TODO increase default fringe width
+;; UPDATE scroll bar (yascroll):1 ends here
 
-;; [[file:config.org::*which key][which key:1]]
+;; [[file:config.org::*Which key][Which key:1]]
+;; NOTE i dont really understand...
 (after! which-key
 (pushnew!
   which-key-replacement-alist
   '(("" . "\\`+?evil[-:]?\\(?:a-\\)?\\(.*\\)") . (nil . "◂\\1"))
   '(("\\`g s" . "\\`evilem--?motion-\\(.*\\)") . (nil . "◃\\1"))
   ))
-;; which key:1 ends here
+;; Which key:1 ends here
 
 ;; [[file:config.org::*Completion][Completion:1]]
 (require 'company-box)
 (add-hook 'company-mode-hook 'company-box-mode)
 
+(setq company-show-numbers t  ; M-N to use
+      company-idle-delay 0)
+
 ;; company-math (latex unicode completions)
 (add-to-list 'company-backends 'company-math-symbols-unicode)
 (setq company-math-allow-latex-symbols-in-faces  t) ;; allow completion in org-mode text
+
+;; TabNine (AI autocomplete)
+(require 'company-tabnine)
+(add-to-list 'company-backends 'company-tabnine)
 ;; Completion:1 ends here
 
 ;; [[file:config.org::*General][General:1]]
@@ -134,13 +198,15 @@
         display-line-numbers-type 'nil
         ;; hl-line-mode 'nil                  ; FIXME saw a forum saying this is broken
         org-startup-with-inline-images 't  ; TODO check if working
+        ;; org-image-actual-width 450         ; set default width ; FIXME overrides setting inline
         org-startup-with-latex-preview 't
         org-startup-shrink-all-tables 't
         org-appear-autolinks 't            ; auto appear links
+        org-startup-indented 'nil            ; dont indent paragraphs
         org-appear-autosubmarkers 't       ; auto apear subscript/superscript
         org-appear-autoentities 't         ; auto apear \alpha etc.
         org-appear-autokeywords 't         ; auto apear elements in `org-hidden-keywords'
-        ;;org-image-actual-width 550      ; set default width ; FIXME overrides setting inline
+
         org-startup-folded 't))            ; FIXME not working
 
 (require 'org-superstar)  ; NEEDED?
@@ -170,6 +236,13 @@
   '(outline-7 :weight normal)
   '(outline-8 :weight normal)
   '(org-document-title :weight normal :height 1.8)) ; 1.2
+
+
+;; Superstar symbols
+(after! org-superstar
+  (setq org-superstar-headline-bullets-list '( "◉" "○" "⎊" "⎉" "⊛" "⊚" "◦" "◘")
+  ;; (setq org-superstar-headline-bullets-list '("①" "②" "✸" "✿" "✤" "✜" "◆" "") ;; double circle bullet...
+        org-superstar-prettify-item-bullets t ))
 ;; Headings:1 ends here
 
 ;; [[file:config.org::*To-do's][To-do's:1]]
@@ -226,12 +299,238 @@
  (load "org-phscroll.el"))
 ;; Tables:1 ends here
 
-;; [[file:config.org::*Org-roam ⤵][Org-roam ⤵:1]]
+;; [[file:config.org::*Prettify symbols][Prettify symbols:1]]
+;; FIXME Not working..
+(setq prettify-symbols-alist
+  (mapcan (lambda (x) (list x (cons (upcase (car x)) (cdr x))))
+          '(("#+begin_src" . )
+            ("#+end_src" . ?)
+            ("#+begin_example" . ?)
+            ("#+end_example" . ?)
+            ("#+header:" . ?)
+            ("#+name:" . ?﮸)
+            ("#+results:" . ?)
+            ("#+call:" . )
+            (":properties:" . ?)
+            (":logbook:" . ?))))
+;; Prettify symbols:1 ends here
+
+;; [[file:config.org::*Org-Babel (src blocks)][Org-Babel (src blocks):1]]
+;; typescript
+(org-babel-do-load-languages
+  'org-babel-load-languages
+    '((C. t)
+      (dot . t)
+      (haskell . t)
+      (js . t)
+      (json . t)
+      (nix . t)
+      (python . t)
+      ;; (sh . t)
+      (typescript . t)
+      ;; jupyter must be load last
+      (jupyter . t)))
+
+(defun org-babel-execute:typescript (body params)
+  (let ((org-babel-js-cmd "npx ts-node < "))
+    (org-babel-execute:js body params)))
+
+;; (defalias 'org-babel-execute:ts 'org-babel-execute:typescript) ; FIXME
+;; Org-Babel (src blocks):1 ends here
+
+;; [[file:config.org::*Hide/Show Properties Drawer][Hide/Show Properties Drawer:1]]
+;; Funtion to hide/unhide the properties drawer
+(defun org-hide-properties ()
+  "Hide all org-mode headline property drawers in buffer. Could be slow if it has a lot of overlays."
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (while (re-search-forward
+            "^ *:properties:\n\\( *:.+?:.*\n\\)+ *:end:\n" nil t)
+      (let ((ov_this (make-overlay (match-beginning 0) (match-end 0))))
+        (overlay-put ov_this 'display "")
+        (overlay-put ov_this 'hidden-prop-drawer t))))
+  (put 'org-toggle-properties-hide-state 'state 'hidden))
+
+(defun org-show-properties ()
+  "Show all org-mode property drawers hidden by org-hide-properties."
+  (interactive)
+  (remove-overlays (point-min) (point-max) 'hidden-prop-drawer t)
+  (put 'org-toggle-properties-hide-state 'state 'shown))
+
+(defun org-toggle-properties ()
+  "Toggle visibility of property drawers."
+  (interactive)
+  (if (eq (get 'org-toggle-properties-hide-state 'state) 'hidden)
+      (org-show-properties)
+    (org-hide-properties)))
+;; Hide/Show Properties Drawer:1 ends here
+
+;; [[file:config.org::*HTML Export][HTML Export:1]]
+(setq org-html-html5-fancy t
+      org-html-table-caption-above nil
+      org-html-htmlize-output-type 'inline-css)
+      ;; org-html-htmlize-output-type 'css)
+
+;; (setq org-confirm-babel-evaluate nil)
+
+;; FIXME: prevent oversize svg img widths on org html export
+;; (with-eval-after-load 'ox-html
+;;   (setq org-html-head
+;;         (replace-regexp-in-string
+;;          ".org-svg { width: 90%; }"
+;;          ".org-svg { width: auto; }"
+;;          org-html-style-default)))
+;; HTML Export:1 ends here
+
+;; [[file:config.org::*Latex Export][Latex Export:1]]
+(require 'ox-extra)
+(ox-extras-activate '(ignore-headlines))
+;; Latex Export:1 ends here
+
+;; [[file:config.org::*Hide radio links][Hide radio links:1]]
+(defcustom org-hidden-links-additional-re "\\(<<<\\)[[:print:]]+?\\(>>>\\)"
+  "Regular expression that matches strings where the invisible-property of the sub-matches 1 and 2 is set to org-link."
+  :type '(choice (const :tag "Off" nil) regexp)
+  :group 'org-link)
+(make-variable-buffer-local 'org-hidden-links-additional-re)
+
+(defun org-activate-hidden-links-additional (limit)
+  "Put invisible-property org-link on strings matching `org-hide-links-additional-re'."
+  (if org-hidden-links-additional-re
+      (re-search-forward org-hidden-links-additional-re limit t)
+    (goto-char limit)
+    nil))
+
+(defun org-hidden-links-hook-function ()
+  "Add rule for `org-activate-hidden-links-additional' to `org-font-lock-extra-keywords'.
+You can include this function in `org-font-lock-set-keywords-hook'."
+  (add-to-list 'org-font-lock-extra-keywords
+                              '(org-activate-hidden-links-additional
+                                (1 '(face org-target invisible org-link))
+                (2 '(face org-target invisible org-link)))))
+
+(add-hook 'org-font-lock-set-keywords-hook #'org-hidden-links-hook-function)
+;; Hide radio links:1 ends here
+
+;; [[file:config.org::*Latex fragments][Latex fragments:1]]
+;; syntax hilighting for latex fragments
+;; (eval-after-load 'org
+;;   '
+(setq org-highlight-latex-and-related '(native script entities))
+;; )
+
+;; prevent background redering uglyness
+;; OLD: https://stackoverflow.com/questions/69474043/emacs-org-mode-background-color-of-latex-fragments-with-org-highlight-latex-a
+(require 'org-src)
+(add-to-list 'org-src-block-faces '("latex" (:inherit default :extend t)))
+
+;; Automatically load inline previews with org-fragtog
+(add-hook 'org-mode-hook 'org-fragtog-mode)
+
+;; Color transparentrather than match default face
+(setq org-format-latex-options
+      (plist-put org-format-latex-options :background "Transparent"))
+
+
+                ;; specify the justification you want
+(plist-put org-format-latex-options :justify 'center)
+;; Latex fragments:1 ends here
+
+;; [[file:config.org::*Org Cite][Org Cite:1]]
+;; (setq org-cite-global-bibliography "~/org/roam/Zotero/bibliography.bib")
+;; Org Cite:1 ends here
+
+;; [[file:config.org::*DEPRECATED Org-ref][DEPRECATED Org-ref:1]]
+;; FIXME startup error
+;; (require 'doi-utils)
+
+;; (setq reftex-default-bibliography '("~/org/roam/bibliography.bib"))
+
+;; ;; see org-ref for use of these variables
+;; (setq org-ref-default-bibliography '("~/org/roam/PDFs/bibliography.bib")
+;;       org-ref-bibliography-notes "~/org/roam/PDFs"   ; TODO not in use
+;;       org-ref-pdf-directory "~/org/roam/PDFs/"       ; academic papers
+;;       org-ref-completion-library 'org-ref-ivy-cite
+;;       org-ref-get-pdf-filename-function 'org-ref-get-pdf-filename-helm-bibtex
+;;       org-ref-bibliography-notes "~/org/roam/PDFs"
+;;       org-ref-notes-directory "~/org/roam/PDFs"
+;;       org-ref-notes-function 'orb-edit-notes)
+;; DEPRECATED Org-ref:1 ends here
+
+;; [[file:config.org::*Helm-bibtex][Helm-bibtex:1]]
+(after! org
+    (setq bibtex-completion-bibliography "~/org/roam/Zotero/bibliography.bib"
+          bibtex-completion-library-path "~/org/roam/Zotero/storage/."
+          bibtex-completion-notes-path "~/org/roam/Zotero/storage"))
+
+;; (after! org
+;;     (setq bibtex-completion-bibliography "~/org/roam/PDFs/bibliography.bib"
+;;           bibtex-completion-library-path "~/org/roam/PDFs/"
+;;           bibtex-completion-notes-path "~/org/roam/PDFs"))
+;; Helm-bibtex:1 ends here
+
+;; [[file:config.org::*UPDATE emacs-jupyter][UPDATE emacs-jupyter:1]]
+; this seems to add syntax-highlighting to jupyter-python and jupyter-typescript blocks
+;; (after! org-src
+;;   (dolist (lang '(python typescript jupyter))
+;;   (cl-pushnew (cons (format "jupyter-%s" lang) lang)
+;;                 org-src-lang-modes :key #'car))
+
+;;   ;;(org-babel-jupyter-override-src-block "python") ;; alias all python to jupyter-python
+;;   ;;(org-babel-jupyter-override-src-block "typescript") ;; alias all python to jupyter-python
+;;  )
+
+;; TypeScript
+;; (setq org-babel-default-header-args:jupyter-typescript '(
+;;   (:session . "ts")
+;;   (:kernel . "tslab")))
+
+;; Python
+(setq org-babel-default-header-args:jupyter-python '(
+   (:session . "py")
+   ;; (:pandoc . "t")
+   (:kernel . "python")))
+
+;; Haskell
+(setq org-babel-default-header-args:jupyter-haskell '(
+   (:session . "hs")
+   (:kernel . "haskell")))
+;; UPDATE emacs-jupyter:1 ends here
+
+;; [[file:config.org::*Org-noter][Org-noter:1]]
+(use-package org-noter
+  :after (:any org pdf-view)
+  :config
+  (setq org-noter-always-create-frame nil))  ; stop opening frames
+
+;; (setq org-noter-set-notes-window-location
+;; Org-noter:1 ends here
+
+;; [[file:config.org::*Hypothesis][Hypothesis:1]]
+(setq hypothesis-username "nazzacode"
+      hypothesis-token "6879-DJYjeV3gat2emzWKlSGkQu20tQTvQK3s7xVSepSdjfA")
+;; Hypothesis:1 ends here
+
+;; [[file:config.org::*FIXME org-download][FIXME org-download:1]]
+(require 'org-download)
+(setq org-download-screenshot-method "xclip")
+(setq-default org-download-image-dir "~/org/roam/Images")
+
+  ;; (use-package org-download
+  ;; :after org
+  ;; :bind
+  ;; (:map org-mode-map
+  ;;       (("a-Y" . org-download-screenshot)
+  ;;        ("a-y" . org-download-yank)))
+;; FIXME org-download:1 ends here
+
+;; [[file:config.org::*General][General:1]]
 ;; (add-hook 'after-init-hook 'org-roam-setup)   ; FIXME start on start-up BREAKING CONFIG ON REDOWNLOAD
 (setq org-roam-directory "~/org/roam"       ; set org-roam dir
       +org-roam-open-buffer-on-find-file nil
 )
-;; Org-roam ⤵:1 ends here
+;; General:1 ends here
 
 ;; [[file:config.org::*Org Roam Capture Templates][Org Roam Capture Templates:1]]
 (setq org-roam-capture-templates
@@ -297,9 +596,11 @@
   ("t" "Todo" plain "%?"
     :if-new (file+head "Todo/${slug}.org"
 
+
 "#+title: ${title}
 #+filetags:
 #+startup: show2levels
+#+CATEGORY:
 
 \n* DOING
 \n* NEXT
@@ -311,52 +612,7 @@
 )
 ;; Org Roam Capture Templates:1 ends here
 
-;; [[file:config.org::*org-roam-ui][org-roam-ui:1]]
-(use-package! websocket
-    :after org-roam)
-
-(use-package! org-roam-ui
-    :after org-roam ;; or :after org
-;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
-;;         a hookable mode anymore, you're advised to pick something yourself
-;;         if you don't care about startup time, use
-    ;; :hook (after-init . org-roam-ui-mode)
-    :config
-    (setq org-roam-ui-sync-theme t
-          org-roam-ui-follow t
-          org-roam-ui-update-on-save t
-          org-roam-ui-open-on-start t))
-;; org-roam-ui:1 ends here
-
-;; [[file:config.org::*Hiding the Properties Drawer][Hiding the Properties Drawer:1]]
-;; Funtion to hide/unhide the properties drawer
-(defun org-hide-properties ()
-  "Hide all org-mode headline property drawers in buffer. Could be slow if it has a lot of overlays."
-  (interactive)
-  (save-excursion
-    (goto-char (point-min))
-    (while (re-search-forward
-            "^ *:properties:\n\\( *:.+?:.*\n\\)+ *:end:\n" nil t)
-      (let ((ov_this (make-overlay (match-beginning 0) (match-end 0))))
-        (overlay-put ov_this 'display "")
-        (overlay-put ov_this 'hidden-prop-drawer t))))
-  (put 'org-toggle-properties-hide-state 'state 'hidden))
-
-(defun org-show-properties ()
-  "Show all org-mode property drawers hidden by org-hide-properties."
-  (interactive)
-  (remove-overlays (point-min) (point-max) 'hidden-prop-drawer t)
-  (put 'org-toggle-properties-hide-state 'state 'shown))
-
-(defun org-toggle-properties ()
-  "Toggle visibility of property drawers."
-  (interactive)
-  (if (eq (get 'org-toggle-properties-hide-state 'state) 'hidden)
-      (org-show-properties)
-    (org-hide-properties)))
-;; Hiding the Properties Drawer:1 ends here
-
-;; [[file:config.org::*Hiding Radio Target Syntax in Node Name][Hiding Radio Target Syntax in Node Name:1]]
+;; [[file:config.org::*Hide radio-target syntax in node name][Hide radio-target syntax in node name:1]]
 (defun org-link-display-format-h (s)
   "Replace radio links in string S with their description.
 If there is no description, use the link target."
@@ -367,7 +623,7 @@ If there is no description, use the link target."
      s nil t)))
 
 (advice-add  'org-link-display-format :filter-return 'org-link-display-format-h)
-;; Hiding Radio Target Syntax in Node Name:1 ends here
+;; Hide radio-target syntax in node name:1 ends here
 
 ;; [[file:config.org::*Org-roam-bibtex (ORB)][Org-roam-bibtex (ORB):1]]
 (use-package! org-roam-bibtex
@@ -401,154 +657,27 @@ If there is no description, use the link target."
 ;;      :unnarrowed t))))
 ;; Org-roam-bibtex (ORB):1 ends here
 
-;; [[file:config.org::*Org-ref][Org-ref:1]]
-;; FIXME startup error
-(require 'doi-utils)
+;; [[file:config.org::*UPDATE org-roam-ui][UPDATE org-roam-ui:1]]
+(use-package! websocket
+    :after org-roam)
 
-(setq reftex-default-bibliography '("~/org/roam/bibliography.bib"))
+;; (use-package! org-roam-ui
+;;     :after org-roam ;; or :after org
+;; ;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
+;; ;;         a hookable mode anymore, you're advised to pick something yourself
+;; ;;         if you don't care about startup time, use
+;;     ;; :hook (after-init . org-roam-ui-mode)
+;;     :config
+;;     (setq org-roam-ui-sync-theme t
+;;           org-roam-ui-follow t
+;;           org-roam-ui-update-on-save t
+;;           org-roam-ui-open-on-start t))
 
-;; see org-ref for use of these variables
-(setq org-ref-default-bibliography '("~/org/roam/PDFs/bibliography.bib")
-      org-ref-bibliography-notes "~/org/roam/PDFs"   ; TODO not in use
-      org-ref-pdf-directory "~/org/roam/PDFs/"       ; academic papers
-      org-ref-completion-library 'org-ref-ivy-cite
-      org-ref-get-pdf-filename-function 'org-ref-get-pdf-filename-helm-bibtex
-      org-ref-bibliography-notes "~/org/roam/PDFs"
-      org-ref-notes-directory "~/org/roam/PDFs"
-      org-ref-notes-function 'orb-edit-notes)
-;; Org-ref:1 ends here
-
-;; [[file:config.org::*Helm-bibtex][Helm-bibtex:1]]
-(after! org
-    (setq bibtex-completion-bibliography "~/org/roam/PDFs/bibliography.bib"
-          bibtex-completion-library-path "~/org/roam/PDFs/"
-          bibtex-completion-notes-path "~/org/roam/PDFs"))
-;; Helm-bibtex:1 ends here
-
-;; [[file:config.org::*Org-Babel (src blocks)][Org-Babel (src blocks):1]]
-;; typescript
-(org-babel-do-load-languages
-  'org-babel-load-languages
-    '((typescript . t)
-      (nix . t)
-      (python . t)
-      (dot . t)
-      ;; (sh . t)
-      (js . t)
-      (json . t)
-      (haskell . t)
-      (jupyter . t)))
-
-(defun org-babel-execute:typescript (body params)
-  (let ((org-babel-js-cmd "npx ts-node < "))
-    (org-babel-execute:js body params)))
-
-;; (defalias 'org-babel-execute:ts 'org-babel-execute:typescript) ; FIXME
-;; Org-Babel (src blocks):1 ends here
-
-;; [[file:config.org::*Jupyter][Jupyter:1]]
-; this seems to add syntax-highlighting to jupyter-python and jupyter-typescript blocks
-;; (after! org-src
-;;   (dolist (lang '(python typescript jupyter))
-;;   (cl-pushnew (cons (format "jupyter-%s" lang) lang)
-;;                 org-src-lang-modes :key #'car))
-
-;;   ;;(org-babel-jupyter-override-src-block "python") ;; alias all python to jupyter-python
-;;   ;;(org-babel-jupyter-override-src-block "typescript") ;; alias all python to jupyter-python
-;;  )
-
-;; TypeScript
-;; (setq org-babel-default-header-args:jupyter-typescript '(
-;;   (:session . "ts")
-;;   (:kernel . "tslab")))
-
-;; Python
-(setq org-babel-default-header-args:jupyter-python '(
-   (:session . "py")
-   ;; (:pandoc . "t")
-   (:kernel . "python")))
-
-;; Haskell
-(setq org-babel-default-header-args:jupyter-haskell '(
-   (:session . "hs")
-   (:kernel . "haskell")))
-;; Jupyter:1 ends here
-
-;; [[file:config.org::*Org-noter][Org-noter:1]]
-(use-package org-noter
-  :after (:any org pdf-view)
-  :config
-  (setq org-noter-always-create-frame nil))  ; stop opening frames
-;; Org-noter:1 ends here
-
-;; [[file:config.org::*Hypothesis][Hypothesis:1]]
-(setq hypothesis-username "nazzacode"
-      hypothesis-token "6879-DJYjeV3gat2emzWKlSGkQu20tQTvQK3s7xVSepSdjfA")
-;; Hypothesis:1 ends here
-
-;; [[file:config.org::*Show Properties (Drawer)][Show Properties (Drawer):1]]
-(defun org+-show-drawers ()
-  "Show all property drawers in current buffer."
-  (interactive)
-  (let ((data (org-element-parse-buffer)))
-    (org-element-map
-    data
-    'property-drawer
-      (lambda (drawer)
-    (let ((b (org-element-property :begin drawer))
-          (e (org-element-property :end drawer)))
-      (org-flag-region b e nil 'org-hide-drawer))))))
-
-(put 'org+-show-drawers 'safe-local-eval-function t)
-;; Show Properties (Drawer):1 ends here
-
-;; [[file:config.org::*HTML Export][HTML Export:1]]
-(setq org-html-html5-fancy t
-      org-html-table-caption-above nil)
-;; HTML Export:1 ends here
-
-;; [[file:config.org::*Hide radio links][Hide radio links:1]]
-(defcustom org-hidden-links-additional-re "\\(<<<\\)[[:print:]]+?\\(>>>\\)"
-  "Regular expression that matches strings where the invisible-property of the sub-matches 1 and 2 is set to org-link."
-  :type '(choice (const :tag "Off" nil) regexp)
-  :group 'org-link)
-(make-variable-buffer-local 'org-hidden-links-additional-re)
-
-(defun org-activate-hidden-links-additional (limit)
-  "Put invisible-property org-link on strings matching `org-hide-links-additional-re'."
-  (if org-hidden-links-additional-re
-      (re-search-forward org-hidden-links-additional-re limit t)
-    (goto-char limit)
-    nil))
-
-(defun org-hidden-links-hook-function ()
-  "Add rule for `org-activate-hidden-links-additional' to `org-font-lock-extra-keywords'.
-You can include this function in `org-font-lock-set-keywords-hook'."
-  (add-to-list 'org-font-lock-extra-keywords
-                              '(org-activate-hidden-links-additional
-                                (1 '(face org-target invisible org-link))
-                (2 '(face org-target invisible org-link)))))
-
-(add-hook 'org-font-lock-set-keywords-hook #'org-hidden-links-hook-function)
-;; Hide radio links:1 ends here
-
-;; [[file:config.org::*Syntax Highlight latex fragments][Syntax Highlight latex fragments:1]]
-;; (eval-after-load 'org
-;;   '(setq org-highlight-latex-and-related '(native)))
-;; Syntax Highlight latex fragments:1 ends here
-
-;; [[file:config.org::*FIXME org-download][FIXME org-download:1]]
-(require 'org-download)
-(setq org-download-screenshot-method "xclip")
-(setq-default org-download-image-dir "~/org/roam/Images")
-
-  ;; (use-package org-download
-  ;; :after org
-  ;; :bind
-  ;; (:map org-mode-map
-  ;;       (("a-Y" . org-download-screenshot)
-  ;;        ("a-y" . org-download-yank)))
-;; FIXME org-download:1 ends here
+(setq org-roam-ui-sync-theme t
+      org-roam-ui-follow t
+      org-roam-ui-update-on-save t
+      org-roam-ui-open-on-start t)
+;; UPDATE org-roam-ui:1 ends here
 
 ;; [[file:config.org::*peep-dired][peep-dired:1]]
 (setq peep-dired-cleanup-eagerly t)
@@ -614,7 +743,12 @@ Refer to `org-agenda-prefix-format' for more information."
        (match-end 1)))))
 ;; Clean category column garbage:1 ends here
 
-;; [[file:config.org::*Calender][Calender:1]]
+;; [[file:config.org::*Writeroom Mode][Writeroom Mode:1]]
+;; TODO increase font less
+;;(setq writeroom-mode-line t)
+;; Writeroom Mode:1 ends here
+
+;; [[file:config.org::*Calendar][Calendar:1]]
 ;; gcal integration
 (require 'calfw)
 (require 'org-gcal)
@@ -652,7 +786,51 @@ Refer to `org-agenda-prefix-format' for more information."
 ;; TODO on startup?
 ;; (add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync) ))
 ;; (add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync) ))
-;; Calender:1 ends here
+;; Calendar:1 ends here
+
+;; [[file:config.org::*Latex][Latex:1]]
+(setq org-format-latex-options
+  (list
+        :foreground 'default  ;; or `auto'
+        ;; :background 'auto
+        :scale 2.8  ;; bigger latex fragment
+        ;; :html-foreground "Black"
+        ;; :html-background "Transparent"
+        ;; :html-scale 1.0
+        :matchers '("begin" "$1" "$" "$$" "\\(" "\\[")))
+;; Latex:1 ends here
+
+;; [[file:config.org::*Exporting][Exporting:1]]
+(setq org-export-headline-levels 5) ; I like nesting
+
+;; show git version on creator string
+(setq org-export-creator-string
+      (format "Emacs %s (Org mode %s %s)" emacs-version (org-release) (org-git-version)))
+;; Exporting:1 ends here
+
+;; [[file:config.org::*Typescript][Typescript:1]]
+(defun setup-tide-mode ()
+  (interactive)
+  (tide-setup)
+  (flycheck-mode +1)
+  (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (eldoc-mode +1)
+  (tide-hl-identifier-mode +1)
+  ;; company is an optional dependency. You have to
+  ;; install it separately via package-install
+  ;; `M-x package-install [ret] company`
+  (company-mode +1))
+
+;; aligns annotation to the right hand side
+(setq company-tooltip-align-annotations t)
+
+;; formats the buffer before saving
+(add-hook 'before-save-hook 'tide-format-before-save)
+
+(add-hook 'typescript-mode-hook #'setup-tide-mode)
+
+(setq tide-completion-detailed t)
+;; Typescript:1 ends here
 
 ;; [[file:config.org::*Treemacs][Treemacs:1]]
 ;; (after! treemacs
@@ -660,8 +838,10 @@ Refer to `org-agenda-prefix-format' for more information."
 ;; Treemacs:1 ends here
 
 ;; [[file:config.org::*Pdf (tools)][Pdf (tools):1]]
-;; Double page spread
+;; more fine-grained zooming
+(setq pdf-view-resize-factor 1.1)
 
+;; Double page spread
 (defun my-pdf-view-double-scroll-up-or-next-page (&optional arg)
   "Scroll page up ARG lines if possible, else go to the next page.
 
@@ -744,50 +924,13 @@ next page only on typing SPC (ARG is nil)."
 ;; (add-hook 'nov-post-html-render-hook 'my-nov-post-html-render-hook)
 ;; Nov.el:1 ends here
 
-;; [[file:config.org::*Latex][Latex:1]]
-(setq org-format-latex-options
-  (list
-        :foreground 'default  ;; or `auto'
-        ;; :background 'auto
-        :scale 3.0  ;; bigger latex fragment
-        ;; :html-foreground "Black"
-        ;; :html-background "Transparent"
-        ;; :html-scale 1.0
-        :matchers '("begin" "$1" "$" "$$" "\\(" "\\[")))
-;; Latex:1 ends here
-
-;; [[file:config.org::*Direnv (Nix)][Direnv (Nix):1]]
+;; [[file:config.org::*MAYBE Direnv (Nix)][MAYBE Direnv (Nix):1]]
 ;; (use-package direnv
 ;;  :config
 ;;  (direnv-mode))
-;; Direnv (Nix):1 ends here
+;; MAYBE Direnv (Nix):1 ends here
 
-;; [[file:config.org::*Typescript][Typescript:1]]
-(defun setup-tide-mode ()
-  (interactive)
-  (tide-setup)
-  (flycheck-mode +1)
-  (setq flycheck-check-syntax-automatically '(save mode-enabled))
-  (eldoc-mode +1)
-  (tide-hl-identifier-mode +1)
-  ;; company is an optional dependency. You have to
-  ;; install it separately via package-install
-  ;; `M-x package-install [ret] company`
-  (company-mode +1))
-
-;; aligns annotation to the right hand side
-(setq company-tooltip-align-annotations t)
-
-;; formats the buffer before saving
-(add-hook 'before-save-hook 'tide-format-before-save)
-
-(add-hook 'typescript-mode-hook #'setup-tide-mode)
-
-
-(setq tide-completion-detailed t)
-;; Typescript:1 ends here
-
-;; [[file:config.org::*Deft][Deft:1]]
+;; [[file:config.org::*MAYBE Deft][MAYBE Deft:1]]
 (use-package deft
   :after org
   :bind
@@ -797,8 +940,19 @@ next page only on typing SPC (ARG is nil)."
   (deft-use-filter-string-for-filename t)
   (deft-default-extension "org")
   (deft-directory org-roam-directory))
-;; Deft:1 ends here
+;; MAYBE Deft:1 ends here
 
-;; [[file:config.org::*Misc][Misc:1]]
-(setq lisp-indent-offset 2)
-;; Misc:1 ends here
+;; [[file:config.org::*Graphviz (dot)][Graphviz (dot):1]]
+(use-package! graphviz-dot-mode
+  :commands graphviz-dot-mode
+  :mode ("\\.dot\\'" "\\.gz\\'")
+  ;; correct higlighting in org mode
+  :init
+  (after! org
+    (setcdr (assoc "dot" org-src-lang-modes)
+            'graphviz-dot)))
+
+;; ;; TODO Completions
+;; (use-package! company-graphviz-dot
+;;   :after graphviz-dot-mode)
+;; Graphviz (dot):1 ends here

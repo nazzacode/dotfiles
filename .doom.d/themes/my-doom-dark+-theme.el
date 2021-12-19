@@ -22,14 +22,15 @@ Can be an integer to determine the exact padding."
   "A dark theme inspired by dark+ Theme by equinusocio"
 
   ;; name        default   256       16
-  ((bg         '("#1e1e1e" "#1e1e1e" nil))
-   (bg-alt     '("#252526" "#222222"  nil))
-   (base0      '("#171F24" "#111122"   "black"))
+  ((bg         '("#1C1C1C" "#1C1C1C" nil))
+   (bg-alt     '("#2B2B2B" "#2B2B2B" nil))
+   ;; (bg-alt     '("#303030" "#303030"  nil))
+   (base0      '("#111111" "#111111"   "black"))
    (base1      '("#1d1d1d" "#1C1C1C" "brightblack"))
-   (base2      '("#262626" "#626262" "brightblack")) ;; src_block_backgroud
-   (base3      '("#313131" "#3a3a3a" "brightblack"))
+   (base2      '("#181818" "#181818" "brightblack")) ;; src_block_backgroud
+   (base3      '("#3a3a3a" "#3a3a3a" "brightblack"))
    (base4      '("#4b474c" "#444444" "brightblack"))
-   (base5      '("#37474F" "#585858" "brightblack"))
+   (base5      '("#6a6a6a" "#585858" "brightblack"))
    (base6      '("#237AD3" "#2277DD" "brightblack"))
    (base7      '("#777778" "#767676" "brightblack"))
    (base8      '("#f4f4f4" "#a8a8a8" "white"))
@@ -53,7 +54,7 @@ Can be an integer to determine the exact padding."
    (dark-cyan    '("#207FA1" "#2277AA" "cyan"))
 
    ;; face categories -- required for all themes
-   (highlight      base6)
+   (highlight      fg) ; base6)
    (vertical-bar   base4) ; fg
    (selection      base4)
    (builtin        magenta)
@@ -117,7 +118,7 @@ Can be an integer to determine the exact padding."
    (css-proprietary-property :foreground orange)
    (css-property             :foreground green)
    (css-selector             :foreground blue)
-   ;;;; dashboard
+   ;\;;; dashboard
    (dashboard-heading :foreground green :weight 'semi-bold)
    ;;;; dired-k
    (dired-k-commited :foreground base4)
@@ -165,10 +166,11 @@ Can be an integer to determine the exact padding."
    ((outline-7 &override) :foreground (doom-lighten grey 0.3))
    ((outline-8 &override) :foreground (doom-lighten cyan 0.6))
    ;;;; org <built-in>
-   ((org-block &override) :background (doom-lighten base2 0.02))
+   ((org-block &override) :background (doom-darken bg-alt 0.1))
+   ;; org src blocks
    ;; ((org-block-background &override)  bg)
-   ((org-block-begin-line &override) :background bg)
-   ((org-block-end-line &override) :background bg)
+   ((org-block-begin-line &override) :background (doom-lighten bg-alt 0.02)) ;bg)
+   ((org-block-end-line &override) :background (doom-lighten bg-alt 0.02)) ; bg)
    ;;;; org-pomodoro
    (org-pomodoro-mode-line :inherit 'mode-line-emphasis) ; unreadable otherwise
    (org-pomodoro-mode-line-overtime :inherit 'org-pomodoro-mode-line)

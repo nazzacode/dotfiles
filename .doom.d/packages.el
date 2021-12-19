@@ -13,6 +13,7 @@
 (package! all-the-icons-dired) ; file icons fordired
 (package! company-box)
 (package! company-math)      ; latex unicode completion menu
+(package! company-tabnine)
 (package! direnv)            ; dev environments per filepath
 (package! deft)              ; search buffer
 (package! doom-modeline)
@@ -26,7 +27,9 @@
 (package! ob-typescript)
 (package! org-appear)        ; show emphasis markers when inside fragment
 (package! org-download)      ; screenshots
+(package! org-fragtog)      ; auto latex fragement rendering
 (package! org-noter)         ; pdf + synced notes; side by side
+(package! org-contrib)  ; extra utilities such as the :ignore: tag
 (package! org-ref)           ; academic referencing in org mode
 (package! org-roam-bibtex)   ; org + roam + bibtex
 (package! org-roam-ui :recipe (:host github :repo "org-roam/org-roam-ui" :files ("*.el" "out"))) ; graph explorer for org roam
@@ -42,6 +45,10 @@
 (package! ts-comint)         ; typescript REPL
 (package! valign)            ; pretty tables
 (package! yascroll)          ; ascii scrollbar
+;; (package! webkit :recipe (:host github :repo "akirakyle/emacs-webkit"  ; browser and ting
+;;           :files (:defaults "*.js" "*.css" "*.so")
+;;           :pre-build ("make")))
+(package! phscroll :recipe (:host github :repo "misohena/phscroll"))  ; partial horizontal scrolling in org mode (use case: wide tables)
 (package! websocket)
 (package! winum)
 
