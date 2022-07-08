@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{c+c1}{;; (use\PYGZhy{}package direnv}
+\PYG{c+c1}{;;  :config}
+\PYG{c+c1}{;;  (direnv\PYGZhy{}mode))}
+\end{Verbatim}

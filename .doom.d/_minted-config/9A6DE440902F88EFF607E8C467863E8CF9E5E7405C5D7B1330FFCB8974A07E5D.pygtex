@@ -1,0 +1,14 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{p}{(}\PYG{n+nv}{use\PYGZhy{}package!} \PYG{n+nv}{graphviz\PYGZhy{}dot\PYGZhy{}mode}
+  \PYG{n+nb}{:commands} \PYG{n+nv}{graphviz\PYGZhy{}dot\PYGZhy{}mode}
+  \PYG{n+nb}{:mode} \PYG{p}{(}\PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}.dot\PYGZbs{}\PYGZbs{}\PYGZsq{}\PYGZdq{}} \PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}.gz\PYGZbs{}\PYGZbs{}\PYGZsq{}\PYGZdq{}}\PYG{p}{)}
+  \PYG{c+c1}{;; correct higlighting in org mode}
+  \PYG{n+nb}{:init}
+  \PYG{p}{(}\PYG{n+nv}{after!} \PYG{n+nv}{org}
+    \PYG{p}{(}\PYG{n+nf}{setcdr} \PYG{p}{(}\PYG{n+nf}{assoc} \PYG{l+s}{\PYGZdq{}dot\PYGZdq{}} \PYG{n+nv}{org\PYGZhy{}src\PYGZhy{}lang\PYGZhy{}modes}\PYG{p}{)}
+            \PYG{l+s+ss}{\PYGZsq{}graphviz\PYGZhy{}dot}\PYG{p}{)))}
+
+\PYG{c+c1}{;; ;; TODO Completions}
+\PYG{c+c1}{;; (use\PYGZhy{}package! company\PYGZhy{}graphviz\PYGZhy{}dot}
+\PYG{c+c1}{;;   :after graphviz\PYGZhy{}dot\PYGZhy{}mode)}
+\end{Verbatim}

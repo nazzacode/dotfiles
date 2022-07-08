@@ -1,0 +1,31 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{p}{(}\PYG{n+nv}{use\PYGZhy{}package!} \PYG{n+nv}{org\PYGZhy{}roam\PYGZhy{}bibtex}
+  \PYG{n+nb}{:after} \PYG{p}{(}\PYG{n+nv}{org\PYGZhy{}roam}\PYG{p}{)}
+  \PYG{n+nb}{:hook} \PYG{p}{(}\PYG{n+nv}{org\PYGZhy{}roam\PYGZhy{}mode} \PYG{o}{.} \PYG{n+nv}{org\PYGZhy{}roam\PYGZhy{}bibtex\PYGZhy{}mode}\PYG{p}{)}
+  \PYG{n+nb}{:config}
+  \PYG{p}{(}\PYG{n+nb}{require} \PYG{l+s+ss}{\PYGZsq{}org\PYGZhy{}ref}\PYG{p}{))} \PYG{c+c1}{; optional: if Org Ref is not loaded anywhere else, load it here}
+
+\PYG{c+c1}{;;   (setq orb\PYGZhy{}preformat\PYGZhy{}keywords}
+\PYG{c+c1}{;;       \PYGZsq{}(\PYGZdq{}citekey\PYGZdq{} \PYGZdq{}title\PYGZdq{} \PYGZdq{}url\PYGZdq{} \PYGZdq{}author\PYGZhy{}or\PYGZhy{}editor\PYGZdq{} \PYGZdq{}keywords\PYGZdq{} \PYGZdq{}file\PYGZdq{})}
+\PYG{c+c1}{;;       orb\PYGZhy{}process\PYGZhy{}file\PYGZhy{}keyword t}
+\PYG{c+c1}{;;       orb\PYGZhy{}file\PYGZhy{}field\PYGZhy{}extensions \PYGZsq{}(\PYGZdq{}pdf\PYGZdq{}))}
+\PYG{c+c1}{;;   ;; (setq orb\PYGZhy{}preformat\PYGZhy{}keywords}
+\PYG{c+c1}{;;   ;; \PYGZsq{}(\PYGZdq{}=key=\PYGZdq{} \PYGZdq{}title\PYGZdq{} \PYGZdq{}url\PYGZdq{} \PYGZdq{}file\PYGZdq{} \PYGZdq{}author\PYGZhy{}or\PYGZhy{}editor\PYGZdq{} \PYGZdq{}keywords\PYGZdq{}))}
+\PYG{c+c1}{;;   (setq orb\PYGZhy{}templates}
+\PYG{c+c1}{;;     \PYGZsq{}((\PYGZdq{}r\PYGZdq{} \PYGZdq{}ref\PYGZdq{} plain (function org\PYGZhy{}roam\PYGZhy{}fapture\PYGZhy{}\PYGZhy{}get\PYGZhy{}point)}
+\PYG{c+c1}{;;      \PYGZdq{}\PYGZdq{}}
+\PYG{c+c1}{;;      :file\PYGZhy{}name \PYGZdq{}\PYGZdl{}\PYGZob{}slug\PYGZcb{}\PYGZdq{}}
+\PYG{c+c1}{;;      :head \PYGZdq{}\PYGZsh{}+TITLE: \PYGZdl{}\PYGZob{}citekey\PYGZcb{}: \PYGZdl{}\PYGZob{}title\PYGZcb{}\PYGZbs{}n\PYGZsh{}+roam\PYGZus{}key: \PYGZdl{}\PYGZob{}ref\PYGZcb{}\PYGZbs{}n\PYGZsh{}+roam\PYGZus{}tags:}
+
+\PYG{c+c1}{;; \PYGZhy{} keywords :: \PYGZdl{}\PYGZob{}keywords\PYGZcb{}}
+
+\PYG{c+c1}{;; \PYGZbs{}n* \PYGZdl{}\PYGZob{}title\PYGZcb{}}
+\PYG{c+c1}{;; :PROPERTIES:}
+\PYG{c+c1}{;; :Custom\PYGZus{}ID: \PYGZdl{}\PYGZob{}citekey\PYGZcb{}}
+\PYG{c+c1}{;; :URL: \PYGZdl{}\PYGZob{}url\PYGZcb{}}
+\PYG{c+c1}{;; :AUTHOR: \PYGZdl{}\PYGZob{}author\PYGZhy{}or\PYGZhy{}editor\PYGZcb{}}
+\PYG{c+c1}{;; :NOTER\PYGZus{}DOCUMENT: \PYGZdl{}\PYGZob{}file\PYGZcb{}}
+\PYG{c+c1}{;; :NOTER\PYGZus{}PAGE:}
+\PYG{c+c1}{;; :END:\PYGZdq{}}
+\PYG{c+c1}{;;      :unnarrowed t))))}
+\end{Verbatim}

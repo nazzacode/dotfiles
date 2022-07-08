@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{;; (custom\PYGZhy{}set\PYGZhy{}variables \PYGZsq{}(org\PYGZhy{}agenda\PYGZhy{}files (list \PYGZdq{}\PYGZti{}/org/roam/gcal.org\PYGZdq{})))}
+ \PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{org\PYGZhy{}agenda\PYGZhy{}files} \PYG{o}{\PYGZsq{}}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}\PYGZti{}/org/roam/gcal.org\PYGZdq{}}\PYG{p}{))}
+\end{Verbatim}

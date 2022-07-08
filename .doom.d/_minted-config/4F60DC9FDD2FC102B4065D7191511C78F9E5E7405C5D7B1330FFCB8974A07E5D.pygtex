@@ -1,0 +1,33 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{p}{(}\PYG{n+nv}{after!} \PYG{n+nv}{org}
+  \PYG{p}{(}\PYG{n+nv}{add\PYGZhy{}hook!} \PYG{l+s+ss}{\PYGZsq{}org\PYGZhy{}mode\PYGZhy{}hook} \PYG{n+nf}{\PYGZsh{}\PYGZsq{}}\PYG{n+nv}{+org\PYGZhy{}pretty\PYGZhy{}mode}   \PYG{c+c1}{; hides emphasis markers and toggles \PYGZdq{}pretty entities\PYGZdq{}}
+                            \PYG{n+nf}{\PYGZsh{}\PYGZsq{}}\PYG{n+nv}{org\PYGZhy{}appear\PYGZhy{}mode}    \PYG{c+c1}{; expand invisible emphasis markers etc.}
+                            \PYG{n+nf}{\PYGZsh{}\PYGZsq{}}\PYG{n+nv}{mixed\PYGZhy{}pitch\PYGZhy{}mode}\PYG{p}{)}  \PYG{c+c1}{; uses var\PYGZhy{}pitch font for text}
+
+  \PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{org\PYGZhy{}directory} \PYG{l+s}{\PYGZdq{}\PYGZti{}/org\PYGZdq{}}              \PYG{c+c1}{; dir for agenda etc.}
+        \PYG{n+nv}{org\PYGZhy{}num\PYGZhy{}skip\PYGZhy{}unnumbered} \PYG{n+no}{t}          \PYG{c+c1}{; skip `:UNNUMBERED:` from numbering}
+        \PYG{n+nv}{org\PYGZhy{}ellipsis} \PYG{l+s}{\PYGZdq{}  \PYGZdq{}}
+        \PYG{n+nv}{display\PYGZhy{}line\PYGZhy{}numbers\PYGZhy{}type} \PYG{l+s+ss}{\PYGZsq{}nil}     \PYG{c+c1}{; no line numbers by default in org}
+        \PYG{n+nv}{org\PYGZhy{}startup\PYGZhy{}with\PYGZhy{}inline\PYGZhy{}images} \PYG{l+s+ss}{\PYGZsq{}t}
+        \PYG{c+c1}{;; org\PYGZhy{}image\PYGZhy{}actual\PYGZhy{}width 450      ; set default width ; FIXME cannot override}
+        \PYG{n+nv}{org\PYGZhy{}startup\PYGZhy{}with\PYGZhy{}latex\PYGZhy{}preview} \PYG{l+s+ss}{\PYGZsq{}t}
+        \PYG{n+nv}{org\PYGZhy{}startup\PYGZhy{}shrink\PYGZhy{}all\PYGZhy{}tables} \PYG{l+s+ss}{\PYGZsq{}t}
+        \PYG{c+c1}{;; org\PYGZhy{}startup\PYGZhy{}indented \PYGZsq{}nil          ; dont indent in nested headings}
+        \PYG{n+nv}{org\PYGZhy{}appear\PYGZhy{}autolinks} \PYG{l+s+ss}{\PYGZsq{}t}            \PYG{c+c1}{; auto appear links}
+        \PYG{n+nv}{org\PYGZhy{}appear\PYGZhy{}autosubmarkers} \PYG{l+s+ss}{\PYGZsq{}t}       \PYG{c+c1}{; auto apear subscript/superscript}
+        \PYG{n+nv}{org\PYGZhy{}appear\PYGZhy{}autoentities} \PYG{l+s+ss}{\PYGZsq{}t}         \PYG{c+c1}{; auto apear \PYGZbs{}alpha etc.}
+        \PYG{n+nv}{org\PYGZhy{}appear\PYGZhy{}autokeywords} \PYG{l+s+ss}{\PYGZsq{}t}         \PYG{c+c1}{; auto apear elements in `org\PYGZhy{}hidden\PYGZhy{}keywords\PYGZsq{}}
+
+        \PYG{n+nv}{org\PYGZhy{}startup\PYGZhy{}folded} \PYG{l+s+ss}{\PYGZsq{}t}\PYG{p}{))}            \PYG{c+c1}{; FIXME not working}
+
+\PYG{c+c1}{;; Fancy Headers and bullet lists}
+\PYG{c+c1}{;; (require \PYGZsq{}org\PYGZhy{}superstar)  ; NEEDED?}
+\PYG{c+c1}{;; (add\PYGZhy{}hook \PYGZsq{}org\PYGZhy{}mode\PYGZhy{}hook (lambda () (org\PYGZhy{}superstar\PYGZhy{}mode 1)))}
+
+\PYG{p}{(}\PYG{n+nv}{font\PYGZhy{}lock\PYGZhy{}add\PYGZhy{}keywords} \PYG{l+s+ss}{\PYGZsq{}org\PYGZhy{}mode}
+                        \PYG{o}{\PYGZsq{}}\PYG{p}{((}\PYG{l+s}{\PYGZdq{}\PYGZca{} *\PYGZbs{}\PYGZbs{}([\PYGZhy{}]\PYGZbs{}\PYGZbs{}) \PYGZdq{}}
+                           \PYG{p}{(}\PYG{l+m+mi}{0} \PYG{p}{(}\PYG{k}{prog1} \PYG{p}{()} \PYG{p}{(}\PYG{n+nv}{compose\PYGZhy{}region} \PYG{p}{(}\PYG{n+nf}{match\PYGZhy{}beginning} \PYG{l+m+mi}{1}\PYG{p}{)} \PYG{p}{(}\PYG{n+nf}{match\PYGZhy{}end} \PYG{l+m+mi}{1}\PYG{p}{)} \PYG{l+s}{\PYGZdq{}•\PYGZdq{}}\PYG{p}{))))))}
+\PYG{p}{(}\PYG{n+nv}{font\PYGZhy{}lock\PYGZhy{}add\PYGZhy{}keywords} \PYG{l+s+ss}{\PYGZsq{}org\PYGZhy{}mode}
+                        \PYG{o}{\PYGZsq{}}\PYG{p}{((}\PYG{l+s}{\PYGZdq{}\PYGZca{} *\PYGZbs{}\PYGZbs{}([+]\PYGZbs{}\PYGZbs{}) \PYGZdq{}}
+                           \PYG{p}{(}\PYG{l+m+mi}{0} \PYG{p}{(}\PYG{k}{prog1} \PYG{p}{()} \PYG{p}{(}\PYG{n+nv}{compose\PYGZhy{}region} \PYG{p}{(}\PYG{n+nf}{match\PYGZhy{}beginning} \PYG{l+m+mi}{1}\PYG{p}{)} \PYG{p}{(}\PYG{n+nf}{match\PYGZhy{}end} \PYG{l+m+mi}{1}\PYG{p}{)} \PYG{l+s}{\PYGZdq{}◦\PYGZdq{}}\PYG{p}{))))))}
+\end{Verbatim}

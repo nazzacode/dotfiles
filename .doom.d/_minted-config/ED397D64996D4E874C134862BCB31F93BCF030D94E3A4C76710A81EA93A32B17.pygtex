@@ -1,0 +1,80 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{p}{(}\PYG{n+nb}{require} \PYG{l+s+ss}{\PYGZsq{}ox\PYGZhy{}extra}\PYG{p}{)}
+\PYG{p}{(}\PYG{n+nv}{ox\PYGZhy{}extras\PYGZhy{}activate} \PYG{o}{\PYGZsq{}}\PYG{p}{(}\PYG{n+nv}{ignore\PYGZhy{}headlines}\PYG{p}{))}
+
+\PYG{c+c1}{;; Need from latex minted package}
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{org\PYGZhy{}latex\PYGZhy{}listings} \PYG{l+s+ss}{\PYGZsq{}minted}
+      \PYG{n+nv}{org\PYGZhy{}latex\PYGZhy{}packages\PYGZhy{}alist} \PYG{o}{\PYGZsq{}}\PYG{p}{((}\PYG{l+s}{\PYGZdq{}\PYGZdq{}} \PYG{l+s}{\PYGZdq{}minted\PYGZdq{}}\PYG{p}{))}
+      \PYG{n+nv}{org\PYGZhy{}latex\PYGZhy{}pdf\PYGZhy{}process}
+      \PYG{o}{\PYGZsq{}}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}pdflatex \PYGZhy{}shell\PYGZhy{}escape \PYGZhy{}interaction nonstopmode \PYGZhy{}output\PYGZhy{}directory \PYGZpc{}o \PYGZpc{}f\PYGZdq{}}
+        \PYG{l+s}{\PYGZdq{}pdflatex \PYGZhy{}shell\PYGZhy{}escape \PYGZhy{}interaction nonstopmode \PYGZhy{}output\PYGZhy{}directory \PYGZpc{}o \PYGZpc{}f\PYGZdq{}}\PYG{p}{))}
+
+\PYG{c+c1}{;; [frame=lines, framesep=2mm, baselinestretch=1.2, bgcolor=LightGray, fontsize=\PYGZbs{}footnotesize, linenos]}
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{org\PYGZhy{}latex\PYGZhy{}minted\PYGZhy{}options} \PYG{o}{\PYGZsq{}}\PYG{p}{((}\PYG{l+s}{\PYGZdq{}breaklines\PYGZdq{}} \PYG{l+s}{\PYGZdq{}true\PYGZdq{}}\PYG{p}{)}
+                                 \PYG{c+c1}{;; (\PYGZdq{}\PYGZdq{} \PYGZdq{}\PYGZdq{})}
+                                 \PYG{p}{(}\PYG{l+s}{\PYGZdq{}breakanywhere\PYGZdq{}} \PYG{l+s}{\PYGZdq{}true\PYGZdq{}}\PYG{p}{)}
+                                 \PYG{c+c1}{;; (\PYGZdq{}framesep\PYGZdq{} \PYGZdq{}2mm\PYGZdq{})}
+                                 \PYG{p}{(}\PYG{l+s}{\PYGZdq{}baselinestretch\PYGZdq{}} \PYG{l+s}{\PYGZdq{}1.1\PYGZdq{}}\PYG{p}{)}    \PYG{c+c1}{;; line spacing}
+                                 \PYG{c+c1}{;; (\PYGZdq{}fontsize\PYGZdq{} \PYGZdq{}\PYGZbs{}footnotesize\PYGZdq{})  ;;}
+                                 \PYG{c+c1}{;; (\PYGZdq{}fontsize\PYGZdq{} \PYGZdq{}16\PYGZdq{})  ;;}
+                                 \PYG{p}{(}\PYG{l+s}{\PYGZdq{}linenos\PYGZdq{}} \PYG{l+s}{\PYGZdq{}true\PYGZdq{}}\PYG{p}{)}
+                                 \PYG{p}{(}\PYG{l+s}{\PYGZdq{}numbersep\PYGZdq{}} \PYG{l+s}{\PYGZdq{}4pt\PYGZdq{}}\PYG{p}{)}
+                                 \PYG{p}{(}\PYG{l+s}{\PYGZdq{}mathescape\PYGZdq{}} \PYG{l+s}{\PYGZdq{}true\PYGZdq{}}\PYG{p}{)}        \PYG{c+c1}{;; allows $$ latex in comments}
+                                 \PYG{p}{(}\PYG{l+s}{\PYGZdq{}bgcolor=grey!10!white\PYGZdq{}}\PYG{p}{)}       \PYG{c+c1}{;; FIXME broken}
+                                 \PYG{c+c1}{;; (\PYGZdq{}frame\PYGZdq{} \PYGZdq{}single\PYGZdq{})))         ;; frame line}
+\PYG{p}{))}
+
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{org\PYGZhy{}latex\PYGZhy{}caption\PYGZhy{}above} \PYG{n+no}{nil}\PYG{p}{)}
+
+\PYG{c+c1}{;; svg rendering (to PDF via Inkscape)}
+\PYG{c+c1}{;; NOTE must have inkscape installed and svg be in same folder}
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{org\PYGZhy{}latex\PYGZhy{}pdf\PYGZhy{}process}
+      \PYG{p}{(}\PYG{k}{let}
+          \PYG{p}{((}\PYG{n+nv}{cmd} \PYG{p}{(}\PYG{n+nf}{concat} \PYG{l+s}{\PYGZdq{}pdflatex \PYGZhy{}shell\PYGZhy{}escape \PYGZhy{}interaction nonstopmode\PYGZdq{}}
+                \PYG{l+s}{\PYGZdq{} \PYGZhy{}\PYGZhy{}synctex=1\PYGZdq{}}
+                \PYG{l+s}{\PYGZdq{} \PYGZhy{}output\PYGZhy{}directory \PYGZpc{}o \PYGZpc{}f\PYGZdq{}}\PYG{p}{)))}
+        \PYG{p}{(}\PYG{n+nf}{list} \PYG{n+nv}{cmd}
+          \PYG{l+s}{\PYGZdq{}cd \PYGZpc{}o; if test \PYGZhy{}r \PYGZpc{}b.idx; then makeindex \PYGZpc{}b.idx; fi\PYGZdq{}}
+          \PYG{l+s}{\PYGZdq{}cd \PYGZpc{}o; bibtex \PYGZpc{}b\PYGZdq{}}
+          \PYG{n+nv}{cmd}
+          \PYG{n+nv}{cmd}\PYG{p}{)))}
+
+\PYG{c+c1}{;; TODO put in seperate file for reprooducibility}
+\PYG{c+c1}{;; TODO install infthesis  class?}
+\PYG{p}{(}\PYG{n+nb}{with\PYGZhy{}eval\PYGZhy{}after\PYGZhy{}load} \PYG{l+s+ss}{\PYGZsq{}ox\PYGZhy{}latex}
+  \PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{org\PYGZhy{}latex\PYGZhy{}classes}
+    \PYG{o}{\PYGZsq{}}\PYG{p}{((}\PYG{l+s}{\PYGZdq{}inf\PYGZhy{}thesis\PYGZdq{}}
+        \PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}documentclass[12pt]\PYGZob{}scrartcl\PYGZcb{}\PYGZdq{}}
+        \PYG{c+c1}{;; \PYGZdq{}\PYGZbs{}documentclass[bsc,frontabs,singlespacing,parskip,deptreport]\PYGZob{}infthesis\PYGZcb{}\PYGZdq{}}
+        \PYG{c+c1}{;; \PYGZdq{}\PYGZbs{}\PYGZbs{}input\PYGZob{}my\PYGZhy{}documents\PYGZhy{}template.tex\PYGZcb{}\PYGZdq{} ; if too long put in seperate file}
+      \PYG{p}{(}\PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}section\PYGZob{}\PYGZpc{}s\PYGZcb{}\PYGZdq{}} \PYG{o}{.} \PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}section*\PYGZob{}\PYGZpc{}s\PYGZcb{}\PYGZdq{}}\PYG{p}{)}
+      \PYG{p}{(}\PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}subsection\PYGZob{}\PYGZpc{}s\PYGZcb{}\PYGZdq{}} \PYG{o}{.} \PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}subsection*\PYGZob{}\PYGZpc{}s\PYGZcb{}\PYGZdq{}}\PYG{p}{)}
+      \PYG{p}{(}\PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}subsubsection\PYGZob{}\PYGZpc{}s\PYGZcb{}\PYGZdq{}} \PYG{o}{.} \PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}subsubsection*\PYGZob{}\PYGZpc{}s\PYGZcb{}\PYGZdq{}}\PYG{p}{)}
+      \PYG{p}{(}\PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}paragraph\PYGZob{}\PYGZpc{}s\PYGZcb{}\PYGZdq{}} \PYG{o}{.} \PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}paragraph*\PYGZob{}\PYGZpc{}s\PYGZcb{}\PYGZdq{}}\PYG{p}{)}
+      \PYG{p}{(}\PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}subparagraph\PYGZob{}\PYGZpc{}s\PYGZcb{}\PYGZdq{}} \PYG{o}{.} \PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}subparagraph*\PYGZob{}\PYGZpc{}s\PYGZcb{}\PYGZdq{}}\PYG{p}{))}
+    \PYG{p}{(}\PYG{l+s}{\PYGZdq{}article\PYGZdq{}} \PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}documentclass[11pt]\PYGZob{}article\PYGZcb{}\PYGZdq{}}
+      \PYG{p}{(}\PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}section\PYGZob{}\PYGZpc{}s\PYGZcb{}\PYGZdq{}} \PYG{o}{.} \PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}section*\PYGZob{}\PYGZpc{}s\PYGZcb{}\PYGZdq{}}\PYG{p}{)}
+      \PYG{p}{(}\PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}subsection\PYGZob{}\PYGZpc{}s\PYGZcb{}\PYGZdq{}} \PYG{o}{.} \PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}subsection*\PYGZob{}\PYGZpc{}s\PYGZcb{}\PYGZdq{}}\PYG{p}{)}
+      \PYG{p}{(}\PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}subsubsection\PYGZob{}\PYGZpc{}s\PYGZcb{}\PYGZdq{}} \PYG{o}{.} \PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}subsubsection*\PYGZob{}\PYGZpc{}s\PYGZcb{}\PYGZdq{}}\PYG{p}{)}
+      \PYG{p}{(}\PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}paragraph\PYGZob{}\PYGZpc{}s\PYGZcb{}\PYGZdq{}} \PYG{o}{.} \PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}paragraph*\PYGZob{}\PYGZpc{}s\PYGZcb{}\PYGZdq{}}\PYG{p}{)}
+      \PYG{p}{(}\PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}subparagraph\PYGZob{}\PYGZpc{}s\PYGZcb{}\PYGZdq{}} \PYG{o}{.} \PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}subparagraph*\PYGZob{}\PYGZpc{}s\PYGZcb{}\PYGZdq{}}\PYG{p}{))}
+    \PYG{p}{(}\PYG{l+s}{\PYGZdq{}report\PYGZdq{}} \PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}documentclass[11pt]\PYGZob{}report\PYGZcb{}\PYGZdq{}}
+      \PYG{p}{(}\PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}part\PYGZob{}\PYGZpc{}s\PYGZcb{}\PYGZdq{}} \PYG{o}{.} \PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}part*\PYGZob{}\PYGZpc{}s\PYGZcb{}\PYGZdq{}}\PYG{p}{)}
+      \PYG{p}{(}\PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}chapter\PYGZob{}\PYGZpc{}s\PYGZcb{}\PYGZdq{}} \PYG{o}{.} \PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}chapter*\PYGZob{}\PYGZpc{}s\PYGZcb{}\PYGZdq{}}\PYG{p}{)}
+      \PYG{p}{(}\PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}section\PYGZob{}\PYGZpc{}s\PYGZcb{}\PYGZdq{}} \PYG{o}{.} \PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}section*\PYGZob{}\PYGZpc{}s\PYGZcb{}\PYGZdq{}}\PYG{p}{)}
+      \PYG{p}{(}\PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}subsection\PYGZob{}\PYGZpc{}s\PYGZcb{}\PYGZdq{}} \PYG{o}{.} \PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}subsection*\PYGZob{}\PYGZpc{}s\PYGZcb{}\PYGZdq{}}\PYG{p}{)}
+      \PYG{p}{(}\PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}subsubsection\PYGZob{}\PYGZpc{}s\PYGZcb{}\PYGZdq{}} \PYG{o}{.} \PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}subsubsection*\PYGZob{}\PYGZpc{}s\PYGZcb{}\PYGZdq{}}\PYG{p}{))}
+    \PYG{p}{(}\PYG{l+s}{\PYGZdq{}book\PYGZdq{}} \PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}documentclass[11pt]\PYGZob{}book\PYGZcb{}\PYGZdq{}}
+      \PYG{p}{(}\PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}part\PYGZob{}\PYGZpc{}s\PYGZcb{}\PYGZdq{}} \PYG{o}{.} \PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}part*\PYGZob{}\PYGZpc{}s\PYGZcb{}\PYGZdq{}}\PYG{p}{)}
+      \PYG{p}{(}\PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}chapter\PYGZob{}\PYGZpc{}s\PYGZcb{}\PYGZdq{}} \PYG{o}{.} \PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}chapter*\PYGZob{}\PYGZpc{}s\PYGZcb{}\PYGZdq{}}\PYG{p}{)}
+      \PYG{p}{(}\PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}section\PYGZob{}\PYGZpc{}s\PYGZcb{}\PYGZdq{}} \PYG{o}{.} \PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}section*\PYGZob{}\PYGZpc{}s\PYGZcb{}\PYGZdq{}}\PYG{p}{)}
+      \PYG{p}{(}\PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}subsection\PYGZob{}\PYGZpc{}s\PYGZcb{}\PYGZdq{}} \PYG{o}{.} \PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}subsection*\PYGZob{}\PYGZpc{}s\PYGZcb{}\PYGZdq{}}\PYG{p}{)}
+      \PYG{p}{(}\PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}subsubsection\PYGZob{}\PYGZpc{}s\PYGZcb{}\PYGZdq{}} \PYG{o}{.} \PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}subsubsection*\PYGZob{}\PYGZpc{}s\PYGZcb{}\PYGZdq{}}\PYG{p}{)))))}
+
+\PYG{c+c1}{;; glossary}
+\PYG{c+c1}{;; (use\PYGZhy{}package org\PYGZhy{}ref}
+\PYG{c+c1}{;;   :ensure t}
+\PYG{c+c1}{;;   :defer t}
+\PYG{c+c1}{;;   :custom (org\PYGZhy{}export\PYGZhy{}before\PYGZhy{}parsing\PYGZhy{}hook \PYGZsq{}(org\PYGZhy{}ref\PYGZhy{}glossary\PYGZhy{}before\PYGZhy{}parsing}
+\PYG{c+c1}{;;                                             org\PYGZhy{}ref\PYGZhy{}acronyms\PYGZhy{}before\PYGZhy{}parsing)))}
+\end{Verbatim}

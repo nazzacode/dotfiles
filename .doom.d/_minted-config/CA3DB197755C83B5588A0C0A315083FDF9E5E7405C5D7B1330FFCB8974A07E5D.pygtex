@@ -1,0 +1,39 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{c+c1}{;; gcal integration}
+\PYG{p}{(}\PYG{n+nb}{require} \PYG{l+s+ss}{\PYGZsq{}calfw}\PYG{p}{)}
+\PYG{p}{(}\PYG{n+nb}{require} \PYG{l+s+ss}{\PYGZsq{}org\PYGZhy{}gcal}\PYG{p}{)}
+
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{org\PYGZhy{}gcal\PYGZhy{}client\PYGZhy{}id} \PYG{l+s}{\PYGZdq{}189857002612\PYGZhy{}bei34shug7gu4ft5ssi5mfedl1kb50u2.apps.googleusercontent.com\PYGZdq{}}
+      \PYG{n+nv}{org\PYGZhy{}gcal\PYGZhy{}client\PYGZhy{}secret} \PYG{l+s}{\PYGZdq{}jMCbPjcHaUWrGu02yUVwIi1m\PYGZdq{}}
+      \PYG{n+nv}{org\PYGZhy{}gcal\PYGZhy{}fetch\PYGZhy{}file\PYGZhy{}alist} \PYG{o}{\PYGZsq{}}\PYG{p}{((}\PYG{l+s}{\PYGZdq{}nathansharp03@gmail.com\PYGZdq{}} \PYG{o}{.}  \PYG{l+s}{\PYGZdq{}\PYGZti{}/org/roam/gcal.org\PYGZdq{}}\PYG{p}{)))}
+
+                                  \PYG{c+c1}{;; (\PYGZdq{}another\PYGZhy{}mail@gmail.com\PYGZdq{} .  \PYGZdq{}\PYGZti{}/task.org\PYGZdq{})))}
+\PYG{c+c1}{;; NOTE: requires gpg (gnupg)}
+
+\PYG{c+c1}{;; Pull into single calender}
+\PYG{c+c1}{;; (require \PYGZsq{}calfw\PYGZhy{}cal)}
+\PYG{p}{(}\PYG{n+nb}{require} \PYG{l+s+ss}{\PYGZsq{}calfw\PYGZhy{}ical}\PYG{p}{)}
+\PYG{c+c1}{;;(require \PYGZsq{}calfw\PYGZhy{}howm)}
+\PYG{p}{(}\PYG{n+nb}{require} \PYG{l+s+ss}{\PYGZsq{}calfw\PYGZhy{}org}\PYG{p}{)}
+
+\PYG{p}{(}\PYG{n+nb}{defun} \PYG{n+nv}{my\PYGZhy{}open\PYGZhy{}calendar} \PYG{p}{()}
+  \PYG{p}{(}\PYG{k}{interactive}\PYG{p}{)}
+  \PYG{p}{(}\PYG{n+nv}{cfw:open\PYGZhy{}calendar\PYGZhy{}buffer}
+   \PYG{n+nb}{:contents\PYGZhy{}sources}
+   \PYG{p}{(}\PYG{n+nf}{list}
+    \PYG{p}{(}\PYG{n+nv}{cfw:org\PYGZhy{}create\PYGZhy{}source}  \PYG{p}{)}  \PYG{c+c1}{; orgmode source}
+    \PYG{c+c1}{;; (cfw:cal\PYGZhy{}create\PYGZhy{}source \PYGZdq{}Orange\PYGZdq{}) ; diary source}
+    \PYG{c+c1}{;; (cfw:ical\PYGZhy{}create\PYGZhy{}source \PYGZdq{}Moon\PYGZdq{} \PYGZdq{}\PYGZti{}/moon.ics\PYGZdq{} \PYGZdq{}Gray\PYGZdq{})  ; ICS source1}
+    \PYG{c+c1}{;; ↓ google calendar ICS}
+    \PYG{c+c1}{;; (cfw:ical\PYGZhy{}create\PYGZhy{}source \PYGZdq{}gcal\PYGZdq{}}
+      \PYG{c+c1}{;; \PYGZdq{}https://calendar.google.com/calendar/ical/nathansharp03\PYGZpc{}40gmail.com/private\PYGZhy{}5984779a038e5ab68ee283c744922c8a/basic.ics\PYGZdq{}}
+      \PYG{c+c1}{;; \PYGZdq{}\PYGZsh{}339CDB\PYGZdq{})}
+\PYG{p}{)))}
+
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{package\PYGZhy{}check\PYGZhy{}signature} \PYG{n+no}{nil}\PYG{p}{)}
+
+\PYG{c+c1}{;; duplication of defualt behavior}
+\PYG{c+c1}{;; TODO on startup?}
+\PYG{c+c1}{;; (add\PYGZhy{}hook \PYGZsq{}org\PYGZhy{}agenda\PYGZhy{}mode\PYGZhy{}hook (lambda () (org\PYGZhy{}gcal\PYGZhy{}sync) ))}
+\PYG{c+c1}{;; (add\PYGZhy{}hook \PYGZsq{}org\PYGZhy{}capture\PYGZhy{}after\PYGZhy{}finalize\PYGZhy{}hook (lambda () (org\PYGZhy{}gcal\PYGZhy{}sync) ))}
+\end{Verbatim}

@@ -1,0 +1,79 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{org\PYGZhy{}roam\PYGZhy{}capture\PYGZhy{}templates}
+
+\PYG{c+c1}{;; Default}
+  \PYG{o}{`}\PYG{p}{((}\PYG{l+s}{\PYGZdq{}d\PYGZdq{}} \PYG{l+s}{\PYGZdq{}default\PYGZdq{}} \PYG{n+nv}{plain} \PYG{l+s}{\PYGZdq{}\PYGZpc{}?\PYGZdq{}}
+    \PYG{n+nb}{:if\PYGZhy{}new} \PYG{p}{(}\PYG{n+nv}{file+head} \PYG{l+s}{\PYGZdq{}\PYGZdl{}\PYGZob{}slug\PYGZcb{}.org\PYGZdq{}}
+
+\PYG{l+s}{\PYGZdq{}\PYGZsh{}+title: \PYGZdl{}\PYGZob{}title\PYGZcb{}}
+\PYG{l+s}{\PYGZsh{}+filetags:\PYGZbs{}n\PYGZdq{}}\PYG{p}{)}
+
+    \PYG{n+nb}{:unnarrowed} \PYG{n+no}{t}\PYG{p}{)}
+
+\PYG{c+c1}{;; Code Challange}
+  \PYG{p}{(}\PYG{l+s}{\PYGZdq{}c\PYGZdq{}} \PYG{l+s}{\PYGZdq{}Code Challange\PYGZdq{}} \PYG{n+nv}{plain} \PYG{l+s}{\PYGZdq{}\PYGZpc{}?\PYGZdq{}}
+    \PYG{n+nb}{:if\PYGZhy{}new} \PYG{p}{(}\PYG{n+nv}{file+head} \PYG{l+s}{\PYGZdq{}CodeChallanges/\PYGZdl{}\PYGZob{}slug\PYGZcb{}.org\PYGZdq{}}
+
+\PYG{l+s}{\PYGZdq{}:PROPERTIES:}
+\PYG{l+s}{:Source:}
+\PYG{l+s}{:Difficulty:}
+\PYG{l+s}{:Rating:}
+\PYG{l+s}{:END:}
+\PYG{l+s}{\PYGZsh{}+title: \PYGZdl{}\PYGZob{}title\PYGZcb{}}
+\PYG{l+s}{\PYGZsh{}+filetags: :code\PYGZhy{}challange:}
+
+\PYG{l+s}{\PYGZbs{}n* Question}
+\PYG{l+s}{\PYGZbs{}n** Example}
+\PYG{l+s}{\PYGZti{}Input: \PYGZti{}}
+\PYG{l+s}{\PYGZti{}Output: \PYGZti{}}
+
+\PYG{l+s}{\PYGZbs{}n* [ ] Solution}
+\PYG{l+s}{\PYGZbs{}n* Testing}
+\PYG{l+s}{\PYGZbs{}n* Runtime Analysis\PYGZdq{}}\PYG{p}{)}
+
+    \PYG{n+nb}{:unnarrowed} \PYG{n+no}{t}\PYG{p}{)}
+
+\PYG{c+c1}{;; Debug/Troubleshoot}
+  \PYG{p}{(}\PYG{l+s}{\PYGZdq{}D\PYGZdq{}} \PYG{l+s}{\PYGZdq{}Debug/Error/Fix\PYGZhy{}me\PYGZdq{}} \PYG{n+nv}{plain} \PYG{l+s}{\PYGZdq{}\PYGZpc{}?\PYGZdq{}}
+    \PYG{n+nb}{:if\PYGZhy{}new} \PYG{p}{(}\PYG{n+nv}{file+head} \PYG{l+s}{\PYGZdq{}\PYGZdl{}\PYGZob{}slug\PYGZcb{}.org\PYGZdq{}}
+
+\PYG{l+s}{\PYGZdq{}\PYGZsh{}+title: \PYGZdl{}\PYGZob{}title\PYGZcb{}}
+\PYG{l+s}{\PYGZsh{}+filetags: :debug:}
+
+\PYG{l+s}{\PYGZbs{}n* Problem}
+\PYG{l+s}{\PYGZbs{}n* TODO Solution\PYGZdq{}}\PYG{p}{)}
+
+    \PYG{n+nb}{:unnarrowed} \PYG{n+no}{t}\PYG{p}{)}
+
+\PYG{c+c1}{;; Cheatsheet}
+  \PYG{p}{(}\PYG{l+s}{\PYGZdq{}C\PYGZdq{}} \PYG{l+s}{\PYGZdq{}cheatsheet\PYGZdq{}} \PYG{n+nv}{plain} \PYG{l+s}{\PYGZdq{}\PYGZpc{}?\PYGZdq{}}
+    \PYG{n+nb}{:if\PYGZhy{}new} \PYG{p}{(}\PYG{n+nv}{file+head} \PYG{l+s}{\PYGZdq{}cheatsheets/\PYGZdl{}\PYGZob{}slug\PYGZcb{}.org\PYGZdq{}}
+
+\PYG{l+s}{\PYGZdq{}\PYGZsh{}+title: \PYGZdl{}\PYGZob{}title\PYGZcb{}}
+\PYG{l+s}{\PYGZsh{}+filetags: :cheatsheat:\PYGZbs{}n}
+
+\PYG{l+s}{| Command | Description |}
+\PYG{l+s}{|\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}+\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}|}
+\PYG{l+s}{|         |             |\PYGZdq{}}\PYG{p}{)}
+
+    \PYG{n+nb}{:unnarrowed} \PYG{n+no}{t}\PYG{p}{)}
+
+\PYG{c+c1}{;; Todo (Kanban)}
+  \PYG{p}{(}\PYG{l+s}{\PYGZdq{}t\PYGZdq{}} \PYG{l+s}{\PYGZdq{}Todo\PYGZdq{}} \PYG{n+nv}{plain} \PYG{l+s}{\PYGZdq{}\PYGZpc{}?\PYGZdq{}}
+    \PYG{n+nb}{:if\PYGZhy{}new} \PYG{p}{(}\PYG{n+nv}{file+head} \PYG{l+s}{\PYGZdq{}Todo/\PYGZdl{}\PYGZob{}slug\PYGZcb{}.org\PYGZdq{}}
+
+
+\PYG{l+s}{\PYGZdq{}\PYGZsh{}+title: \PYGZdl{}\PYGZob{}title\PYGZcb{}}
+\PYG{l+s}{\PYGZsh{}+filetags:}
+\PYG{l+s}{\PYGZsh{}+startup: show2levels}
+\PYG{l+s}{\PYGZsh{}+CATEGORY:}
+
+\PYG{l+s}{\PYGZbs{}n* DOING}
+\PYG{l+s}{\PYGZbs{}n* NEXT}
+\PYG{l+s}{\PYGZbs{}n* TODO}
+\PYG{l+s}{\PYGZbs{}n* DONE\PYGZdq{}}\PYG{p}{)}
+
+    \PYG{n+nb}{:unnarrowed} \PYG{n+no}{t}\PYG{p}{)}
+  \PYG{p}{)}
+\PYG{p}{)}
+\end{Verbatim}

@@ -1,0 +1,23 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{p}{(}\PYG{n+nb}{defun} \PYG{n+nv}{setup\PYGZhy{}tide\PYGZhy{}mode} \PYG{p}{()}
+  \PYG{p}{(}\PYG{k}{interactive}\PYG{p}{)}
+  \PYG{p}{(}\PYG{n+nv}{tide\PYGZhy{}setup}\PYG{p}{)}
+  \PYG{p}{(}\PYG{n+nv}{flycheck\PYGZhy{}mode} \PYG{l+m+mi}{+1}\PYG{p}{)}
+  \PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{flycheck\PYGZhy{}check\PYGZhy{}syntax\PYGZhy{}automatically} \PYG{o}{\PYGZsq{}}\PYG{p}{(}\PYG{n+nv}{save} \PYG{n+nv}{mode\PYGZhy{}enabled}\PYG{p}{))}
+  \PYG{p}{(}\PYG{n+nv}{eldoc\PYGZhy{}mode} \PYG{l+m+mi}{+1}\PYG{p}{)}
+  \PYG{p}{(}\PYG{n+nv}{tide\PYGZhy{}hl\PYGZhy{}identifier\PYGZhy{}mode} \PYG{l+m+mi}{+1}\PYG{p}{)}
+  \PYG{c+c1}{;; company is an optional dependency. You have to}
+  \PYG{c+c1}{;; install it separately via package\PYGZhy{}install}
+  \PYG{c+c1}{;; `M\PYGZhy{}x package\PYGZhy{}install [ret] company`}
+  \PYG{p}{(}\PYG{n+nv}{company\PYGZhy{}mode} \PYG{l+m+mi}{+1}\PYG{p}{))}
+
+\PYG{c+c1}{;; aligns annotation to the right hand side}
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{company\PYGZhy{}tooltip\PYGZhy{}align\PYGZhy{}annotations} \PYG{n+no}{t}\PYG{p}{)}
+
+\PYG{c+c1}{;; formats the buffer before saving}
+\PYG{p}{(}\PYG{n+nv}{add\PYGZhy{}hook} \PYG{l+s+ss}{\PYGZsq{}before\PYGZhy{}save\PYGZhy{}hook} \PYG{l+s+ss}{\PYGZsq{}tide\PYGZhy{}format\PYGZhy{}before\PYGZhy{}save}\PYG{p}{)}
+
+\PYG{p}{(}\PYG{n+nv}{add\PYGZhy{}hook} \PYG{l+s+ss}{\PYGZsq{}typescript\PYGZhy{}mode\PYGZhy{}hook} \PYG{n+nf}{\PYGZsh{}\PYGZsq{}}\PYG{n+nv}{setup\PYGZhy{}tide\PYGZhy{}mode}\PYG{p}{)}
+
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{tide\PYGZhy{}completion\PYGZhy{}detailed} \PYG{n+no}{t}\PYG{p}{)}
+\end{Verbatim}

@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{;; (add\PYGZhy{}hook \PYGZsq{}after\PYGZhy{}init\PYGZhy{}hook \PYGZsq{}org\PYGZhy{}roam\PYGZhy{}setup)   ; FIXME start on start\PYGZhy{}up BREAKING CONFIG ON REDOWNLOAD}
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{org\PYGZhy{}roam\PYGZhy{}directory} \PYG{l+s}{\PYGZdq{}\PYGZti{}/org/roam\PYGZdq{}}       \PYG{c+c1}{; set org\PYGZhy{}roam dir}
+      \PYG{n+nv}{+org\PYGZhy{}roam\PYGZhy{}open\PYGZhy{}buffer\PYGZhy{}on\PYGZhy{}find\PYGZhy{}file} \PYG{n+no}{nil}
+\PYG{p}{)}
+\end{Verbatim}

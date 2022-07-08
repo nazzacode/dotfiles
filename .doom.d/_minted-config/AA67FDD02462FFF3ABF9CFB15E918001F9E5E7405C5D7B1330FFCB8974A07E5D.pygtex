@@ -1,0 +1,23 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{p}{(}\PYG{n+nb}{require} \PYG{l+s+ss}{\PYGZsq{}ox\PYGZhy{}extra}\PYG{p}{)}
+\PYG{p}{(}\PYG{n+nv}{ox\PYGZhy{}extras\PYGZhy{}activate} \PYG{o}{\PYGZsq{}}\PYG{p}{(}\PYG{n+nv}{ignore\PYGZhy{}headlines}\PYG{p}{))}
+
+\PYG{c+c1}{;; Need from latex minted package}
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{org\PYGZhy{}latex\PYGZhy{}listings} \PYG{l+s+ss}{\PYGZsq{}minted}
+      \PYG{n+nv}{org\PYGZhy{}latex\PYGZhy{}packages\PYGZhy{}alist} \PYG{o}{\PYGZsq{}}\PYG{p}{((}\PYG{l+s}{\PYGZdq{}\PYGZdq{}} \PYG{l+s}{\PYGZdq{}minted\PYGZdq{}}\PYG{p}{))}
+      \PYG{n+nv}{org\PYGZhy{}latex\PYGZhy{}pdf\PYGZhy{}process}
+      \PYG{o}{\PYGZsq{}}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}pdflatex \PYGZhy{}shell\PYGZhy{}escape \PYGZhy{}interaction nonstopmode \PYGZhy{}output\PYGZhy{}directory \PYGZpc{}o \PYGZpc{}f\PYGZdq{}}
+        \PYG{l+s}{\PYGZdq{}pdflatex \PYGZhy{}shell\PYGZhy{}escape \PYGZhy{}interaction nonstopmode \PYGZhy{}output\PYGZhy{}directory \PYGZpc{}o \PYGZpc{}f\PYGZdq{}}\PYG{p}{))}
+
+\PYG{c+c1}{;; [frame=lines, framesep=2mm, baselinestretch=1.2, bgcolor=LightGray, fontsize=\PYGZbs{}footnotesize, linenos]}
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{org\PYGZhy{}latex\PYGZhy{}minted\PYGZhy{}options} \PYG{o}{\PYGZsq{}}\PYG{p}{((}\PYG{l+s}{\PYGZdq{}breaklines\PYGZdq{}} \PYG{l+s}{\PYGZdq{}true\PYGZdq{}}\PYG{p}{)}
+                                 \PYG{c+c1}{;; (\PYGZdq{}\PYGZdq{} \PYGZdq{}\PYGZdq{})}
+                                 \PYG{p}{(}\PYG{l+s}{\PYGZdq{}breakanywhere\PYGZdq{}} \PYG{l+s}{\PYGZdq{}true\PYGZdq{}}\PYG{p}{)}
+                                 \PYG{p}{(}\PYG{l+s}{\PYGZdq{}framesep\PYGZdq{}} \PYG{l+s}{\PYGZdq{}2mm\PYGZdq{}}\PYG{p}{)}
+                                 \PYG{p}{(}\PYG{l+s}{\PYGZdq{}baselinestretch\PYGZdq{}} \PYG{l+s}{\PYGZdq{}1.1\PYGZdq{}}\PYG{p}{)}    \PYG{c+c1}{;; line spacing}
+                                 \PYG{p}{(}\PYG{l+s}{\PYGZdq{}fontsie\PYGZdq{}} \PYG{l+s}{\PYGZdq{}\PYGZbs{}footnotesize\PYGZdq{}}\PYG{p}{)}  \PYG{c+c1}{;;}
+                                 \PYG{p}{(}\PYG{l+s}{\PYGZdq{}linenos\PYGZdq{}} \PYG{l+s}{\PYGZdq{}true\PYGZdq{}}\PYG{p}{)}
+                                 \PYG{p}{(}\PYG{l+s}{\PYGZdq{}mathescape\PYGZdq{}} \PYG{l+s}{\PYGZdq{}true\PYGZdq{}}\PYG{p}{)}        \PYG{c+c1}{;; allows $$ latex in comments}
+                                 \PYG{p}{(}\PYG{l+s}{\PYGZdq{}bgcolor\PYGZdq{}} \PYG{l+s}{\PYGZdq{}LightGrey\PYGZdq{}}\PYG{p}{)}
+                                 \PYG{p}{(}\PYG{l+s}{\PYGZdq{}frame\PYGZdq{}} \PYG{l+s}{\PYGZdq{}single\PYGZdq{}}\PYG{p}{)))}         \PYG{c+c1}{;; frame line}
+\end{Verbatim}

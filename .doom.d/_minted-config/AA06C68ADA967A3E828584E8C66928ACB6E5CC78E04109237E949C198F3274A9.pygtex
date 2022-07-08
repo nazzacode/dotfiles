@@ -1,0 +1,17 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{;; TODO rethink? add? how to select more dynamically?}
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{org\PYGZhy{}tag\PYGZhy{}persistent\PYGZhy{}alist}
+      \PYG{o}{\PYGZsq{}}\PYG{p}{((}\PYG{n+nb}{:startgroup} \PYG{o}{.} \PYG{n+no}{nil}\PYG{p}{)}
+        \PYG{p}{(}\PYG{l+s}{\PYGZdq{}uni\PYGZdq{}} \PYG{o}{.} \PYG{l+s+sc}{?u}\PYG{p}{)}
+        \PYG{p}{(}\PYG{l+s}{\PYGZdq{}computing\PYGZdq{}} \PYG{o}{.} \PYG{l+s+sc}{?c}\PYG{p}{)}
+        \PYG{p}{(}\PYG{l+s}{\PYGZdq{}graph\PYGZus{}theory\PYGZdq{}} \PYG{o}{.} \PYG{l+s+sc}{?g}\PYG{p}{)}
+        \PYG{p}{(}\PYG{l+s}{\PYGZdq{}math\PYGZdq{}} \PYG{o}{.} \PYG{l+s+sc}{?m}\PYG{p}{)}
+        \PYG{p}{(}\PYG{l+s}{\PYGZdq{}philosophy\PYGZdq{}} \PYG{o}{.} \PYG{l+s+sc}{?p}\PYG{p}{)}
+        \PYG{p}{(}\PYG{l+s}{\PYGZdq{}phychology\PYGZdq{}} \PYG{o}{.} \PYG{l+s+sc}{?P}\PYG{p}{)}
+        \PYG{p}{(}\PYG{l+s}{\PYGZdq{}research\PYGZdq{}} \PYG{o}{.} \PYG{l+s+sc}{?r}\PYG{p}{)}
+        \PYG{p}{(}\PYG{l+s}{\PYGZdq{}my\PYGZdq{}} \PYG{o}{.} \PYG{l+s+sc}{?m}\PYG{p}{)}
+        \PYG{p}{(}\PYG{l+s}{\PYGZdq{}money\PYGZdq{}} \PYG{o}{.} \PYG{l+s+sc}{?M}\PYG{p}{)}
+        \PYG{p}{(}\PYG{n+nb}{:endgroup} \PYG{o}{.} \PYG{n+no}{nil}\PYG{p}{)}
+        \PYG{p}{(}\PYG{l+s}{\PYGZdq{}noexport\PYGZdq{}} \PYG{o}{.} \PYG{l+s+sc}{?x}\PYG{p}{)}
+\PYG{p}{))}
+\end{Verbatim}

@@ -1,0 +1,20 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{;; syntax hilighting for latex fragments}
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{org\PYGZhy{}highlight\PYGZhy{}latex\PYGZhy{}and\PYGZhy{}related} \PYG{o}{\PYGZsq{}}\PYG{p}{(}\PYG{n+nv}{native} \PYG{n+nv}{script} \PYG{n+nv}{entities}\PYG{p}{))}
+
+\PYG{c+c1}{;; prevent background redering uglyness}
+\PYG{c+c1}{;; OLD: https://stackoverflow.com/questions/69474043/emacs\PYGZhy{}org\PYGZhy{}mode\PYGZhy{}background\PYGZhy{}color\PYGZhy{}of\PYGZhy{}latex\PYGZhy{}fragments\PYGZhy{}with\PYGZhy{}org\PYGZhy{}highlight\PYGZhy{}latex\PYGZhy{}a}
+\PYG{p}{(}\PYG{n+nb}{require} \PYG{l+s+ss}{\PYGZsq{}org\PYGZhy{}src}\PYG{p}{)}
+\PYG{p}{(}\PYG{n+nv}{add\PYGZhy{}to\PYGZhy{}list} \PYG{l+s+ss}{\PYGZsq{}org\PYGZhy{}src\PYGZhy{}block\PYGZhy{}faces} \PYG{o}{\PYGZsq{}}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}latex\PYGZdq{}} \PYG{p}{(}\PYG{n+nb}{:inherit} \PYG{n+nv}{default} \PYG{n+nb}{:extend} \PYG{n+no}{t}\PYG{p}{)))}
+
+\PYG{c+c1}{;; Automatically load inline previews with org\PYGZhy{}fragtog}
+\PYG{p}{(}\PYG{n+nv}{add\PYGZhy{}hook} \PYG{l+s+ss}{\PYGZsq{}org\PYGZhy{}mode\PYGZhy{}hook} \PYG{l+s+ss}{\PYGZsq{}org\PYGZhy{}fragtog\PYGZhy{}mode}\PYG{p}{)}
+
+\PYG{c+c1}{;; Color transparentrather than match default face}
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{org\PYGZhy{}format\PYGZhy{}latex\PYGZhy{}options}
+  \PYG{p}{(}\PYG{n+nf}{plist\PYGZhy{}put} \PYG{n+nv}{org\PYGZhy{}format\PYGZhy{}latex\PYGZhy{}options} \PYG{n+nb}{:background} \PYG{l+s}{\PYGZdq{}Transparent\PYGZdq{}}\PYG{p}{))}
+
+
+\PYG{c+c1}{;; specify the justification you want}
+\PYG{p}{(}\PYG{n+nf}{plist\PYGZhy{}put} \PYG{n+nv}{org\PYGZhy{}format\PYGZhy{}latex\PYGZhy{}options} \PYG{n+nb}{:justify} \PYG{l+s+ss}{\PYGZsq{}center}\PYG{p}{)}
+\end{Verbatim}

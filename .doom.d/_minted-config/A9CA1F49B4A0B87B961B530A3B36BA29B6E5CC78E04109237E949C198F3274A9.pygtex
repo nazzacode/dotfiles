@@ -1,0 +1,44 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{org\PYGZhy{}agenda\PYGZhy{}prefix\PYGZhy{}format}
+      \PYG{o}{\PYGZsq{}}\PYG{p}{((}\PYG{n+nv}{agenda} \PYG{o}{.} \PYG{l+s}{\PYGZdq{} \PYGZpc{}i \PYGZpc{}\PYGZhy{}12(vulpea\PYGZhy{}agenda\PYGZhy{}category)\PYGZpc{}?\PYGZhy{}12t\PYGZpc{} s\PYGZdq{}}\PYG{p}{)}
+        \PYG{p}{(}\PYG{n+nv}{todo} \PYG{o}{.} \PYG{l+s}{\PYGZdq{} \PYGZpc{}i \PYGZpc{}\PYGZhy{}12(vulpea\PYGZhy{}agenda\PYGZhy{}category) \PYGZdq{}}\PYG{p}{)}
+        \PYG{p}{(}\PYG{n+nv}{tags} \PYG{o}{.} \PYG{l+s}{\PYGZdq{} \PYGZpc{}i \PYGZpc{}\PYGZhy{}12(vulpea\PYGZhy{}agenda\PYGZhy{}category) \PYGZdq{}}\PYG{p}{)}
+        \PYG{p}{(}\PYG{n+nv}{search} \PYG{o}{.} \PYG{l+s}{\PYGZdq{} \PYGZpc{}i \PYGZpc{}\PYGZhy{}12(vaulpea\PYGZhy{}agenda\PYGZhy{}category) \PYGZdq{}}\PYG{p}{)))}
+
+\PYG{p}{(}\PYG{n+nb}{defun} \PYG{n+nv}{vulpea\PYGZhy{}agenda\PYGZhy{}category} \PYG{p}{()}
+  \PYG{l+s}{\PYGZdq{}Get category of item at point for agenda.}
+
+\PYG{l+s}{Category is defined by one of the following items:}
+
+\PYG{l+s}{\PYGZhy{} CATEGORY property}
+\PYG{l+s}{\PYGZhy{} TITLE keyword}
+\PYG{l+s}{\PYGZhy{} TITLE property}
+\PYG{l+s}{\PYGZhy{} filename without directory and extension}
+
+\PYG{l+s}{Usage example:}
+
+\PYG{l+s}{  (setq org\PYGZhy{}agenda\PYGZhy{}prefix\PYGZhy{}format}
+\PYG{l+s}{        \PYGZsq{}((agenda . \PYGZbs{}\PYGZdq{} \PYGZpc{}(vulpea\PYGZhy{}agenda\PYGZhy{}category) \PYGZpc{}?\PYGZhy{}12t \PYGZpc{}12s\PYGZbs{}\PYGZdq{})))}
+
+\PYG{l+s}{Refer to }\PYG{l+s+ss}{`org\PYGZhy{}agenda\PYGZhy{}prefix\PYGZhy{}format\PYGZsq{}}\PYG{l+s}{ for more information.\PYGZdq{}}
+  \PYG{p}{(}\PYG{k}{let*} \PYG{p}{((}\PYG{n+nv}{file\PYGZhy{}name} \PYG{p}{(}\PYG{n+nb}{when} \PYG{n+nf}{buffer\PYGZhy{}file\PYGZhy{}name}
+                      \PYG{p}{(}\PYG{n+nv}{file\PYGZhy{}name\PYGZhy{}sans\PYGZhy{}extension}
+                       \PYG{p}{(}\PYG{n+nf}{file\PYGZhy{}name\PYGZhy{}nondirectory} \PYG{n+nf}{buffer\PYGZhy{}file\PYGZhy{}name}\PYG{p}{))))}
+         \PYG{p}{(}\PYG{n+nv}{title} \PYG{p}{(}\PYG{n+nv}{vulpea\PYGZhy{}buffer\PYGZhy{}prop\PYGZhy{}get} \PYG{l+s}{\PYGZdq{}title\PYGZdq{}}\PYG{p}{))}
+         \PYG{p}{(}\PYG{n+nv}{category} \PYG{p}{(}\PYG{n+nv}{org\PYGZhy{}get\PYGZhy{}category}\PYG{p}{)))}
+    \PYG{p}{(}\PYG{k}{or} \PYG{p}{(}\PYG{k}{if} \PYG{p}{(}\PYG{k}{and}
+             \PYG{n+nv}{title}
+             \PYG{p}{(}\PYG{n+nf}{string\PYGZhy{}equal} \PYG{n+nv}{category} \PYG{n+nv}{file\PYGZhy{}name}\PYG{p}{))}
+            \PYG{n+nv}{title}
+          \PYG{n+nv}{category}\PYG{p}{)}
+        \PYG{l+s}{\PYGZdq{}\PYGZdq{}}\PYG{p}{)))}
+
+\PYG{p}{(}\PYG{n+nb}{defun} \PYG{n+nv}{vulpea\PYGZhy{}buffer\PYGZhy{}prop\PYGZhy{}get} \PYG{p}{(}\PYG{n+nv}{name}\PYG{p}{)}
+  \PYG{l+s}{\PYGZdq{}Get a buffer property called NAME as a string.\PYGZdq{}}
+  \PYG{p}{(}\PYG{n+nv}{org\PYGZhy{}with\PYGZhy{}point\PYGZhy{}at} \PYG{l+m+mi}{1}
+    \PYG{p}{(}\PYG{n+nb}{when} \PYG{p}{(}\PYG{n+nf}{re\PYGZhy{}search\PYGZhy{}forward} \PYG{p}{(}\PYG{n+nf}{concat} \PYG{l+s}{\PYGZdq{}\PYGZca{}\PYGZsh{}\PYGZbs{}\PYGZbs{}+\PYGZdq{}} \PYG{n+nv}{name} \PYG{l+s}{\PYGZdq{}: \PYGZbs{}\PYGZbs{}(.*\PYGZbs{}\PYGZbs{})\PYGZdq{}}\PYG{p}{)}
+                             \PYG{p}{(}\PYG{n+nf}{point\PYGZhy{}max}\PYG{p}{)} \PYG{n+no}{t}\PYG{p}{)}
+      \PYG{p}{(}\PYG{n+nf}{buffer\PYGZhy{}substring\PYGZhy{}no\PYGZhy{}properties}
+       \PYG{p}{(}\PYG{n+nf}{match\PYGZhy{}beginning} \PYG{l+m+mi}{1}\PYG{p}{)}
+       \PYG{p}{(}\PYG{n+nf}{match\PYGZhy{}end} \PYG{l+m+mi}{1}\PYG{p}{)))))}
+\end{Verbatim}

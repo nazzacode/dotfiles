@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{p}{(}\PYG{n+nv}{global\PYGZhy{}yascroll\PYGZhy{}bar\PYGZhy{}mode} \PYG{l+m+mi}{1}\PYG{p}{)}
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{yascroll\PYGZhy{}scroll\PYGZhy{}bar} \PYG{l+s}{\PYGZdq{}right\PYGZhy{}fringe\PYGZdq{}}
+      \PYG{n+nv}{yascroll:disabled\PYGZhy{}modes} \PYG{o}{\PYGZsq{}}\PYG{p}{(}\PYG{n+nv}{image\PYGZhy{}mode} \PYG{n+nv}{eshell\PYGZhy{}mode}\PYG{p}{)}  \PYG{c+c1}{; is this syntax correct?}
+      \PYG{n+nv}{yascroll:delay\PYGZhy{}to\PYGZhy{}hide} \PYG{l+m+mi}{5}\PYG{p}{)}  \PYG{c+c1}{; \PYGZsq{}nil)}
+
+
+\PYG{c+c1}{;; FIXME disapperaing when not moving}
+\PYG{c+c1}{;; TODO increase default fringe width}
+\end{Verbatim}

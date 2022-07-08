@@ -1,0 +1,7 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{org\PYGZhy{}export\PYGZhy{}headline\PYGZhy{}levels} \PYG{l+m+mi}{5}\PYG{p}{)} \PYG{c+c1}{; I like nesting}
+
+\PYG{c+c1}{;; show git version on creator string}
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{org\PYGZhy{}export\PYGZhy{}creator\PYGZhy{}string}
+      \PYG{p}{(}\PYG{n+nf}{format} \PYG{l+s}{\PYGZdq{}Emacs \PYGZpc{}s (Org mode \PYGZpc{}s \PYGZpc{}s)\PYGZdq{}} \PYG{n+nv}{emacs\PYGZhy{}version} \PYG{p}{(}\PYG{n+nv}{org\PYGZhy{}release}\PYG{p}{)} \PYG{p}{(}\PYG{n+nv}{org\PYGZhy{}git\PYGZhy{}version}\PYG{p}{)))}
+\end{Verbatim}

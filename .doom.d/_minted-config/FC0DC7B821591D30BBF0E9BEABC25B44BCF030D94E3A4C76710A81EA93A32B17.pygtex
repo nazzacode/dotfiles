@@ -1,0 +1,21 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{p}{(}\PYG{n+nv}{use\PYGZhy{}package!} \PYG{n+nv}{websocket}
+    \PYG{n+nb}{:after} \PYG{n+nv}{org\PYGZhy{}roam}\PYG{p}{)}
+
+\PYG{c+c1}{;; (use\PYGZhy{}package! org\PYGZhy{}roam\PYGZhy{}ui}
+\PYG{c+c1}{;;     :after org\PYGZhy{}roam ;; or :after org}
+\PYG{c+c1}{;; ;;         normally we\PYGZsq{}d recommend hooking orui after org\PYGZhy{}roam, but since org\PYGZhy{}roam does not have}
+\PYG{c+c1}{;; ;;         a hookable mode anymore, you\PYGZsq{}re advised to pick something yourself}
+\PYG{c+c1}{;; ;;         if you don\PYGZsq{}t care about startup time, use}
+\PYG{c+c1}{;;     ;; :hook (after\PYGZhy{}init . org\PYGZhy{}roam\PYGZhy{}ui\PYGZhy{}mode)}
+\PYG{c+c1}{;;     :config}
+\PYG{c+c1}{;;     (setq org\PYGZhy{}roam\PYGZhy{}ui\PYGZhy{}sync\PYGZhy{}theme t}
+\PYG{c+c1}{;;           org\PYGZhy{}roam\PYGZhy{}ui\PYGZhy{}follow t}
+\PYG{c+c1}{;;           org\PYGZhy{}roam\PYGZhy{}ui\PYGZhy{}update\PYGZhy{}on\PYGZhy{}save t}
+\PYG{c+c1}{;;           org\PYGZhy{}roam\PYGZhy{}ui\PYGZhy{}open\PYGZhy{}on\PYGZhy{}start t))}
+
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{org\PYGZhy{}roam\PYGZhy{}ui\PYGZhy{}sync\PYGZhy{}theme} \PYG{n+no}{t}
+      \PYG{n+nv}{org\PYGZhy{}roam\PYGZhy{}ui\PYGZhy{}follow} \PYG{n+no}{t}
+      \PYG{n+nv}{org\PYGZhy{}roam\PYGZhy{}ui\PYGZhy{}update\PYGZhy{}on\PYGZhy{}save} \PYG{n+no}{t}
+      \PYG{n+nv}{org\PYGZhy{}roam\PYGZhy{}ui\PYGZhy{}open\PYGZhy{}on\PYGZhy{}start} \PYG{n+no}{t}\PYG{p}{)}
+\end{Verbatim}

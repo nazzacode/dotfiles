@@ -1,0 +1,25 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{p}{(}\PYG{n+nb}{defcustom} \PYG{n+nv}{org\PYGZhy{}hidden\PYGZhy{}links\PYGZhy{}additional\PYGZhy{}re} \PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}(\PYGZlt{}\PYGZlt{}\PYGZlt{}\PYGZbs{}\PYGZbs{})[[:print:]]+?\PYGZbs{}\PYGZbs{}(\PYGZgt{}\PYGZgt{}\PYGZgt{}\PYGZbs{}\PYGZbs{})\PYGZdq{}}
+  \PYG{l+s}{\PYGZdq{}Regular expression that matches strings where the invisible\PYGZhy{}property of the sub\PYGZhy{}matches 1 and 2 is set to org\PYGZhy{}link.\PYGZdq{}}
+  \PYG{n+nb}{:type} \PYG{o}{\PYGZsq{}}\PYG{p}{(}\PYG{n+nv}{choice} \PYG{p}{(}\PYG{n+nv}{const} \PYG{n+nb}{:tag} \PYG{l+s}{\PYGZdq{}Off\PYGZdq{}} \PYG{n+no}{nil}\PYG{p}{)} \PYG{n+nv}{regexp}\PYG{p}{)}
+  \PYG{n+nb}{:group} \PYG{l+s+ss}{\PYGZsq{}org\PYGZhy{}link}\PYG{p}{)}
+\PYG{p}{(}\PYG{n+nf}{make\PYGZhy{}variable\PYGZhy{}buffer\PYGZhy{}local} \PYG{l+s+ss}{\PYGZsq{}org\PYGZhy{}hidden\PYGZhy{}links\PYGZhy{}additional\PYGZhy{}re}\PYG{p}{)}
+
+\PYG{p}{(}\PYG{n+nb}{defun} \PYG{n+nv}{org\PYGZhy{}activate\PYGZhy{}hidden\PYGZhy{}links\PYGZhy{}additional} \PYG{p}{(}\PYG{n+nv}{limit}\PYG{p}{)}
+  \PYG{l+s}{\PYGZdq{}Put invisible\PYGZhy{}property org\PYGZhy{}link on strings matching }\PYG{l+s+ss}{`org\PYGZhy{}hide\PYGZhy{}links\PYGZhy{}additional\PYGZhy{}re\PYGZsq{}}\PYG{l+s}{.\PYGZdq{}}
+  \PYG{p}{(}\PYG{k}{if} \PYG{n+nv}{org\PYGZhy{}hidden\PYGZhy{}links\PYGZhy{}additional\PYGZhy{}re}
+      \PYG{p}{(}\PYG{n+nf}{re\PYGZhy{}search\PYGZhy{}forward} \PYG{n+nv}{org\PYGZhy{}hidden\PYGZhy{}links\PYGZhy{}additional\PYGZhy{}re} \PYG{n+nv}{limit} \PYG{n+no}{t}\PYG{p}{)}
+    \PYG{p}{(}\PYG{n+nf}{goto\PYGZhy{}char} \PYG{n+nv}{limit}\PYG{p}{)}
+    \PYG{n+no}{nil}\PYG{p}{))}
+
+\PYG{p}{(}\PYG{n+nb}{defun} \PYG{n+nv}{org\PYGZhy{}hidden\PYGZhy{}links\PYGZhy{}hook\PYGZhy{}function} \PYG{p}{()}
+  \PYG{l+s}{\PYGZdq{}Add rule for }\PYG{l+s+ss}{`org\PYGZhy{}activate\PYGZhy{}hidden\PYGZhy{}links\PYGZhy{}additional\PYGZsq{}}\PYG{l+s}{ to }\PYG{l+s+ss}{`org\PYGZhy{}font\PYGZhy{}lock\PYGZhy{}extra\PYGZhy{}keywords\PYGZsq{}}\PYG{l+s}{.}
+\PYG{l+s}{You can include this function in }\PYG{l+s+ss}{`org\PYGZhy{}font\PYGZhy{}lock\PYGZhy{}set\PYGZhy{}keywords\PYGZhy{}hook\PYGZsq{}}\PYG{l+s}{.\PYGZdq{}}
+  \PYG{p}{(}\PYG{n+nv}{add\PYGZhy{}to\PYGZhy{}list} \PYG{l+s+ss}{\PYGZsq{}org\PYGZhy{}font\PYGZhy{}lock\PYGZhy{}extra\PYGZhy{}keywords}
+                              \PYG{o}{\PYGZsq{}}\PYG{p}{(}\PYG{n+nv}{org\PYGZhy{}activate\PYGZhy{}hidden\PYGZhy{}links\PYGZhy{}additional}
+                                \PYG{p}{(}\PYG{l+m+mi}{1} \PYG{o}{\PYGZsq{}}\PYG{p}{(}\PYG{n+nv}{face} \PYG{n+nv}{org\PYGZhy{}target} \PYG{n+nv}{invisible} \PYG{n+nv}{org\PYGZhy{}link}\PYG{p}{))}
+                \PYG{p}{(}\PYG{l+m+mi}{2} \PYG{o}{\PYGZsq{}}\PYG{p}{(}\PYG{n+nv}{face} \PYG{n+nv}{org\PYGZhy{}target} \PYG{n+nv}{invisible} \PYG{n+nv}{org\PYGZhy{}link}\PYG{p}{)))))}
+
+\PYG{p}{(}\PYG{n+nv}{add\PYGZhy{}hook} \PYG{l+s+ss}{\PYGZsq{}org\PYGZhy{}font\PYGZhy{}lock\PYGZhy{}set\PYGZhy{}keywords\PYGZhy{}hook} \PYG{n+nf}{\PYGZsh{}\PYGZsq{}}\PYG{n+nv}{org\PYGZhy{}hidden\PYGZhy{}links\PYGZhy{}hook\PYGZhy{}function}\PYG{p}{)}
+
+\end{Verbatim}

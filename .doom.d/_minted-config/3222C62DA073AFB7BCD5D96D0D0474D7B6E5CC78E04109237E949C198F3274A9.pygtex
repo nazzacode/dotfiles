@@ -1,0 +1,27 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{;; Funtion to hide/unhide the properties drawer}
+\PYG{p}{(}\PYG{n+nb}{defun} \PYG{n+nv}{org\PYGZhy{}hide\PYGZhy{}properties} \PYG{p}{()}
+  \PYG{l+s}{\PYGZdq{}Hide all org\PYGZhy{}mode headline property drawers in buffer. Could be slow if it has a lot of overlays.\PYGZdq{}}
+  \PYG{p}{(}\PYG{k}{interactive}\PYG{p}{)}
+  \PYG{p}{(}\PYG{k}{save\PYGZhy{}excursion}
+    \PYG{p}{(}\PYG{n+nf}{goto\PYGZhy{}char} \PYG{p}{(}\PYG{n+nf}{point\PYGZhy{}min}\PYG{p}{))}
+    \PYG{p}{(}\PYG{k}{while} \PYG{p}{(}\PYG{n+nf}{re\PYGZhy{}search\PYGZhy{}forward}
+            \PYG{l+s}{\PYGZdq{}\PYGZca{} *:properties:\PYGZbs{}n\PYGZbs{}\PYGZbs{}( *:.+?:.*\PYGZbs{}n\PYGZbs{}\PYGZbs{})+ *:end:\PYGZbs{}n\PYGZdq{}} \PYG{n+no}{nil} \PYG{n+no}{t}\PYG{p}{)}
+      \PYG{p}{(}\PYG{k}{let} \PYG{p}{((}\PYG{n+nv}{ov\PYGZus{}this} \PYG{p}{(}\PYG{n+nf}{make\PYGZhy{}overlay} \PYG{p}{(}\PYG{n+nf}{match\PYGZhy{}beginning} \PYG{l+m+mi}{0}\PYG{p}{)} \PYG{p}{(}\PYG{n+nf}{match\PYGZhy{}end} \PYG{l+m+mi}{0}\PYG{p}{))))}
+        \PYG{p}{(}\PYG{n+nf}{overlay\PYGZhy{}put} \PYG{n+nv}{ov\PYGZus{}this} \PYG{l+s+ss}{\PYGZsq{}display} \PYG{l+s}{\PYGZdq{}\PYGZdq{}}\PYG{p}{)}
+        \PYG{p}{(}\PYG{n+nf}{overlay\PYGZhy{}put} \PYG{n+nv}{ov\PYGZus{}this} \PYG{l+s+ss}{\PYGZsq{}hidden\PYGZhy{}prop\PYGZhy{}drawer} \PYG{n+no}{t}\PYG{p}{))))}
+  \PYG{p}{(}\PYG{n+nf}{put} \PYG{l+s+ss}{\PYGZsq{}org\PYGZhy{}toggle\PYGZhy{}properties\PYGZhy{}hide\PYGZhy{}state} \PYG{l+s+ss}{\PYGZsq{}state} \PYG{l+s+ss}{\PYGZsq{}hidden}\PYG{p}{))}
+
+\PYG{p}{(}\PYG{n+nb}{defun} \PYG{n+nv}{org\PYGZhy{}show\PYGZhy{}properties} \PYG{p}{()}
+  \PYG{l+s}{\PYGZdq{}Show all org\PYGZhy{}mode property drawers hidden by org\PYGZhy{}hide\PYGZhy{}properties.\PYGZdq{}}
+  \PYG{p}{(}\PYG{k}{interactive}\PYG{p}{)}
+  \PYG{p}{(}\PYG{n+nv}{remove\PYGZhy{}overlays} \PYG{p}{(}\PYG{n+nf}{point\PYGZhy{}min}\PYG{p}{)} \PYG{p}{(}\PYG{n+nf}{point\PYGZhy{}max}\PYG{p}{)} \PYG{l+s+ss}{\PYGZsq{}hidden\PYGZhy{}prop\PYGZhy{}drawer} \PYG{n+no}{t}\PYG{p}{)}
+  \PYG{p}{(}\PYG{n+nf}{put} \PYG{l+s+ss}{\PYGZsq{}org\PYGZhy{}toggle\PYGZhy{}properties\PYGZhy{}hide\PYGZhy{}state} \PYG{l+s+ss}{\PYGZsq{}state} \PYG{l+s+ss}{\PYGZsq{}shown}\PYG{p}{))}
+
+\PYG{p}{(}\PYG{n+nb}{defun} \PYG{n+nv}{org\PYGZhy{}toggle\PYGZhy{}properties} \PYG{p}{()}
+  \PYG{l+s}{\PYGZdq{}Toggle visibility of property drawers.\PYGZdq{}}
+  \PYG{p}{(}\PYG{k}{interactive}\PYG{p}{)}
+  \PYG{p}{(}\PYG{k}{if} \PYG{p}{(}\PYG{n+nf}{eq} \PYG{p}{(}\PYG{n+nf}{get} \PYG{l+s+ss}{\PYGZsq{}org\PYGZhy{}toggle\PYGZhy{}properties\PYGZhy{}hide\PYGZhy{}state} \PYG{l+s+ss}{\PYGZsq{}state}\PYG{p}{)} \PYG{l+s+ss}{\PYGZsq{}hidden}\PYG{p}{)}
+      \PYG{p}{(}\PYG{n+nv}{org\PYGZhy{}show\PYGZhy{}properties}\PYG{p}{)}
+    \PYG{p}{(}\PYG{n+nv}{org\PYGZhy{}hide\PYGZhy{}properties}\PYG{p}{)))}
+\end{Verbatim}

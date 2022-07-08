@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{c+c1}{;; (add\PYGZhy{}hook \PYGZsq{}org\PYGZhy{}mode\PYGZhy{}hook \PYGZsh{}\PYGZsq{}valign\PYGZhy{}mode)}
+\PYG{c+c1}{;; (setq valign\PYGZhy{}fancy\PYGZhy{}bar \PYGZsq{}non\PYGZhy{}nil)}
+
+\PYG{c+c1}{;; Horizontal scrolling for tables}
+\PYG{p}{(}\PYG{n+nb}{require} \PYG{l+s+ss}{\PYGZsq{}phscroll}\PYG{p}{)}
+\PYG{p}{(}\PYG{n+nv}{after!} \PYG{n+nv}{org}
+ \PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{org\PYGZhy{}startup\PYGZhy{}truncated} \PYG{n+no}{nil}\PYG{p}{)}
+ \PYG{p}{(}\PYG{n+nf}{load} \PYG{l+s}{\PYGZdq{}org\PYGZhy{}phscroll.el\PYGZdq{}}\PYG{p}{))}
+\end{Verbatim}

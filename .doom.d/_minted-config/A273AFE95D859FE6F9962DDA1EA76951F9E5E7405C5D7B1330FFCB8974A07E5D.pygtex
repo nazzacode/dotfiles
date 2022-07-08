@@ -1,0 +1,27 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{c+c1}{; this seems to add syntax\PYGZhy{}highlighting to jupyter\PYGZhy{}python and jupyter\PYGZhy{}typescript blocks}
+\PYG{p}{(}\PYG{n+nv}{after!} \PYG{n+nv}{org\PYGZhy{}src}
+  \PYG{p}{(}\PYG{n+nb}{dolist} \PYG{p}{(}\PYG{n+nv}{lang} \PYG{o}{\PYGZsq{}}\PYG{p}{(}\PYG{n+nv}{python} \PYG{n+nv}{typescript} \PYG{n+nv}{jupyter}\PYG{p}{))}
+  \PYG{p}{(}\PYG{n+nb}{cl\PYGZhy{}pushnew} \PYG{p}{(}\PYG{n+nf}{cons} \PYG{p}{(}\PYG{n+nf}{format} \PYG{l+s}{\PYGZdq{}jupyter\PYGZhy{}\PYGZpc{}s\PYGZdq{}} \PYG{n+nv}{lang}\PYG{p}{)} \PYG{n+nv}{lang}\PYG{p}{)}
+                \PYG{n+nv}{org\PYGZhy{}src\PYGZhy{}lang\PYGZhy{}modes} \PYG{n+nb}{:key} \PYG{n+nf}{\PYGZsh{}\PYGZsq{}car}\PYG{p}{))}
+
+  \PYG{c+c1}{;;(org\PYGZhy{}babel\PYGZhy{}jupyter\PYGZhy{}override\PYGZhy{}src\PYGZhy{}block \PYGZdq{}python\PYGZdq{}) ;; alias all python to jupyter\PYGZhy{}python}
+  \PYG{c+c1}{;;(org\PYGZhy{}babel\PYGZhy{}jupyter\PYGZhy{}override\PYGZhy{}src\PYGZhy{}block \PYGZdq{}typescript\PYGZdq{}) ;; alias all python to jupyter\PYGZhy{}python}
+\PYG{p}{)}
+
+\PYG{c+c1}{;; TypeScript}
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{org\PYGZhy{}babel\PYGZhy{}default\PYGZhy{}header\PYGZhy{}args:jupyter\PYGZhy{}typescript} \PYG{o}{\PYGZsq{}}\PYG{p}{(}
+  \PYG{p}{(}\PYG{n+nb}{:session} \PYG{o}{.} \PYG{l+s}{\PYGZdq{}ts\PYGZdq{}}\PYG{p}{)}
+  \PYG{p}{(}\PYG{n+nb}{:kernel} \PYG{o}{.} \PYG{l+s}{\PYGZdq{}tslab\PYGZdq{}}\PYG{p}{)))}
+
+\PYG{c+c1}{;; Python}
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{org\PYGZhy{}babel\PYGZhy{}default\PYGZhy{}header\PYGZhy{}args:jupyter\PYGZhy{}python} \PYG{o}{\PYGZsq{}}\PYG{p}{(}
+   \PYG{p}{(}\PYG{n+nb}{:session} \PYG{o}{.} \PYG{l+s}{\PYGZdq{}py\PYGZdq{}}\PYG{p}{)}
+   \PYG{c+c1}{;; (:pandoc . \PYGZdq{}t\PYGZdq{})}
+   \PYG{p}{(}\PYG{n+nb}{:kernel} \PYG{o}{.} \PYG{l+s}{\PYGZdq{}python\PYGZdq{}}\PYG{p}{)))}
+
+\PYG{c+c1}{;; Haskell}
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{org\PYGZhy{}babel\PYGZhy{}default\PYGZhy{}header\PYGZhy{}args:jupyter\PYGZhy{}haskell} \PYG{o}{\PYGZsq{}}\PYG{p}{(}
+   \PYG{p}{(}\PYG{n+nb}{:session} \PYG{o}{.} \PYG{l+s}{\PYGZdq{}hs\PYGZdq{}}\PYG{p}{)}
+   \PYG{p}{(}\PYG{n+nb}{:kernel} \PYG{o}{.} \PYG{l+s}{\PYGZdq{}haskell\PYGZdq{}}\PYG{p}{)))}
+\end{Verbatim}

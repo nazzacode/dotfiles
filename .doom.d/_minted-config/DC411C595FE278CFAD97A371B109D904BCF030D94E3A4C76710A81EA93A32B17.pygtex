@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{hypothesis\PYGZhy{}username} \PYG{l+s}{\PYGZdq{}nazzacode\PYGZdq{}}
+      \PYG{n+nv}{hypothesis\PYGZhy{}token} \PYG{l+s}{\PYGZdq{}6879\PYGZhy{}DJYjeV3gat2emzWKlSGkQu20tQTvQK3s7xVSepSdjfA\PYGZdq{}}\PYG{p}{)}
+\end{Verbatim}

@@ -1,0 +1,18 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{;; TODO move template to .doom.d folder!}
+
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{org\PYGZhy{}html\PYGZhy{}html5\PYGZhy{}fancy} \PYG{n+no}{t}
+      \PYG{n+nv}{org\PYGZhy{}html\PYGZhy{}table\PYGZhy{}caption\PYGZhy{}above} \PYG{n+no}{nil}
+      \PYG{n+nv}{org\PYGZhy{}html\PYGZhy{}htmlize\PYGZhy{}output\PYGZhy{}type} \PYG{l+s+ss}{\PYGZsq{}inline\PYGZhy{}css}\PYG{p}{)}
+      \PYG{c+c1}{;; org\PYGZhy{}html\PYGZhy{}htmlize\PYGZhy{}output\PYGZhy{}type \PYGZsq{}css)}
+
+\PYG{c+c1}{;; (setq org\PYGZhy{}confirm\PYGZhy{}babel\PYGZhy{}evaluate nil)}
+
+\PYG{c+c1}{;; FIXME: prevent oversize svg img widths on org html export}
+\PYG{c+c1}{;; (with\PYGZhy{}eval\PYGZhy{}after\PYGZhy{}load \PYGZsq{}ox\PYGZhy{}html}
+\PYG{c+c1}{;;   (setq org\PYGZhy{}html\PYGZhy{}head}
+\PYG{c+c1}{;;         (replace\PYGZhy{}regexp\PYGZhy{}in\PYGZhy{}string}
+\PYG{c+c1}{;;          \PYGZdq{}.org\PYGZhy{}svg \PYGZob{} width: 90\PYGZpc{}; \PYGZcb{}\PYGZdq{}}
+\PYG{c+c1}{;;          \PYGZdq{}.org\PYGZhy{}svg \PYGZob{} width: auto; \PYGZcb{}\PYGZdq{}}
+\PYG{c+c1}{;;          org\PYGZhy{}html\PYGZhy{}style\PYGZhy{}default)))}
+\end{Verbatim}

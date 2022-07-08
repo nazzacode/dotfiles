@@ -1,0 +1,22 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{p}{(}\PYG{n+nb}{defun} \PYG{n+nv}{my\PYGZhy{}split\PYGZhy{}pararagraph\PYGZhy{}into\PYGZhy{}lines} \PYG{p}{()}
+  \PYG{l+s}{\PYGZdq{}Split current paragraph into lines with one sentence each.\PYGZdq{}}
+  \PYG{p}{(}\PYG{k}{interactive}\PYG{p}{)}
+  \PYG{p}{(}\PYG{k}{save\PYGZhy{}excursion}
+    \PYG{p}{(}\PYG{k}{let} \PYG{p}{((}\PYG{n+nv}{fill\PYGZhy{}column} \PYG{p}{(}\PYG{n+nf}{point\PYGZhy{}max}\PYG{p}{)))}
+      \PYG{p}{(}\PYG{n+nv}{fill\PYGZhy{}paragraph}\PYG{p}{))}
+    \PYG{p}{(}\PYG{k}{let} \PYG{p}{((}\PYG{n+nv}{auto\PYGZhy{}fill\PYGZhy{}p} \PYG{n+nv}{auto\PYGZhy{}fill\PYGZhy{}function}\PYG{p}{)}
+          \PYG{p}{(}\PYG{n+nv}{end} \PYG{p}{(}\PYG{k}{progn} \PYG{p}{(}\PYG{n+nf}{end\PYGZhy{}of\PYGZhy{}line}\PYG{p}{)} \PYG{p}{(}\PYG{n+nv}{backward\PYGZhy{}sentence}\PYG{p}{)} \PYG{p}{(}\PYG{n+nf}{point}\PYG{p}{))))}
+      \PYG{p}{(}\PYG{n+nv}{back\PYGZhy{}to\PYGZhy{}indentation}\PYG{p}{)}
+      \PYG{p}{(}\PYG{n+nb}{unless} \PYG{p}{(}\PYG{n+nf}{=} \PYG{p}{(}\PYG{n+nf}{point}\PYG{p}{)} \PYG{n+nv}{end}\PYG{p}{)}
+        \PYG{p}{(}\PYG{n+nv}{auto\PYGZhy{}fill\PYGZhy{}mode} \PYG{l+m+mi}{\PYGZhy{}1}\PYG{p}{)}
+        \PYG{p}{(}\PYG{k}{while} \PYG{p}{(}\PYG{n+nf}{\PYGZlt{}} \PYG{p}{(}\PYG{n+nf}{point}\PYG{p}{)} \PYG{n+nv}{end}\PYG{p}{)}
+          \PYG{p}{(}\PYG{n+nv}{forward\PYGZhy{}sentence}\PYG{p}{)}
+          \PYG{p}{(}\PYG{n+nv}{delete\PYGZhy{}horizontal\PYGZhy{}space}\PYG{p}{)}
+          \PYG{p}{(}\PYG{n+nv}{newline\PYGZhy{}and\PYGZhy{}indent}\PYG{p}{))}
+        \PYG{p}{(}\PYG{n+nv}{deactivate\PYGZhy{}mark}\PYG{p}{)}
+        \PYG{p}{(}\PYG{n+nb}{when} \PYG{n+nv}{auto\PYGZhy{}fill\PYGZhy{}p}
+          \PYG{p}{(}\PYG{n+nv}{auto\PYGZhy{}fill\PYGZhy{}mode} \PYG{n+no}{t}\PYG{p}{))}
+        \PYG{p}{(}\PYG{n+nb}{when} \PYG{p}{(}\PYG{n+nf}{looking\PYGZhy{}at} \PYG{l+s}{\PYGZdq{}\PYGZca{}\PYGZdl{}\PYGZdq{}}\PYG{p}{)}
+          \PYG{p}{(}\PYG{n+nv}{backward\PYGZhy{}delete\PYGZhy{}char} \PYG{l+m+mi}{1}\PYG{p}{))))))}
+\end{Verbatim}

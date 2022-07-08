@@ -1,0 +1,12 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{auto\PYGZhy{}save\PYGZhy{}default} \PYG{n+no}{t}
+      \PYG{n+nv}{initial\PYGZhy{}major\PYGZhy{}mode} \PYG{l+s+ss}{\PYGZsq{}org\PYGZhy{}mode}
+      \PYG{n+nv}{make\PYGZhy{}backup\PYGZhy{}files} \PYG{n+no}{t}
+      \PYG{n+nv}{lisp\PYGZhy{}indent\PYGZhy{}offset} \PYG{l+m+mi}{2}\PYG{p}{)}
+
+\PYG{p}{(}\PYG{k}{setq\PYGZhy{}default} \PYG{n+nv}{tab\PYGZhy{}width} \PYG{l+m+mi}{2}\PYG{p}{)}
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{straight\PYGZhy{}allow\PYGZhy{}recipe\PYGZhy{}inheritance} \PYG{n+no}{nil}\PYG{p}{)}
+
+\PYG{c+c1}{;; (menu\PYGZhy{}bar\PYGZhy{}mode 1)  ;; good for learning}
+\PYG{c+c1}{;; (pixel\PYGZhy{}scroll\PYGZhy{}mode 1) ; smooth scrolling ; ERROR causes severe lag}
+\end{Verbatim}

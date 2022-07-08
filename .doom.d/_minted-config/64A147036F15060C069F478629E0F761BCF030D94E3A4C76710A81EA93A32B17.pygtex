@@ -1,0 +1,12 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{p}{(}\PYG{n+nb}{defun} \PYG{n+nv}{org\PYGZhy{}link\PYGZhy{}display\PYGZhy{}format\PYGZhy{}h} \PYG{p}{(}\PYG{n+nv}{s}\PYG{p}{)}
+  \PYG{l+s}{\PYGZdq{}Replace radio links in string S with their description.}
+\PYG{l+s}{If there is no description, use the link target.\PYGZdq{}}
+  \PYG{p}{(}\PYG{n+nb}{save\PYGZhy{}match\PYGZhy{}data}
+    \PYG{p}{(}\PYG{n+nv}{replace\PYGZhy{}regexp\PYGZhy{}in\PYGZhy{}string}
+     \PYG{n+nv}{org\PYGZhy{}radio\PYGZhy{}target\PYGZhy{}regexp}
+     \PYG{p}{(}\PYG{n+nb}{lambda} \PYG{p}{(}\PYG{n+nv}{m}\PYG{p}{)} \PYG{p}{(}\PYG{k}{or} \PYG{p}{(}\PYG{n+nv}{match\PYGZhy{}string} \PYG{l+m+mi}{2} \PYG{n+nv}{m}\PYG{p}{)} \PYG{p}{(}\PYG{n+nv}{match\PYGZhy{}string} \PYG{l+m+mi}{1} \PYG{n+nv}{m}\PYG{p}{)))}
+     \PYG{n+nv}{s} \PYG{n+no}{nil} \PYG{n+no}{t}\PYG{p}{)))}
+
+\PYG{p}{(}\PYG{n+nv}{advice\PYGZhy{}add}  \PYG{l+s+ss}{\PYGZsq{}org\PYGZhy{}link\PYGZhy{}display\PYGZhy{}format} \PYG{n+nb}{:filter\PYGZhy{}return} \PYG{l+s+ss}{\PYGZsq{}org\PYGZhy{}link\PYGZhy{}display\PYGZhy{}format\PYGZhy{}h}\PYG{p}{)}
+\end{Verbatim}

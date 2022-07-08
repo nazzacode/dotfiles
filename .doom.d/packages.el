@@ -1,22 +1,11 @@
 ;; -*- no-byte-compile: t; -*-
 ;;; $DOOMDIR/packages.el
 
-;; To install a package with Doom you must declare them here and run 'doom sync'
-;; on the command line, then restart Emacs for the changes to take effect -- or
-;; use 'M-x doom/reload'.
-
-
-;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
-;(package! some-package)
-  ;; :recipe (:host github :repo "org-roam/org-roam-bibtex"))
 (package! alert)             ; notification interface
 (package! all-the-icons-dired) ; file icons fordired
-(package! company-box)
+(package! company-box)       ; completion UI fame/box
 (package! company-math)      ; latex unicode completion menu
-(package! company-tabnine)
-(package! direnv)            ; dev environments per filepath
-(package! deft)              ; search buffer
-(package! doom-modeline)
+(package! dashboard)
 (package! eldoc-eval)
 (package! graphviz-dot-mode) ; graph diagrams
 (package! highlight-indent-guides)
@@ -26,33 +15,40 @@
 (package! nov)               ; epub reader
 (package! ob-typescript)
 (package! org-appear)        ; show emphasis markers when inside fragment
+(package! org-contrib)       ; extra utilities such as the :ignore: tag
 (package! org-download)      ; screenshots
-(package! org-fragtog)      ; auto latex fragement rendering
+(package! org-fragtog)       ; auto latex fragement rendering
+(package! org-modern)        ; wowoa cool ui for org
 (package! org-noter)         ; pdf + synced notes; side by side
-(package! org-contrib)  ; extra utilities such as the :ignore: tag
 (package! org-ref)           ; academic referencing in org mode
 (package! org-roam-bibtex)   ; org + roam + bibtex
 (package! org-roam-ui :recipe (:host github :repo "org-roam/org-roam-ui" :files ("*.el" "out"))) ; graph explorer for org roam
+(package! org-special-block-extras)
 (package! org-superstar)     ; fancy headings and bullets
 (package! pdf-continuous-scroll-mode :recipe (:host github :repo "dalanicolai/pdf-continuous-scroll-mode.el"))
+(package! pdf-continuous-scroll-mode :disable (not (and (fboundp 'init-image-library) (init-image-library 'svg))))
+;; (package! pdf-tools  :recipe (:host github :repo "dalanicolai/pdf-tools" :branch "continuous-scroll-version-3" :files ("lisp/*.el" "README" "vimura-server/*.py" ("build" "Makefile") ("build" "server") (:exclude "lisp/tablist.el" "lisp/tablist-filter.el"))))
+(package! pdf-view-restore)
 (package! peep-dired)        ; preview popup for dired
 (package! persist)           ; variables that persist across sessions
-(package! phscroll :recipe (:host github :repo "misohena/phscroll"))  ; partial horizontal scrolling in org mode (use case: wide tables)
+;; (package! phscroll :recipe (:host github :repo "misohena/phscroll"))  ; partial horizontal scrolling in org mode (use case: wide tables)
 (package! rainbow-mode)      ; sets background color for color names
 (package! request)           ; elisp http
 (package! transpose-frame)   ; allows transposing the frame among other operations
-(package! treemacs-icons-dired)           ;
+(package! treemacs-icons-dired)  ; treemacs icons
+(package! tree-sitter)       ; better syntax highlighting
+(package! tree-sitter-langs)
 (package! ts-comint)         ; typescript REPL
 (package! valign)            ; pretty tables
-(package! yascroll)          ; ascii scrollbar
-;; (package! webkit :recipe (:host github :repo "akirakyle/emacs-webkit"  ; browser and ting
-;;           :files (:defaults "*.js" "*.css" "*.so")
-;;           :pre-build ("make")))
-(package! phscroll :recipe (:host github :repo "misohena/phscroll"))  ; partial horizontal scrolling in org mode (use case: wide tables)
 (package! websocket)
-(package! winum)
-
-
+(package! winum)             ; numbers windows in some way?
+(package! yascroll)          ; ascii scrollbar
+;; (package! company-tabnine)   ; AI autocomplete
+;; (package! deft)              ; search buffer
+;; (package! direnv)            ; dev environments per filepath
+;; (package! doom-modeline)
+;; (package! oc-biblatex)
+;; (package! webkit :recipe (:host github :repo "akirakyle/emacs-webkit"  ; browser and ting :files (:defaults "*.js" "*.css" "*.so") :pare-build ("make")))
 
 ;; To install a package directly from a remote git repo, you must specify a
 ;; `:recipe'. You'll find documentation on what `:recipe' accepts here:

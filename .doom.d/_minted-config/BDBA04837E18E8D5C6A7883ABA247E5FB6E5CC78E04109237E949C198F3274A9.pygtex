@@ -1,0 +1,33 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{;; (require \PYGZsq{}flycheck)}
+\PYG{c+c1}{;; (require \PYGZsq{}solidity\PYGZhy{}flycheck)}
+
+\PYG{c+c1}{;; ;; Linter Paths}
+\PYG{c+c1}{;; (setq solidity\PYGZhy{}solc\PYGZhy{}path \PYGZdq{}/usr/bin/solcjs\PYGZdq{})}
+\PYG{c+c1}{;; (setq solidity\PYGZhy{}solium\PYGZhy{}path \PYGZdq{}/usr/bin/solium\PYGZdq{})}
+
+\PYG{c+c1}{;; (require \PYGZsq{}solidity\PYGZhy{}mode)}
+
+
+\PYG{c+c1}{;; (setq solidity\PYGZhy{}flycheck\PYGZhy{}solc\PYGZhy{}checker\PYGZhy{}active t)}
+\PYG{c+c1}{;; (setq solidity\PYGZhy{}flycheck\PYGZhy{}solium\PYGZhy{}checker\PYGZhy{}active t)}
+
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{solidity\PYGZhy{}comment\PYGZhy{}style} \PYG{l+s+ss}{\PYGZsq{}slash}\PYG{p}{)}
+
+\PYG{p}{(}\PYG{n+nv}{add\PYGZhy{}hook} \PYG{l+s+ss}{\PYGZsq{}after\PYGZhy{}init\PYGZhy{}hook} \PYG{n+nf}{\PYGZsh{}\PYGZsq{}}\PYG{n+nv}{global\PYGZhy{}flycheck\PYGZhy{}mode}\PYG{p}{)}
+
+\PYG{c+c1}{;; (setq solidity\PYGZhy{}solc\PYGZhy{}path \PYGZdq{}/usr/bin/solcjs\PYGZdq{})}
+
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{solidity\PYGZhy{}solium\PYGZhy{}path} \PYG{l+s}{\PYGZdq{}/usr/bin/solium\PYGZdq{}}\PYG{p}{)}
+\PYG{c+c1}{;; (setq flycheck\PYGZhy{}solidity\PYGZhy{}solium\PYGZhy{}soliumrcfile \PYGZdq{}\PYGZti{}/.soliumrc.json\PYGZdq{})}
+
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{solidity\PYGZhy{}flycheck\PYGZhy{}solium\PYGZhy{}checker\PYGZhy{}active} \PYG{n+no}{t}\PYG{p}{)}
+
+\PYG{p}{(}\PYG{n+nb}{require} \PYG{l+s+ss}{\PYGZsq{}solidity\PYGZhy{}flycheck}\PYG{p}{)}
+
+\PYG{c+c1}{;; (add\PYGZhy{}hook \PYGZsq{}solidity\PYGZhy{}mode\PYGZhy{}hook}
+\PYG{c+c1}{;;   (lambda ()}
+\PYG{c+c1}{;;   (set (make\PYGZhy{}local\PYGZhy{}variable \PYGZsq{}company\PYGZhy{}backends)}
+\PYG{c+c1}{;;     (append \PYGZsq{}((company\PYGZhy{}solidity company\PYGZhy{}capf company\PYGZhy{}dabbrev\PYGZhy{}code))}
+\PYG{c+c1}{;;       company\PYGZhy{}backends))))}
+\end{Verbatim}

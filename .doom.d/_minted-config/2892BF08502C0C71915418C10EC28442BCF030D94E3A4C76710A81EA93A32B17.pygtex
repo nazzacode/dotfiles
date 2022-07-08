@@ -1,0 +1,88 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{c+c1}{;; Taken from tecosaur \PYGZlt{}3}
+
+\PYG{c+c1}{;; TODO make work for caps}
+\PYG{c+c1}{;; TODO}
+\PYG{c+c1}{;; \PYGZsh{}+filetags:}
+\PYG{c+c1}{;; \PYGZsh{}+description:}
+
+\PYG{p}{(}\PYG{n+nv}{appendq!} \PYG{n+nv}{+ligatures\PYGZhy{}extra\PYGZhy{}symbols}
+          \PYG{o}{`}\PYG{p}{(}\PYG{n+nb}{:list\PYGZus{}property} \PYG{l+s}{\PYGZdq{}∷\PYGZdq{}}
+\PYG{c+c1}{;;            :checkbox      \PYGZdq{}☐\PYGZdq{}}
+\PYG{c+c1}{;;            :pending       \PYGZdq{}◼\PYGZdq{}}
+\PYG{c+c1}{;;            :checkedbox    \PYGZdq{}☑\PYGZdq{}}
+            \PYG{n+nb}{:em\PYGZus{}dash}       \PYG{l+s}{\PYGZdq{}—\PYGZdq{}}
+            \PYG{n+nb}{:ellipses}      \PYG{l+s}{\PYGZdq{}…\PYGZdq{}}
+            \PYG{n+nb}{:arrow\PYGZus{}right}   \PYG{l+s}{\PYGZdq{}→\PYGZdq{}}
+            \PYG{n+nb}{:arrow\PYGZus{}left}    \PYG{l+s}{\PYGZdq{}←\PYGZdq{}}
+            \PYG{n+nb}{:title}         \PYG{l+s}{\PYGZdq{}🆃\PYGZdq{}}
+            \PYG{n+nb}{:subtitle}      \PYG{l+s}{\PYGZdq{}🆂\PYGZdq{}}
+            \PYG{n+nb}{:author}        \PYG{l+s}{\PYGZdq{}🅐\PYGZdq{}}
+            \PYG{n+nb}{:date}          \PYG{l+s}{\PYGZdq{}🅳\PYGZdq{}}
+            \PYG{n+nb}{:property}      \PYG{l+s}{\PYGZdq{}⚙\PYGZdq{}}
+            \PYG{n+nb}{:options}       \PYG{l+s}{\PYGZdq{}⌥\PYGZdq{}}
+            \PYG{n+nb}{:startup}       \PYG{l+s}{\PYGZdq{}⏻\PYGZdq{}}
+            \PYG{n+nb}{:macro}         \PYG{l+s}{\PYGZdq{}𝓜\PYGZdq{}}
+            \PYG{n+nb}{:html\PYGZus{}head}     \PYG{l+s}{\PYGZdq{}🅷\PYGZdq{}}
+            \PYG{n+nb}{:html}          \PYG{l+s}{\PYGZdq{}🅗\PYGZdq{}}
+            \PYG{n+nb}{:latex\PYGZus{}class}   \PYG{l+s}{\PYGZdq{}🄻\PYGZdq{}}
+            \PYG{n+nb}{:latex\PYGZus{}header}  \PYG{l+s}{\PYGZdq{}🅻\PYGZdq{}}
+            \PYG{n+nb}{:beamer\PYGZus{}header} \PYG{l+s}{\PYGZdq{}🅑\PYGZdq{}}
+            \PYG{n+nb}{:latex}         \PYG{l+s}{\PYGZdq{}🅛\PYGZdq{}}
+            \PYG{n+nb}{:attr\PYGZus{}latex}    \PYG{l+s}{\PYGZdq{}🄛\PYGZdq{}}
+            \PYG{n+nb}{:attr\PYGZus{}html}     \PYG{l+s}{\PYGZdq{}🄗\PYGZdq{}}
+            \PYG{n+nb}{:attr\PYGZus{}org}      \PYG{l+s}{\PYGZdq{}⒪\PYGZdq{}}
+            \PYG{n+nb}{:begin\PYGZus{}quote}   \PYG{l+s}{\PYGZdq{}❝\PYGZdq{}}
+            \PYG{n+nb}{:end\PYGZus{}quote}     \PYG{l+s}{\PYGZdq{}❞\PYGZdq{}}
+            \PYG{n+nb}{:caption}       \PYG{l+s}{\PYGZdq{}☰\PYGZdq{}}
+            \PYG{n+nb}{:header}        \PYG{l+s}{\PYGZdq{}›\PYGZdq{}}
+            \PYG{n+nb}{:results}       \PYG{l+s}{\PYGZdq{}⮑\PYGZdq{}}
+            \PYG{n+nb}{:begin\PYGZus{}export}  \PYG{l+s}{\PYGZdq{}⏩\PYGZdq{}}
+            \PYG{n+nb}{:end\PYGZus{}export}    \PYG{l+s}{\PYGZdq{}⏪\PYGZdq{}}
+            \PYG{n+nb}{:properties}    \PYG{l+s}{\PYGZdq{}⚙\PYGZdq{}}
+            \PYG{n+nb}{:end}           \PYG{l+s}{\PYGZdq{}∎\PYGZdq{}}
+            \PYG{n+nb}{:filetags}      \PYG{l+s}{\PYGZdq{}🏷\PYGZdq{}}
+            \PYG{n+nb}{:description}   \PYG{l+s}{\PYGZdq{}✍\PYGZdq{}}
+\PYG{p}{))}
+\PYG{p}{(}\PYG{n+nv}{set\PYGZhy{}ligatures!} \PYG{l+s+ss}{\PYGZsq{}org\PYGZhy{}mode}
+  \PYG{n+nb}{:merge} \PYG{n+no}{t}
+  \PYG{n+nb}{:checkbox}      \PYG{l+s}{\PYGZdq{}[ ]\PYGZdq{}}
+  \PYG{n+nb}{:pending}       \PYG{l+s}{\PYGZdq{}[\PYGZhy{}]\PYGZdq{}}
+  \PYG{n+nb}{:checkedbox}    \PYG{l+s}{\PYGZdq{}[X]\PYGZdq{}}
+  \PYG{n+nb}{:list\PYGZus{}property} \PYG{l+s}{\PYGZdq{}::\PYGZdq{}}
+  \PYG{n+nb}{:em\PYGZus{}dash}       \PYG{l+s}{\PYGZdq{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZdq{}}
+  \PYG{n+nb}{:ellipsis}      \PYG{l+s}{\PYGZdq{}...\PYGZdq{}}
+  \PYG{n+nb}{:arrow\PYGZus{}right}   \PYG{l+s}{\PYGZdq{}\PYGZhy{}\PYGZgt{}\PYGZdq{}}
+  \PYG{n+nb}{:arrow\PYGZus{}left}    \PYG{l+s}{\PYGZdq{}\PYGZlt{}\PYGZhy{}\PYGZdq{}}
+  \PYG{n+nb}{:title}         \PYG{l+s}{\PYGZdq{}\PYGZsh{}+title:\PYGZdq{}}
+  \PYG{n+nb}{:subtitle}      \PYG{l+s}{\PYGZdq{}\PYGZsh{}+subtitle:\PYGZdq{}}
+  \PYG{n+nb}{:author}        \PYG{l+s}{\PYGZdq{}\PYGZsh{}+author:\PYGZdq{}}
+  \PYG{n+nb}{:date}          \PYG{l+s}{\PYGZdq{}\PYGZsh{}+date:\PYGZdq{}}
+  \PYG{n+nb}{:property}      \PYG{l+s}{\PYGZdq{}\PYGZsh{}+property:\PYGZdq{}}
+  \PYG{n+nb}{:options}       \PYG{l+s}{\PYGZdq{}\PYGZsh{}+options:\PYGZdq{}}
+  \PYG{n+nb}{:startup}       \PYG{l+s}{\PYGZdq{}\PYGZsh{}+startup:\PYGZdq{}}
+  \PYG{n+nb}{:macro}         \PYG{l+s}{\PYGZdq{}\PYGZsh{}+macro:\PYGZdq{}}
+  \PYG{n+nb}{:html\PYGZus{}head}     \PYG{l+s}{\PYGZdq{}\PYGZsh{}+html\PYGZus{}head:\PYGZdq{}}
+  \PYG{n+nb}{:html}          \PYG{l+s}{\PYGZdq{}\PYGZsh{}+html:\PYGZdq{}}
+  \PYG{n+nb}{:latex\PYGZus{}class}   \PYG{l+s}{\PYGZdq{}\PYGZsh{}+latex\PYGZus{}class:\PYGZdq{}}
+  \PYG{n+nb}{:latex\PYGZus{}header}  \PYG{l+s}{\PYGZdq{}\PYGZsh{}+latex\PYGZus{}header:\PYGZdq{}}
+  \PYG{n+nb}{:beamer\PYGZus{}header} \PYG{l+s}{\PYGZdq{}\PYGZsh{}+beamer\PYGZus{}header:\PYGZdq{}}
+  \PYG{n+nb}{:latex}         \PYG{l+s}{\PYGZdq{}\PYGZsh{}+latex:\PYGZdq{}}
+  \PYG{n+nb}{:attr\PYGZus{}latex}    \PYG{l+s}{\PYGZdq{}\PYGZsh{}+attr\PYGZus{}latex:\PYGZdq{}}
+  \PYG{n+nb}{:attr\PYGZus{}html}     \PYG{l+s}{\PYGZdq{}\PYGZsh{}+attr\PYGZus{}html:\PYGZdq{}}
+  \PYG{n+nb}{:attr\PYGZus{}org}      \PYG{l+s}{\PYGZdq{}\PYGZsh{}+attr\PYGZus{}org:\PYGZdq{}}
+  \PYG{n+nb}{:begin\PYGZus{}quote}   \PYG{l+s}{\PYGZdq{}\PYGZsh{}+begin\PYGZus{}quote\PYGZdq{}}
+  \PYG{n+nb}{:end\PYGZus{}quote}     \PYG{l+s}{\PYGZdq{}\PYGZsh{}+end\PYGZus{}quote\PYGZdq{}}
+  \PYG{n+nb}{:caption}       \PYG{l+s}{\PYGZdq{}\PYGZsh{}+caption:\PYGZdq{}}
+  \PYG{n+nb}{:header}        \PYG{l+s}{\PYGZdq{}\PYGZsh{}+header:\PYGZdq{}}
+  \PYG{n+nb}{:begin\PYGZus{}export}  \PYG{l+s}{\PYGZdq{}\PYGZsh{}+begin\PYGZus{}export\PYGZdq{}}
+  \PYG{n+nb}{:end\PYGZus{}export}    \PYG{l+s}{\PYGZdq{}\PYGZsh{}+end\PYGZus{}export\PYGZdq{}}
+  \PYG{n+nb}{:filetags}      \PYG{l+s}{\PYGZdq{}\PYGZsh{}+filetags:\PYGZdq{}}
+  \PYG{n+nb}{:description}   \PYG{l+s}{\PYGZdq{}\PYGZsh{}+description:\PYGZdq{}}
+  \PYG{n+nb}{:results}       \PYG{l+s}{\PYGZdq{}\PYGZsh{}+RESULTS:\PYGZdq{}}
+  \PYG{n+nb}{:property}      \PYG{l+s}{\PYGZdq{}:PROPERTIES:\PYGZdq{}}
+  \PYG{n+nb}{:end}           \PYG{l+s}{\PYGZdq{}:END:\PYGZdq{}}
+\PYG{p}{)}
+
+\PYG{p}{(}\PYG{n+nf}{plist\PYGZhy{}put} \PYG{n+nv}{+ligatures\PYGZhy{}extra\PYGZhy{}symbols} \PYG{n+nb}{:name} \PYG{l+s}{\PYGZdq{}⁍\PYGZdq{}}\PYG{p}{)}
+\end{Verbatim}

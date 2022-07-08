@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{;; (use\PYGZhy{}package direnv}
+\PYG{c+c1}{;;  :config}
+\PYG{c+c1}{;;  (direnv\PYGZhy{}mode))}
+\end{Verbatim}

@@ -1,0 +1,24 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{;; TODO julia, emacs seems to love it...}
+
+\PYG{p}{(}\PYG{n+nv}{org\PYGZhy{}babel\PYGZhy{}do\PYGZhy{}load\PYGZhy{}languages}
+  \PYG{l+s+ss}{\PYGZsq{}org\PYGZhy{}babel\PYGZhy{}load\PYGZhy{}languages}
+    \PYG{o}{\PYGZsq{}}\PYG{p}{((}\PYG{n+nv}{C.} \PYG{n+no}{t}\PYG{p}{)}
+      \PYG{p}{(}\PYG{n+nv}{dot} \PYG{o}{.} \PYG{n+no}{t}\PYG{p}{)}
+      \PYG{p}{(}\PYG{n+nv}{haskell} \PYG{o}{.} \PYG{n+no}{t}\PYG{p}{)}
+      \PYG{p}{(}\PYG{n+nv}{js} \PYG{o}{.} \PYG{n+no}{t}\PYG{p}{)}
+      \PYG{p}{(}\PYG{n+nv}{json} \PYG{o}{.} \PYG{n+no}{t}\PYG{p}{)}
+      \PYG{p}{(}\PYG{n+nv}{nix} \PYG{o}{.} \PYG{n+no}{t}\PYG{p}{)}
+      \PYG{p}{(}\PYG{n+nv}{python} \PYG{o}{.} \PYG{n+no}{t}\PYG{p}{)}
+      \PYG{c+c1}{;; (sh . t)}
+      \PYG{p}{(}\PYG{n+nv}{typescript} \PYG{o}{.} \PYG{n+no}{t}\PYG{p}{)}
+      \PYG{c+c1}{;; jupyter must be load last}
+      \PYG{p}{(}\PYG{n+nv}{jupyter} \PYG{o}{.} \PYG{n+no}{t}\PYG{p}{)))}
+
+\PYG{c+c1}{;; Typescript}
+\PYG{p}{(}\PYG{n+nb}{defun} \PYG{n+nv}{org\PYGZhy{}babel\PYGZhy{}execute:typescript} \PYG{p}{(}\PYG{n+nv}{body} \PYG{n+nv}{params}\PYG{p}{)}
+  \PYG{p}{(}\PYG{k}{let} \PYG{p}{((}\PYG{n+nv}{org\PYGZhy{}babel\PYGZhy{}js\PYGZhy{}cmd} \PYG{l+s}{\PYGZdq{}npx ts\PYGZhy{}node \PYGZlt{} \PYGZdq{}}\PYG{p}{))}
+    \PYG{p}{(}\PYG{n+nv}{org\PYGZhy{}babel\PYGZhy{}execute:js} \PYG{n+nv}{body} \PYG{n+nv}{params}\PYG{p}{)))}
+
+\PYG{c+c1}{;; (defalias \PYGZsq{}org\PYGZhy{}babel\PYGZhy{}execute:ts \PYGZsq{}org\PYGZhy{}babel\PYGZhy{}execute:typescript) ; FIXME}
+\end{Verbatim}

@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{p}{(}\PYG{n+nb}{use\PYGZhy{}package} \PYG{n+nv}{deft}
+  \PYG{n+nb}{:after} \PYG{n+nv}{org}
+  \PYG{n+nb}{:bind}
+  \PYG{p}{(}\PYG{l+s}{\PYGZdq{}C\PYGZhy{}c n d\PYGZdq{}} \PYG{o}{.} \PYG{n+nv}{deft}\PYG{p}{)}
+  \PYG{n+nb}{:custom}
+  \PYG{p}{(}\PYG{n+nv}{deft\PYGZhy{}recursive} \PYG{n+no}{t}\PYG{p}{)}
+  \PYG{p}{(}\PYG{n+nv}{deft\PYGZhy{}use\PYGZhy{}filter\PYGZhy{}string\PYGZhy{}for\PYGZhy{}filename} \PYG{n+no}{t}\PYG{p}{)}
+  \PYG{p}{(}\PYG{n+nv}{deft\PYGZhy{}default\PYGZhy{}extension} \PYG{l+s}{\PYGZdq{}org\PYGZdq{}}\PYG{p}{)}
+  \PYG{p}{(}\PYG{n+nv}{deft\PYGZhy{}directory} \PYG{n+nv}{org\PYGZhy{}roam\PYGZhy{}directory}\PYG{p}{))}
+\end{Verbatim}

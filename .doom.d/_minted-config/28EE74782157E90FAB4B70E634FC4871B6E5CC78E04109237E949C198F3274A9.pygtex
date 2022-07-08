@@ -1,0 +1,27 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{;; FIXME not loading for some reason!?}
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{org\PYGZhy{}todo\PYGZhy{}keywords} \PYG{o}{\PYGZsq{}}\PYG{p}{(}
+  \PYG{p}{(}\PYG{n+nv}{sequence} \PYG{l+s}{\PYGZdq{}TODO(t)\PYGZdq{}} \PYG{l+s}{\PYGZdq{}DOING(d)\PYGZdq{}} \PYG{l+s}{\PYGZdq{}STRT(s)\PYGZdq{}} \PYG{l+s}{\PYGZdq{}NEXT(n)\PYGZdq{}} \PYG{l+s}{\PYGZdq{}PROJ(p)\PYGZdq{}} \PYG{l+s}{\PYGZdq{}WAIT(w)\PYGZdq{}} \PYG{l+s}{\PYGZdq{}MAYBE(m)\PYGZdq{}} \PYG{l+s}{\PYGZdq{}ERROR(e)\PYGZdq{}} \PYG{l+s}{\PYGZdq{}FIXME(f)\PYGZdq{}} \PYG{l+s}{\PYGZdq{}UPDATE(u)\PYGZdq{}} \PYG{l+s}{\PYGZdq{}MOVE(M)\PYGZdq{}} \PYG{l+s}{\PYGZdq{}(x)\PYGZdq{}} \PYG{l+s}{\PYGZdq{}|\PYGZdq{}} \PYG{l+s}{\PYGZdq{}DONE(D)\PYGZdq{}} \PYG{l+s}{\PYGZdq{}CANCL(c)\PYGZdq{}} \PYG{l+s}{\PYGZdq{}DEPRECATED(z)\PYGZdq{}}\PYG{p}{)}
+  \PYG{p}{(}\PYG{n+nv}{sequence} \PYG{l+s}{\PYGZdq{}[ ](T)\PYGZdq{}} \PYG{l+s}{\PYGZdq{}[\PYGZhy{}](\PYGZhy{})\PYGZdq{}} \PYG{l+s}{\PYGZdq{}[?](?)\PYGZdq{}} \PYG{l+s}{\PYGZdq{}|\PYGZdq{}} \PYG{l+s}{\PYGZdq{}[X](X)\PYGZdq{}} \PYG{l+s}{\PYGZdq{}[.](.)\PYGZdq{}} \PYG{p}{)}
+  \PYG{p}{(}\PYG{n+nv}{sequence} \PYG{l+s}{\PYGZdq{}SPRINT(S)\PYGZdq{}} \PYG{l+s}{\PYGZdq{}EPIC(E)\PYGZdq{}}\PYG{p}{)}
+  \PYG{p}{(}\PYG{n+nv}{sequence} \PYG{l+s}{\PYGZdq{}OKAY(o)\PYGZdq{}} \PYG{l+s}{\PYGZdq{}YES(y)\PYGZdq{}} \PYG{l+s}{\PYGZdq{}|\PYGZdq{}} \PYG{l+s}{\PYGZdq{}NO(N)\PYGZdq{}}\PYG{p}{)))}
+
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{org\PYGZhy{}todo\PYGZhy{}keyword\PYGZhy{}faces} \PYG{o}{\PYGZsq{}}\PYG{p}{(}
+  \PYG{p}{(}\PYG{l+s}{\PYGZdq{}TODO\PYGZdq{}} \PYG{o}{.} \PYG{p}{(}\PYG{n+nb}{:foreground} \PYG{l+s}{\PYGZdq{}DarkSeaGreen3\PYGZdq{}} \PYG{n+nb}{:weight} \PYG{n+nv}{semi\PYGZhy{}bold}\PYG{p}{))}
+  \PYG{p}{(}\PYG{l+s}{\PYGZdq{}DOING\PYGZdq{}} \PYG{o}{.} \PYG{p}{(}\PYG{n+nb}{:foreground} \PYG{l+s}{\PYGZdq{}light goldenrod\PYGZdq{}} \PYG{n+nb}{:weight} \PYG{n+nv}{semi\PYGZhy{}bold} \PYG{n+nv}{+org\PYGZhy{}todo\PYGZhy{}active}\PYG{p}{))}
+  \PYG{p}{(}\PYG{l+s}{\PYGZdq{}STRT\PYGZdq{}} \PYG{o}{.} \PYG{p}{(}\PYG{n+nb}{:foreground} \PYG{l+s}{\PYGZdq{}\PYGZsh{}9083e6\PYGZdq{}} \PYG{n+nb}{:weight} \PYG{n+nv}{semi\PYGZhy{}bold} \PYG{n+nv}{+org\PYGZhy{}todo\PYGZhy{}active}\PYG{p}{))}
+  \PYG{p}{(}\PYG{l+s}{\PYGZdq{}SPRINT\PYGZdq{}} \PYG{o}{.} \PYG{p}{(}\PYG{n+nb}{:foreground} \PYG{l+s}{\PYGZdq{}light goldenrod\PYGZdq{}} \PYG{n+nb}{:weight} \PYG{n+nv}{semi\PYGZhy{}bold} \PYG{n+nv}{+org\PYGZhy{}todo\PYGZhy{}active}\PYG{p}{))}
+  \PYG{p}{(}\PYG{l+s}{\PYGZdq{}NEXT\PYGZdq{}} \PYG{o}{.} \PYG{p}{(}\PYG{n+nb}{:foreground} \PYG{l+s}{\PYGZdq{}light salmon\PYGZdq{}} \PYG{n+nb}{:weight} \PYG{n+nv}{semi\PYGZhy{}bold}\PYG{p}{))}
+  \PYG{p}{(}\PYG{l+s}{\PYGZdq{}EPIC\PYGZdq{}} \PYG{o}{.} \PYG{p}{(}\PYG{n+nb}{:foreground} \PYG{l+s}{\PYGZdq{}PeachPuff3\PYGZdq{}} \PYG{n+nb}{:weight} \PYG{n+nv}{semi\PYGZhy{}bold} \PYG{n+nv}{+org\PYGZhy{}todo\PYGZhy{}project}\PYG{p}{))}
+  \PYG{p}{(}\PYG{l+s}{\PYGZdq{}PROJ\PYGZdq{}} \PYG{o}{.} \PYG{p}{(}\PYG{n+nb}{:foreground} \PYG{l+s}{\PYGZdq{}PeachPuff3\PYGZdq{}} \PYG{n+nb}{:weight} \PYG{n+nv}{semi\PYGZhy{}bold} \PYG{n+nv}{+org\PYGZhy{}todo\PYGZhy{}project}\PYG{p}{))}
+  \PYG{p}{(}\PYG{l+s}{\PYGZdq{}WAIT\PYGZdq{}} \PYG{o}{.} \PYG{p}{(}\PYG{n+nb}{:foreground} \PYG{l+s}{\PYGZdq{}powder blue\PYGZdq{}} \PYG{n+nb}{:weight} \PYG{n+nv}{semi\PYGZhy{}bold} \PYG{n+nv}{+org\PYGZhy{}todo\PYGZhy{}onhold}\PYG{p}{))}
+  \PYG{p}{(}\PYG{l+s}{\PYGZdq{}MAYBE\PYGZdq{}} \PYG{o}{.} \PYG{p}{(}\PYG{n+nb}{:foreground} \PYG{l+s}{\PYGZdq{}light pink\PYGZdq{}} \PYG{n+nb}{:weight} \PYG{n+nv}{semi\PYGZhy{}bold} \PYG{n+nv}{+org\PYGZhy{}todo\PYGZhy{}onhold}\PYG{p}{))}
+  \PYG{p}{(}\PYG{l+s}{\PYGZdq{}ERROR\PYGZdq{}} \PYG{o}{.} \PYG{p}{(}\PYG{n+nb}{:foreground} \PYG{l+s}{\PYGZdq{}IndianRed\PYGZdq{}} \PYG{n+nb}{:weight} \PYG{n+nv}{semi\PYGZhy{}bold}\PYG{p}{))}
+  \PYG{p}{(}\PYG{l+s}{\PYGZdq{}FIXME\PYGZdq{}} \PYG{o}{.} \PYG{p}{(}\PYG{n+nb}{:foreground} \PYG{l+s}{\PYGZdq{}IndianRed4\PYGZdq{}} \PYG{n+nb}{:weight} \PYG{n+nv}{semi\PYGZhy{}bold}\PYG{p}{))}
+  \PYG{c+c1}{;; (\PYGZdq{}DONE\PYGZdq{} . (:foreground \PYGZdq{}\PYGZdq{} :Weight bold))}
+  \PYG{p}{(}\PYG{l+s}{\PYGZdq{}CANCL\PYGZdq{}} \PYG{o}{.} \PYG{p}{(}\PYG{n+nb}{:foreground} \PYG{l+s}{\PYGZdq{}grey11\PYGZdq{}} \PYG{n+nb}{:weight} \PYG{n+nv}{semi\PYGZhy{}bold} \PYG{n+nv}{+org\PYGZhy{}todo\PYGZhy{}cancel}\PYG{p}{))}
+  \PYG{p}{(}\PYG{l+s}{\PYGZdq{}[\PYGZhy{}]\PYGZdq{}} \PYG{o}{.} \PYG{p}{(}\PYG{n+nv}{+org\PYGZhy{}todo\PYGZhy{}active}\PYG{p}{))}
+  \PYG{p}{(}\PYG{l+s}{\PYGZdq{}[?]\PYGZdq{}} \PYG{o}{.} \PYG{p}{(}\PYG{n+nv}{+org\PYGZhy{}todo\PYGZhy{}onhold}\PYG{p}{))}
+  \PYG{p}{(}\PYG{l+s}{\PYGZdq{}YES\PYGZdq{}} \PYG{o}{.} \PYG{p}{(}\PYG{n+nb}{:foreground} \PYG{l+s}{\PYGZdq{}DarkSeaGreen3\PYGZdq{}}\PYG{p}{))}
+  \PYG{p}{(}\PYG{l+s}{\PYGZdq{}NO\PYGZdq{}} \PYG{o}{.} \PYG{p}{(}\PYG{n+nv}{+org\PYGZhy{}todo\PYGZhy{}cancel}\PYG{p}{))))}
+\end{Verbatim}

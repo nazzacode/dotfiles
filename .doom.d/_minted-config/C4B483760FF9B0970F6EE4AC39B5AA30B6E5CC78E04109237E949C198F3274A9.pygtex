@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{doom\PYGZhy{}theme} \PYG{l+s+ss}{\PYGZsq{}my\PYGZhy{}doom\PYGZhy{}dark+}\PYG{p}{)}
+\PYG{c+c1}{;; TODO highlight src block heads and footers a different color? (without bleed? (end foot early)}
+\PYG{c+c1}{;; (setq doom\PYGZhy{}theme \PYGZsq{}my\PYGZhy{}doom\PYGZhy{}gruvbox)}
+\PYG{c+c1}{;; (setq doom\PYGZhy{}theme \PYGZsq{}doom\PYGZhy{}acario\PYGZhy{}light)}
+\PYG{c+c1}{;; (setq doom\PYGZhy{}theme \PYGZsq{}doom\PYGZhy{}zenburn)}
+
+\PYG{c+c1}{;; (setq doom\PYGZhy{}themes\PYGZhy{}padded\PYGZhy{}modeline nil) ; TEST ??}
+\end{Verbatim}

@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{p}{(}\PYG{n+nv}{after!} \PYG{n+nv}{org}
+    \PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{bibtex\PYGZhy{}completion\PYGZhy{}bibliography} \PYG{l+s}{\PYGZdq{}\PYGZti{}/org/roam/Zotero/bibliography.bib\PYGZdq{}}
+          \PYG{n+nv}{bibtex\PYGZhy{}completion\PYGZhy{}library\PYGZhy{}path} \PYG{l+s}{\PYGZdq{}\PYGZti{}/org/roam/Zotero/storage/.\PYGZdq{}}
+          \PYG{n+nv}{bibtex\PYGZhy{}completion\PYGZhy{}notes\PYGZhy{}path} \PYG{l+s}{\PYGZdq{}\PYGZti{}/org/roam/Zotero/storage\PYGZdq{}}\PYG{p}{))}
+
+\PYG{c+c1}{;; (after! org}
+\PYG{c+c1}{;;     (setq bibtex\PYGZhy{}completion\PYGZhy{}bibliography \PYGZdq{}\PYGZti{}/org/roam/PDFs/bibliography.bib\PYGZdq{}}
+\PYG{c+c1}{;;           bibtex\PYGZhy{}completion\PYGZhy{}library\PYGZhy{}path \PYGZdq{}\PYGZti{}/org/roam/PDFs/\PYGZdq{}}
+\PYG{c+c1}{;;           bibtex\PYGZhy{}completion\PYGZhy{}notes\PYGZhy{}path \PYGZdq{}\PYGZti{}/org/roam/PDFs\PYGZdq{}))}
+\end{Verbatim}

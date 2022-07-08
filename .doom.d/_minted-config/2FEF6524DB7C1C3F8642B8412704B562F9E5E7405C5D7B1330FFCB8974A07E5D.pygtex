@@ -1,0 +1,12 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{p}{(}\PYG{n+nb}{require} \PYG{l+s+ss}{\PYGZsq{}org\PYGZhy{}download}\PYG{p}{)}
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{org\PYGZhy{}download\PYGZhy{}screenshot\PYGZhy{}method} \PYG{l+s}{\PYGZdq{}xclip\PYGZdq{}}\PYG{p}{)}
+\PYG{p}{(}\PYG{k}{setq\PYGZhy{}default} \PYG{n+nv}{org\PYGZhy{}download\PYGZhy{}image\PYGZhy{}dir} \PYG{l+s}{\PYGZdq{}\PYGZti{}/org/roam/Images\PYGZdq{}}\PYG{p}{)}
+
+  \PYG{c+c1}{;; (use\PYGZhy{}package org\PYGZhy{}download}
+  \PYG{c+c1}{;; :after org}
+  \PYG{c+c1}{;; :bind}
+  \PYG{c+c1}{;; (:map org\PYGZhy{}mode\PYGZhy{}map}
+  \PYG{c+c1}{;;       ((\PYGZdq{}a\PYGZhy{}Y\PYGZdq{} . org\PYGZhy{}download\PYGZhy{}screenshot)}
+  \PYG{c+c1}{;;        (\PYGZdq{}a\PYGZhy{}y\PYGZdq{} . org\PYGZhy{}download\PYGZhy{}yank)))}
+\end{Verbatim}

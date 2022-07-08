@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{c+c1}{;; removes \PYGZsq{}evil\PYGZsq{} from head of strings}
+\PYG{p}{(}\PYG{n+nv}{after!} \PYG{n+nv}{which\PYGZhy{}key}
+\PYG{p}{(}\PYG{n+nv}{pushnew!}
+  \PYG{n+nv}{which\PYGZhy{}key\PYGZhy{}replacement\PYGZhy{}alist}
+  \PYG{o}{\PYGZsq{}}\PYG{p}{((}\PYG{l+s}{\PYGZdq{}\PYGZdq{}} \PYG{o}{.} \PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}`+?evil[\PYGZhy{}:]?\PYGZbs{}\PYGZbs{}(?:a\PYGZhy{}\PYGZbs{}\PYGZbs{})?\PYGZbs{}\PYGZbs{}(.*\PYGZbs{}\PYGZbs{})\PYGZdq{}}\PYG{p}{)} \PYG{o}{.} \PYG{p}{(}\PYG{n+no}{nil} \PYG{o}{.} \PYG{l+s}{\PYGZdq{}◂\PYGZbs{}\PYGZbs{}1\PYGZdq{}}\PYG{p}{))}
+  \PYG{o}{\PYGZsq{}}\PYG{p}{((}\PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}`g s\PYGZdq{}} \PYG{o}{.} \PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}`evilem\PYGZhy{}\PYGZhy{}?motion\PYGZhy{}\PYGZbs{}\PYGZbs{}(.*\PYGZbs{}\PYGZbs{})\PYGZdq{}}\PYG{p}{)} \PYG{o}{.} \PYG{p}{(}\PYG{n+no}{nil} \PYG{o}{.} \PYG{l+s}{\PYGZdq{}◃\PYGZbs{}\PYGZbs{}1\PYGZdq{}}\PYG{p}{))}
+  \PYG{p}{))}
+\end{Verbatim}

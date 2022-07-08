@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{c+c1}{;; (setq org\PYGZhy{}cite\PYGZhy{}global\PYGZhy{}bibliography \PYGZdq{}\PYGZti{}/org/roam/Zotero/bibliography.bib\PYGZdq{})}
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{org\PYGZhy{}cite\PYGZhy{}csl\PYGZhy{}styles\PYGZhy{}dir} \PYG{l+s}{\PYGZdq{}\PYGZti{}/org/roam/Zotero/styles\PYGZdq{}}\PYG{p}{)}
+\end{Verbatim}

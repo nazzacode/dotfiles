@@ -1,0 +1,26 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{;; TODO  full completion backend in org mode src blocks?}
+
+\PYG{p}{(}\PYG{n+nb}{require} \PYG{l+s+ss}{\PYGZsq{}company\PYGZhy{}box}\PYG{p}{)}
+\PYG{p}{(}\PYG{n+nv}{add\PYGZhy{}hook} \PYG{l+s+ss}{\PYGZsq{}company\PYGZhy{}mode\PYGZhy{}hook} \PYG{l+s+ss}{\PYGZsq{}company\PYGZhy{}box\PYGZhy{}mode}\PYG{p}{)}
+
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{company\PYGZhy{}show\PYGZhy{}numbers} \PYG{n+no}{t}  \PYG{c+c1}{; M\PYGZhy{}N to use}
+      \PYG{n+nv}{company\PYGZhy{}idle\PYGZhy{}delay} \PYG{l+m+mi}{0}\PYG{p}{)}
+
+\PYG{c+c1}{;; ;; NOT WORKING}
+\PYG{c+c1}{;; (add\PYGZhy{}hook \PYGZsq{}company\PYGZhy{}mode\PYGZhy{}hook}
+\PYG{c+c1}{;;   (lambda ()}
+\PYG{c+c1}{;;     (add\PYGZhy{}to\PYGZhy{}list company\PYGZhy{}backends \PYGZsq{}(company\PYGZhy{}math\PYGZhy{}symbols\PYGZhy{}unicode))))}
+
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{company\PYGZhy{}math\PYGZhy{}allow\PYGZhy{}latex\PYGZhy{}symbols\PYGZhy{}in\PYGZhy{}faces}  \PYG{n+no}{t}\PYG{p}{)} \PYG{c+c1}{;; allow completion in org\PYGZhy{}mode text}
+
+\PYG{c+c1}{;; FIXME only enable in certain modes...}
+\PYG{c+c1}{;; ;; TabNine (AI autocomplete)}
+\PYG{c+c1}{;; (require \PYGZsq{}company\PYGZhy{}tabnine)}
+\PYG{c+c1}{;; (add\PYGZhy{}to\PYGZhy{}list \PYGZsq{}company\PYGZhy{}backends \PYGZsq{}company\PYGZhy{}tabnine)}
+
+\PYG{c+c1}{;; company\PYGZhy{}math (latex unicode completions)}
+\PYG{p}{(}\PYG{n+nv}{add\PYGZhy{}to\PYGZhy{}list} \PYG{l+s+ss}{\PYGZsq{}company\PYGZhy{}backends} \PYG{l+s+ss}{\PYGZsq{}company\PYGZhy{}math\PYGZhy{}symbols\PYGZhy{}unicode}\PYG{p}{)} \PYG{c+c1}{; FIXME requires hot reload!}
+
+\PYG{c+c1}{;; (add\PYGZhy{}hook \PYGZsq{}after\PYGZhy{}init\PYGZhy{}hook \PYGZsq{}global\PYGZhy{}company\PYGZhy{}mode)}
+\end{Verbatim}

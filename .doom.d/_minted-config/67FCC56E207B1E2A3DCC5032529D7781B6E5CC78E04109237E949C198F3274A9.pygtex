@@ -1,0 +1,13 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{peep\PYGZhy{}dired\PYGZhy{}cleanup\PYGZhy{}eagerly} \PYG{n+no}{t}\PYG{p}{)}
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{peep\PYGZhy{}dired\PYGZhy{}enable\PYGZhy{}on\PYGZhy{}directories} \PYG{n+no}{t}\PYG{p}{)}
+
+\PYG{p}{(}\PYG{n+nv}{evil\PYGZhy{}define\PYGZhy{}key} \PYG{l+s+ss}{\PYGZsq{}normal} \PYG{n+nv}{peep\PYGZhy{}dired\PYGZhy{}mode\PYGZhy{}map} \PYG{p}{(}\PYG{n+nv}{kbd} \PYG{l+s}{\PYGZdq{}\PYGZlt{}SPC\PYGZgt{}\PYGZdq{}}\PYG{p}{)} \PYG{l+s+ss}{\PYGZsq{}peep\PYGZhy{}dired\PYGZhy{}scroll\PYGZhy{}page\PYGZhy{}down}
+                                             \PYG{p}{(}\PYG{n+nv}{kbd} \PYG{l+s}{\PYGZdq{}C\PYGZhy{}\PYGZlt{}SPC\PYGZgt{}\PYGZdq{}}\PYG{p}{)} \PYG{l+s+ss}{\PYGZsq{}peep\PYGZhy{}dired\PYGZhy{}scroll\PYGZhy{}page\PYGZhy{}up}
+                                             \PYG{p}{(}\PYG{n+nv}{kbd} \PYG{l+s}{\PYGZdq{}\PYGZlt{}backspace\PYGZgt{}\PYGZdq{}}\PYG{p}{)} \PYG{l+s+ss}{\PYGZsq{}peep\PYGZhy{}dired\PYGZhy{}scroll\PYGZhy{}page\PYGZhy{}up}
+                                             \PYG{p}{(}\PYG{n+nv}{kbd} \PYG{l+s}{\PYGZdq{}j\PYGZdq{}}\PYG{p}{)} \PYG{l+s+ss}{\PYGZsq{}peep\PYGZhy{}dired\PYGZhy{}next\PYGZhy{}file}
+                                             \PYG{p}{(}\PYG{n+nv}{kbd} \PYG{l+s}{\PYGZdq{}k\PYGZdq{}}\PYG{p}{)} \PYG{l+s+ss}{\PYGZsq{}peep\PYGZhy{}dired\PYGZhy{}prev\PYGZhy{}file}\PYG{p}{)}
+\PYG{p}{(}\PYG{n+nv}{add\PYGZhy{}hook} \PYG{l+s+ss}{\PYGZsq{}peep\PYGZhy{}dired\PYGZhy{}hook} \PYG{l+s+ss}{\PYGZsq{}evil\PYGZhy{}normalize\PYGZhy{}keymaps}\PYG{p}{)}
+
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{peep\PYGZhy{}dired\PYGZhy{}ignored\PYGZhy{}extensions} \PYG{o}{\PYGZsq{}}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}mkv\PYGZdq{}} \PYG{l+s}{\PYGZdq{}iso\PYGZdq{}} \PYG{l+s}{\PYGZdq{}mp4\PYGZdq{}}\PYG{p}{))}
+\end{Verbatim}

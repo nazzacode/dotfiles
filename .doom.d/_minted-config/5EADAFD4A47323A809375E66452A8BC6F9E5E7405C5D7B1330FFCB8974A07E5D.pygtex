@@ -1,0 +1,38 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{c+c1}{;; (setq doom\PYGZhy{}dashboard\PYGZhy{}widget\PYGZhy{}banner \PYGZdq{}\PYGZti{}/.doom.d/doom\PYGZus{}splash.txt\PYGZdq{})}
+\PYG{p}{(}\PYG{n+nb}{require} \PYG{l+s+ss}{\PYGZsq{}dashboard}\PYG{p}{)}
+\PYG{p}{(}\PYG{n+nv}{dashboard\PYGZhy{}setup\PYGZhy{}startup\PYGZhy{}hook}\PYG{p}{)}
+
+\PYG{c+c1}{; Set the title}
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{dashboard\PYGZhy{}banner\PYGZhy{}logo\PYGZhy{}title} \PYG{l+s}{\PYGZdq{}Welcome to Emacs Dashboard\PYGZdq{}}\PYG{p}{)}
+
+\PYG{c+c1}{;; Set the banner}
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{dashboard\PYGZhy{}startup\PYGZhy{}banner} \PYG{l+s}{\PYGZdq{}\PYGZti{}/.doom.d/doom\PYGZus{}splash.txt\PYGZdq{}}\PYG{p}{)}
+\PYG{c+c1}{;; Value can be}
+\PYG{c+c1}{;; \PYGZsq{}official which displays the official emacs logo}
+\PYG{c+c1}{;; \PYGZsq{}logo which displays an alternative emacs logo}
+\PYG{c+c1}{;; 1, 2 or 3 which displays one of the text banners}
+\PYG{c+c1}{;; \PYGZdq{}path/to/your/image.gif\PYGZdq{}, \PYGZdq{}path/to/your/image.png\PYGZdq{} or \PYGZdq{}path/to/your/text.txt\PYGZdq{} which displays whatever gif/image/text you would prefer}
+
+\PYG{c+c1}{;; Content is not centered by default. To center, set}
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{dashboard\PYGZhy{}center\PYGZhy{}content} \PYG{n+no}{t}\PYG{p}{)}
+
+\PYG{c+c1}{;; To disable shortcut \PYGZdq{}jump\PYGZdq{} indicators for each section, set}
+\PYG{c+c1}{;; (setq dashboard\PYGZhy{}show\PYGZhy{}shortcuts nil)}
+
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{dashboard\PYGZhy{}items} \PYG{o}{\PYGZsq{}}\PYG{p}{((}\PYG{n+nv}{recents}  \PYG{o}{.} \PYG{l+m+mi}{5}\PYG{p}{)}
+                        \PYG{c+c1}{;; (bookmarks . 5)}
+                        \PYG{c+c1}{;; (projects . 5)}
+                        \PYG{p}{(}\PYG{n+nv}{agenda} \PYG{o}{.} \PYG{l+m+mi}{5}\PYG{p}{)))}
+                        \PYG{c+c1}{;; (registers . 5)}
+
+
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{dashboard\PYGZhy{}set\PYGZhy{}heading\PYGZhy{}icons} \PYG{n+no}{t}\PYG{p}{)}
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{dashboard\PYGZhy{}set\PYGZhy{}file\PYGZhy{}icons} \PYG{n+no}{t}\PYG{p}{)}
+\PYG{c+c1}{;; (setq dashboard\PYGZhy{}set\PYGZhy{}navigator t) ??}
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{dashboard\PYGZhy{}set\PYGZhy{}init\PYGZhy{}info} \PYG{n+no}{t}\PYG{p}{)}
+\PYG{c+c1}{;; (setq dashboard\PYGZhy{}week\PYGZhy{}agenda t)}
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{dashboard\PYGZhy{}item\PYGZhy{}names} \PYG{o}{\PYGZsq{}}\PYG{p}{((}\PYG{l+s}{\PYGZdq{}Recent Files:\PYGZdq{}} \PYG{o}{.} \PYG{l+s}{\PYGZdq{}Recent:\PYGZdq{}}\PYG{p}{)}
+                             \PYG{p}{(}\PYG{l+s}{\PYGZdq{}Agenda for today:\PYGZdq{}} \PYG{o}{.} \PYG{l+s}{\PYGZdq{}Today\PYGZsq{}s agenda:\PYGZdq{}}\PYG{p}{)}
+                             \PYG{p}{(}\PYG{l+s}{\PYGZdq{}Agenda for the coming week:\PYGZdq{}} \PYG{o}{.} \PYG{l+s}{\PYGZdq{}Agenda:\PYGZdq{}}\PYG{p}{)))}
+\end{Verbatim}

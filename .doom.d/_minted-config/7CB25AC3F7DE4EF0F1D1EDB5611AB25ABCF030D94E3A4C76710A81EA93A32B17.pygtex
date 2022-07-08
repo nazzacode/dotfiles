@@ -1,0 +1,46 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{c+c1}{;; more fine\PYGZhy{}grained zooming}
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{pdf\PYGZhy{}view\PYGZhy{}resize\PYGZhy{}factor} \PYG{l+m+mf}{1.1}\PYG{p}{)}
+
+\PYG{c+c1}{;; Double page spread}
+\PYG{p}{(}\PYG{n+nb}{defun} \PYG{n+nv}{my\PYGZhy{}pdf\PYGZhy{}view\PYGZhy{}double\PYGZhy{}scroll\PYGZhy{}up\PYGZhy{}or\PYGZhy{}next\PYGZhy{}page} \PYG{p}{(}\PYG{k+kp}{\PYGZam{}optional} \PYG{n+nv}{arg}\PYG{p}{)}
+  \PYG{l+s}{\PYGZdq{}Scroll page up ARG lines if possible, else go to the next page.}
+
+\PYG{l+s}{When }\PYG{l+s+ss}{`pdf\PYGZhy{}view\PYGZhy{}continuous\PYGZsq{}}\PYG{l+s}{ is non\PYGZhy{}nil, scrolling upward at the}
+\PYG{l+s}{bottom edge of the page moves to the next page. Otherwise, go to}
+\PYG{l+s}{next page only on typing SPC (ARG is nil).\PYGZdq{}}
+  \PYG{p}{(}\PYG{k}{interactive} \PYG{l+s}{\PYGZdq{}P\PYGZdq{}}\PYG{p}{)}
+  \PYG{p}{(}\PYG{k}{if} \PYG{p}{(}\PYG{k}{or} \PYG{n+nv}{pdf\PYGZhy{}view\PYGZhy{}continuous} \PYG{p}{(}\PYG{n+nf}{null} \PYG{n+nv}{arg}\PYG{p}{))}
+      \PYG{p}{(}\PYG{k}{let} \PYG{p}{((}\PYG{n+nv}{hscroll} \PYG{p}{(}\PYG{n+nf}{window\PYGZhy{}hscroll}\PYG{p}{))}
+            \PYG{p}{(}\PYG{n+nv}{cur\PYGZhy{}page} \PYG{p}{(}\PYG{n+nv}{pdf\PYGZhy{}view\PYGZhy{}current\PYGZhy{}page}\PYG{p}{)))}
+        \PYG{p}{(}\PYG{n+nb}{when} \PYG{p}{(}\PYG{k}{or} \PYG{p}{(}\PYG{n+nf}{=} \PYG{p}{(}\PYG{n+nf}{window\PYGZhy{}vscroll}\PYG{p}{)} \PYG{p}{(}\PYG{n+nv}{image\PYGZhy{}scroll\PYGZhy{}up} \PYG{n+nv}{arg}\PYG{p}{))}
+                  \PYG{c+c1}{;; Workaround rounding/off\PYGZhy{}by\PYGZhy{}one issues.}
+                  \PYG{p}{(}\PYG{n+nf}{memq} \PYG{n+nv}{pdf\PYGZhy{}view\PYGZhy{}display\PYGZhy{}size}
+                        \PYG{o}{\PYGZsq{}}\PYG{p}{(}\PYG{n+nv}{fit\PYGZhy{}height} \PYG{n+nv}{fit\PYGZhy{}page}\PYG{p}{)))}
+          \PYG{p}{(}\PYG{n+nv}{pdf\PYGZhy{}view\PYGZhy{}next\PYGZhy{}page} \PYG{l+m+mi}{2}\PYG{p}{)}
+          \PYG{p}{(}\PYG{n+nb}{when} \PYG{p}{(}\PYG{n+nf}{/=} \PYG{n+nv}{cur\PYGZhy{}page} \PYG{p}{(}\PYG{n+nv}{pdf\PYGZhy{}view\PYGZhy{}current\PYGZhy{}page}\PYG{p}{))}
+            \PYG{p}{(}\PYG{n+nv}{image\PYGZhy{}bob}\PYG{p}{)}
+            \PYG{p}{(}\PYG{n+nv}{image\PYGZhy{}bol} \PYG{l+m+mi}{1}\PYG{p}{))}
+          \PYG{p}{(}\PYG{n+nf}{set\PYGZhy{}window\PYGZhy{}hscroll} \PYG{p}{(}\PYG{n+nf}{selected\PYGZhy{}window}\PYG{p}{)} \PYG{n+nv}{hscroll}\PYG{p}{)))}
+    \PYG{p}{(}\PYG{n+nv}{image\PYGZhy{}scroll\PYGZhy{}up} \PYG{n+nv}{arg}\PYG{p}{)))}
+
+\PYG{p}{(}\PYG{n+nb}{defun} \PYG{n+nv}{my\PYGZhy{}pdf\PYGZhy{}view\PYGZhy{}double\PYGZhy{}scroll\PYGZhy{}horizontal\PYGZhy{}view} \PYG{p}{()}
+  \PYG{p}{(}\PYG{k}{interactive}\PYG{p}{)}
+  \PYG{p}{(}\PYG{n+nv}{my\PYGZhy{}pdf\PYGZhy{}view\PYGZhy{}double\PYGZhy{}scroll\PYGZhy{}up\PYGZhy{}or\PYGZhy{}next\PYGZhy{}page}\PYG{p}{)}
+  \PYG{p}{(}\PYG{n+nv}{other\PYGZhy{}window} \PYG{l+m+mi}{1}\PYG{p}{)}
+  \PYG{p}{(}\PYG{n+nv}{my\PYGZhy{}pdf\PYGZhy{}view\PYGZhy{}double\PYGZhy{}scroll\PYGZhy{}up\PYGZhy{}or\PYGZhy{}next\PYGZhy{}page}\PYG{p}{)}
+  \PYG{p}{(}\PYG{n+nv}{other\PYGZhy{}window} \PYG{l+m+mi}{1}\PYG{p}{))}
+
+\PYG{p}{(}\PYG{n+nb}{defun} \PYG{n+nv}{my\PYGZhy{}pdf\PYGZhy{}view\PYGZhy{}double\PYGZhy{}scroll\PYGZhy{}vertical\PYGZhy{}view} \PYG{p}{()}
+  \PYG{p}{(}\PYG{k}{interactive}\PYG{p}{)}
+  \PYG{p}{(}\PYG{n+nv}{my\PYGZhy{}pdf\PYGZhy{}view\PYGZhy{}double\PYGZhy{}scroll\PYGZhy{}up\PYGZhy{}or\PYGZhy{}next\PYGZhy{}page}\PYG{p}{)}
+  \PYG{p}{(}\PYG{n+nv}{shrink\PYGZhy{}window} \PYG{l+m+mi}{1}\PYG{p}{)}
+  \PYG{p}{(}\PYG{n+nv}{other\PYGZhy{}window} \PYG{l+m+mi}{1}\PYG{p}{)}
+  \PYG{p}{(}\PYG{n+nv}{my\PYGZhy{}pdf\PYGZhy{}view\PYGZhy{}double\PYGZhy{}scroll\PYGZhy{}up\PYGZhy{}or\PYGZhy{}next\PYGZhy{}page}\PYG{p}{)}
+  \PYG{p}{(}\PYG{n+nv}{enlarge\PYGZhy{}window} \PYG{l+m+mi}{1}\PYG{p}{)}
+  \PYG{p}{(}\PYG{n+nv}{other\PYGZhy{}window} \PYG{l+m+mi}{1}\PYG{p}{))}
+
+\PYG{c+c1}{;; pdf\PYGZhy{}annot\PYGZhy{}list\PYGZhy{}format}
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{pdf\PYGZhy{}annot\PYGZhy{}list\PYGZhy{}format} \PYG{o}{\PYGZsq{}}\PYG{p}{((}\PYG{n+nv}{page} \PYG{o}{.} \PYG{l+m+mi}{3}\PYG{p}{)} \PYG{p}{(}\PYG{n+nv}{type} \PYG{o}{.} \PYG{l+m+mi}{6}\PYG{p}{)} \PYG{p}{(}\PYG{n+nv}{contents} \PYG{o}{.} \PYG{l+m+mi}{24}\PYG{p}{)} \PYG{p}{(}\PYG{n+nv}{date} \PYG{o}{.} \PYG{l+m+mi}{24}\PYG{p}{))}
+      \PYG{n+nv}{pdf\PYGZhy{}annot\PYGZhy{}list\PYGZhy{}highlight\PYGZhy{}type} \PYG{l+s+ss}{\PYGZsq{}t}\PYG{p}{)}
+\end{Verbatim}

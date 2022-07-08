@@ -1,0 +1,16 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{;; FIXME startup error}
+\PYG{c+c1}{;; (require \PYGZsq{}doi\PYGZhy{}utils)}
+
+\PYG{c+c1}{;; (setq reftex\PYGZhy{}default\PYGZhy{}bibliography \PYGZsq{}(\PYGZdq{}\PYGZti{}/org/roam/bibliography.bib\PYGZdq{}))}
+
+\PYG{c+c1}{;; ;; see org\PYGZhy{}ref for use of these variables}
+\PYG{c+c1}{;; (setq org\PYGZhy{}ref\PYGZhy{}default\PYGZhy{}bibliography \PYGZsq{}(\PYGZdq{}\PYGZti{}/org/roam/PDFs/bibliography.bib\PYGZdq{})}
+\PYG{c+c1}{;;       org\PYGZhy{}ref\PYGZhy{}bibliography\PYGZhy{}notes \PYGZdq{}\PYGZti{}/org/roam/PDFs\PYGZdq{}   ; TODO not in use}
+\PYG{c+c1}{;;       org\PYGZhy{}ref\PYGZhy{}pdf\PYGZhy{}directory \PYGZdq{}\PYGZti{}/org/roam/PDFs/\PYGZdq{}       ; academic papers}
+\PYG{c+c1}{;;       org\PYGZhy{}ref\PYGZhy{}completion\PYGZhy{}library \PYGZsq{}org\PYGZhy{}ref\PYGZhy{}ivy\PYGZhy{}cite}
+\PYG{c+c1}{;;       org\PYGZhy{}ref\PYGZhy{}get\PYGZhy{}pdf\PYGZhy{}filename\PYGZhy{}function \PYGZsq{}org\PYGZhy{}ref\PYGZhy{}get\PYGZhy{}pdf\PYGZhy{}filename\PYGZhy{}helm\PYGZhy{}bibtex}
+\PYG{c+c1}{;;       org\PYGZhy{}ref\PYGZhy{}bibliography\PYGZhy{}notes \PYGZdq{}\PYGZti{}/org/roam/PDFs\PYGZdq{}}
+\PYG{c+c1}{;;       org\PYGZhy{}ref\PYGZhy{}notes\PYGZhy{}directory \PYGZdq{}\PYGZti{}/org/roam/PDFs\PYGZdq{}}
+\PYG{c+c1}{;;       org\PYGZhy{}ref\PYGZhy{}notes\PYGZhy{}function \PYGZsq{}orb\PYGZhy{}edit\PYGZhy{}notes)}
+\end{Verbatim}

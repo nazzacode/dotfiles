@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{org\PYGZhy{}format\PYGZhy{}latex\PYGZhy{}options}
+  \PYG{p}{(}\PYG{n+nf}{list}
+        \PYG{n+nb}{:foreground} \PYG{l+s+ss}{\PYGZsq{}default}  \PYG{c+c1}{;; or `auto\PYGZsq{}}
+        \PYG{c+c1}{;; :background \PYGZsq{}auto}
+        \PYG{n+nb}{:scale} \PYG{l+m+mf}{2.0}  \PYG{c+c1}{;; bigger latex fragment}
+        \PYG{c+c1}{;; :html\PYGZhy{}foreground \PYGZdq{}Black\PYGZdq{}}
+        \PYG{c+c1}{;; :html\PYGZhy{}background \PYGZdq{}Transparent\PYGZdq{}}
+        \PYG{c+c1}{;; :html\PYGZhy{}scale 1.0}
+        \PYG{n+nb}{:matchers} \PYG{o}{\PYGZsq{}}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}begin\PYGZdq{}} \PYG{l+s}{\PYGZdq{}\PYGZdl{}1\PYGZdq{}} \PYG{l+s}{\PYGZdq{}\PYGZdl{}\PYGZdq{}} \PYG{l+s}{\PYGZdq{}\PYGZdl{}\PYGZdl{}\PYGZdq{}} \PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}(\PYGZdq{}} \PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}[\PYGZdq{}}\PYG{p}{)))}
+\end{Verbatim}

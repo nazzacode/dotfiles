@@ -1,0 +1,20 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{c+c1}{;; (use\PYGZhy{}package! mixed\PYGZhy{}pitch}
+\PYG{c+c1}{;;   :hook (org\PYGZhy{}mode . mixed\PYGZhy{}pitch\PYGZhy{}mode)}
+\PYG{c+c1}{;;   :config}
+\PYG{c+c1}{;;   (setq variable\PYGZhy{}pitch\PYGZhy{}set\PYGZhy{}heigth \PYGZsq{}t)}
+\PYG{c+c1}{;   (set\PYGZhy{}face\PYGZhy{}attribute \PYGZsq{}variable\PYGZhy{}pitch nil :height 1.5))}
+
+\PYG{p}{(}\PYG{k}{setq}
+          \PYG{c+c1}{;; doom\PYGZhy{}font (font\PYGZhy{}spec :family \PYGZdq{}Hasklug Nerd Font Mono\PYGZdq{} :size 26 :height 1.0)}
+          \PYG{c+c1}{;; doom\PYGZhy{}font (font\PYGZhy{}spec :family \PYGZdq{}Hasklug Nerd Font Mono\PYGZdq{} :size 26 :height 1.0)}
+\PYG{c+c1}{;; (setq  doom\PYGZhy{}font (font\PYGZhy{}spec :family \PYGZdq{}Agave Nerd Font Mono\PYGZdq{})}
+\PYG{c+c1}{;; (setq  doom\PYGZhy{}font (font\PYGZhy{}spec :family \PYGZdq{}Cousine Nerd Font Mono\PYGZdq{} ) ;; TODO size}
+       \PYG{n+nv}{doom\PYGZhy{}variable\PYGZhy{}pitch\PYGZhy{}font} \PYG{p}{(}\PYG{n+nf}{font\PYGZhy{}spec} \PYG{n+nb}{:family} \PYG{l+s}{\PYGZdq{}DM Mono\PYGZdq{}}\PYG{p}{)}
+\PYG{c+c1}{;;       doom\PYGZhy{}variable\PYGZhy{}pitch\PYGZhy{}font (font\PYGZhy{}spec :family \PYGZdq{}Iosevka Aile\PYGZdq{}) ; :size 32 :height 1.5)}
+\PYG{c+c1}{;;       doom\PYGZhy{}variable\PYGZhy{}pitch\PYGZhy{}font (font\PYGZhy{}spec :family \PYGZdq{}ETBookOT\PYGZdq{})}
+\PYG{c+c1}{;;       doom\PYGZhy{}variable\PYGZhy{}pitch\PYGZhy{}font (font\PYGZhy{}spec :family \PYGZdq{}TSCu\PYGZus{}Comic\PYGZdq{})}
+\PYG{c+c1}{;;       doom\PYGZhy{}unicode\PYGZhy{}font (font\PYGZhy{}spec :family \PYGZdq{}Symbola\PYGZdq{})          ; good unicode support}
+\PYG{c+c1}{;;       doom\PYGZhy{}big\PYGZhy{}font (font\PYGZhy{}spec :family \PYGZdq{}Fira Mono\PYGZdq{} :size 19))}
+\PYG{p}{)}
+\end{Verbatim}

@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{p}{(}\PYG{n+nb}{use\PYGZhy{}package} \PYG{n+nv}{org\PYGZhy{}noter}
+  \PYG{n+nb}{:after} \PYG{p}{(}\PYG{n+nb}{:any} \PYG{n+nv}{org} \PYG{n+nv}{pdf\PYGZhy{}view}\PYG{p}{)}
+  \PYG{n+nb}{:config}
+  \PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{org\PYGZhy{}noter\PYGZhy{}always\PYGZhy{}create\PYGZhy{}frame} \PYG{n+no}{nil}\PYG{p}{))}  \PYG{c+c1}{; stop opening frames}
+
+\PYG{c+c1}{;; (setq org\PYGZhy{}noter\PYGZhy{}set\PYGZhy{}notes\PYGZhy{}window\PYGZhy{}location}
+\end{Verbatim}

@@ -1,0 +1,34 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{p}{(}\PYG{k}{setq\PYGZhy{}default} \PYG{n+nv}{line\PYGZhy{}spacing} \PYG{l+m+mf}{0.1}
+             \PYG{n+nv}{word\PYGZhy{}wrap} \PYG{n+no}{t}\PYG{p}{)}
+
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{display\PYGZhy{}line\PYGZhy{}numbers\PYGZhy{}type} \PYG{n+no}{t}          \PYG{c+c1}{; \PYGZsq{}relative  ; or `nil\PYGZsq{}}
+      \PYG{n+nv}{+ivy\PYGZhy{}buffer\PYGZhy{}preview} \PYG{n+no}{t}                \PYG{c+c1}{; preview buffer on switch}
+      \PYG{c+c1}{;; emojify\PYGZhy{}emoji\PYGZhy{}set \PYGZdq{}\PYGZdq{}  ; increase resolution from default \PYGZdq{}emojione\PYGZhy{}v2.2.6\PYGZhy{}22\PYGZdq{}}
+      \PYG{n+nv}{emojify\PYGZhy{}emoji\PYGZhy{}set} \PYG{l+s}{\PYGZdq{}emojione\PYGZhy{}v2.2.6\PYGZdq{}}  \PYG{c+c1}{; increase resolution from default \PYGZdq{}emojione\PYGZhy{}v2.2.6\PYGZhy{}22\PYGZdq{}}
+      \PYG{c+c1}{;; fringe\PYGZhy{}mode \PYGZsq{}nil)  ; should be a number}
+      \PYG{n+nv}{emojify\PYGZhy{}display\PYGZhy{}style} \PYG{l+s+ss}{\PYGZsq{}unicode}
+      \PYG{n+nv}{large\PYGZhy{}file\PYGZhy{}warning\PYGZhy{}threshold} \PYG{n+no}{nil}
+\PYG{p}{)}
+
+\PYG{p}{(}\PYG{n+nv}{fringe\PYGZhy{}mode} \PYG{l+m+mi}{4}\PYG{p}{)} \PYG{c+c1}{; FIXME very not loading on startup}
+
+\PYG{c+c1}{; icons in dired}
+\PYG{p}{(}\PYG{n+nv}{add\PYGZhy{}hook} \PYG{l+s+ss}{\PYGZsq{}dired\PYGZhy{}mode\PYGZhy{}hook} \PYG{l+s+ss}{\PYGZsq{}all\PYGZhy{}the\PYGZhy{}icons\PYGZhy{}dired\PYGZhy{}mode}\PYG{p}{)}
+
+\PYG{c+c1}{;; ; dont highlight the line}
+\PYG{p}{(}\PYG{n+nv}{remove\PYGZhy{}hook} \PYG{l+s+ss}{\PYGZsq{}doom\PYGZhy{}first\PYGZhy{}buffer\PYGZhy{}hook} \PYG{n+nf}{\PYGZsh{}\PYGZsq{}}\PYG{n+nv}{global\PYGZhy{}hl\PYGZhy{}line\PYGZhy{}mode}\PYG{p}{)}
+
+\PYG{c+c1}{;; Highlight\PYGZhy{}indent\PYGZhy{}guide}
+
+\PYG{p}{(}\PYG{n+nv}{add\PYGZhy{}hook} \PYG{l+s+ss}{\PYGZsq{}prog\PYGZhy{}mode\PYGZhy{}hook} \PYG{l+s+ss}{\PYGZsq{}highlight\PYGZhy{}indent\PYGZhy{}guides\PYGZhy{}mode}\PYG{p}{)}
+\PYG{c+c1}{;; (add\PYGZhy{}hook \PYGZsq{}org\PYGZhy{}mode\PYGZhy{}hook \PYGZsq{}highlight\PYGZhy{}indent\PYGZhy{}guides\PYGZhy{}mode)  ; FIXME background in code blocks}
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{highlight\PYGZhy{}indent\PYGZhy{}guides\PYGZhy{}method} \PYG{l+s+ss}{\PYGZsq{}character}
+      \PYG{n+nv}{highlight\PYGZhy{}indent\PYGZhy{}guides\PYGZhy{}responsive} \PYG{l+s+ss}{\PYGZsq{}stack}\PYG{p}{)}
+
+\PYG{c+c1}{;; BUG REPORT: causing a mess in doom load screen}
+\PYG{c+c1}{;; colorise strings that represent colors. e.g. \PYGZsh{}fffffff}
+\PYG{c+c1}{;; (define\PYGZhy{}globalized\PYGZhy{}minor\PYGZhy{}mode global\PYGZhy{}rainbow\PYGZhy{}mode rainbow\PYGZhy{}mode}
+\PYG{c+c1}{;;   (lambda () (rainbow\PYGZhy{}mode 1)))}
+\PYG{c+c1}{;; (global\PYGZhy{}rainbow\PYGZhy{}mode 1)}
+\end{Verbatim}

@@ -1,0 +1,19 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{c+c1}{;; `weights:\PYGZsq{} can be [normal, semi\PYGZhy{}bold, bold]}
+\PYG{p}{(}\PYG{n+nv}{custom\PYGZhy{}set\PYGZhy{}faces!}
+  \PYG{o}{\PYGZsq{}}\PYG{p}{(}\PYG{n+nv}{outline\PYGZhy{}1} \PYG{n+nb}{:weight} \PYG{n+nv}{normal} \PYG{n+nb}{:height} \PYG{l+m+mf}{1.24}\PYG{p}{)} \PYG{c+c1}{;1.12)}
+  \PYG{o}{\PYGZsq{}}\PYG{p}{(}\PYG{n+nv}{outline\PYGZhy{}2} \PYG{n+nb}{:weight} \PYG{n+nv}{normal} \PYG{n+nb}{:height} \PYG{l+m+mf}{1.16}\PYG{p}{)} \PYG{c+c1}{;1.08)}
+  \PYG{o}{\PYGZsq{}}\PYG{p}{(}\PYG{n+nv}{outline\PYGZhy{}3} \PYG{n+nb}{:weight} \PYG{n+nv}{normal} \PYG{n+nb}{:height} \PYG{l+m+mf}{1.10}\PYG{p}{)} \PYG{c+c1}{;1.05)}
+  \PYG{o}{\PYGZsq{}}\PYG{p}{(}\PYG{n+nv}{outline\PYGZhy{}4} \PYG{n+nb}{:weight} \PYG{n+nv}{normal} \PYG{n+nb}{:height} \PYG{l+m+mf}{1.06}\PYG{p}{)} \PYG{c+c1}{;1.03)}
+  \PYG{o}{\PYGZsq{}}\PYG{p}{(}\PYG{n+nv}{outline\PYGZhy{}5} \PYG{n+nb}{:weight} \PYG{n+nv}{normal} \PYG{n+nb}{:height} \PYG{l+m+mf}{1.04}\PYG{p}{)} \PYG{c+c1}{;1.02)}
+  \PYG{o}{\PYGZsq{}}\PYG{p}{(}\PYG{n+nv}{outline\PYGZhy{}6} \PYG{n+nb}{:weight} \PYG{n+nv}{normal} \PYG{n+nb}{:height} \PYG{l+m+mf}{1.02}\PYG{p}{)} \PYG{c+c1}{;1.01)}
+  \PYG{o}{\PYGZsq{}}\PYG{p}{(}\PYG{n+nv}{outline\PYGZhy{}7} \PYG{n+nb}{:weight} \PYG{n+nv}{normal}\PYG{p}{)}
+  \PYG{o}{\PYGZsq{}}\PYG{p}{(}\PYG{n+nv}{outline\PYGZhy{}8} \PYG{n+nb}{:weight} \PYG{n+nv}{normal}\PYG{p}{)}
+  \PYG{o}{\PYGZsq{}}\PYG{p}{(}\PYG{n+nv}{org\PYGZhy{}document\PYGZhy{}title} \PYG{n+nb}{:weight} \PYG{n+nv}{normal} \PYG{n+nb}{:height} \PYG{l+m+mf}{1.8}\PYG{p}{))} \PYG{c+c1}{; 1.2}
+
+\PYG{c+c1}{;; Superstar symbols}
+\PYG{p}{(}\PYG{n+nv}{after!} \PYG{n+nv}{org\PYGZhy{}superstar}
+  \PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{org\PYGZhy{}superstar\PYGZhy{}headline\PYGZhy{}bullets\PYGZhy{}list} \PYG{o}{\PYGZsq{}}\PYG{p}{(} \PYG{l+s}{\PYGZdq{}◉\PYGZdq{}} \PYG{l+s}{\PYGZdq{}○\PYGZdq{}} \PYG{l+s}{\PYGZdq{}⎊\PYGZdq{}} \PYG{l+s}{\PYGZdq{}⎉\PYGZdq{}} \PYG{l+s}{\PYGZdq{}⊛\PYGZdq{}} \PYG{l+s}{\PYGZdq{}⊚\PYGZdq{}} \PYG{l+s}{\PYGZdq{}◦\PYGZdq{}} \PYG{l+s}{\PYGZdq{}◘\PYGZdq{}}\PYG{p}{)}
+  \PYG{c+c1}{;; (setq org\PYGZhy{}superstar\PYGZhy{}headline\PYGZhy{}bullets\PYGZhy{}list \PYGZsq{}(\PYGZdq{}①\PYGZdq{} \PYGZdq{}②\PYGZdq{} \PYGZdq{}✸\PYGZdq{} \PYGZdq{}✿\PYGZdq{} \PYGZdq{}✤\PYGZdq{} \PYGZdq{}✜\PYGZdq{} \PYGZdq{}◆\PYGZdq{} \PYGZdq{}\PYGZdq{}) ;; double circle bullet...}
+        \PYG{n+nv}{org\PYGZhy{}superstar\PYGZhy{}prettify\PYGZhy{}item\PYGZhy{}bullets} \PYG{n+no}{t} \PYG{p}{))}
+\end{Verbatim}

@@ -1,0 +1,61 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{doom\PYGZhy{}modeline\PYGZhy{}height} \PYG{l+m+mi}{10}
+      \PYG{c+c1}{;; doom\PYGZhy{}modeline\PYGZhy{}indent\PYGZhy{}info t}
+      \PYG{n+nv}{doom\PYGZhy{}modeline\PYGZhy{}vcs\PYGZhy{}max\PYGZhy{}length} \PYG{l+m+mi}{12}
+      \PYG{n+nv}{doom\PYGZhy{}modeline\PYGZhy{}buffer\PYGZhy{}file\PYGZhy{}name\PYGZhy{}style} \PYG{l+s+ss}{\PYGZsq{}truncate\PYGZhy{}upto\PYGZhy{}root}
+      \PYG{n+nv}{doom\PYGZhy{}modeline\PYGZhy{}icon} \PYG{n+no}{t}
+      \PYG{n+nv}{doom\PYGZhy{}modeline\PYGZhy{}major\PYGZhy{}mode\PYGZhy{}icon} \PYG{n+no}{t}
+      \PYG{n+nv}{doom\PYGZhy{}modeline\PYGZhy{}enable\PYGZhy{}word\PYGZhy{}count} \PYG{n+no}{t}
+      \PYG{c+c1}{;; doom\PYGZhy{}modeline\PYGZhy{}hud t ;; ?}
+      \PYG{n+nv}{doom\PYGZhy{}modeline\PYGZhy{}major\PYGZhy{}mode\PYGZhy{}color\PYGZhy{}icon} \PYG{n+no}{nil}\PYG{p}{)}
+
+\PYG{c+c1}{;; (custom\PYGZhy{}set\PYGZhy{}faces!}
+\PYG{c+c1}{;;     \PYGZsq{}(mode\PYGZhy{}line :family \PYGZdq{}Iosevka Aile\PYGZdq{})  ; :height 0.85)}
+\PYG{c+c1}{;;     \PYGZsq{}(mode\PYGZhy{}line\PYGZhy{}inactive :family \PYGZdq{}Iosevka Aile\PYGZdq{}))  ; :height 0.85))}
+
+\PYG{c+c1}{;; main modline}
+\PYG{p}{(}\PYG{n+nv}{after!} \PYG{n+nv}{doom\PYGZhy{}modeline}
+  \PYG{p}{(}\PYG{n+nv}{doom\PYGZhy{}modeline\PYGZhy{}def\PYGZhy{}modeline} \PYG{l+s+ss}{\PYGZsq{}main}
+    \PYG{o}{\PYGZsq{}}\PYG{p}{(}\PYG{n+nv}{bar} \PYG{n+nv}{matches} \PYG{n+nv}{buffer\PYGZhy{}info} \PYG{n+nv}{remote\PYGZhy{}host} \PYG{n+nv}{buffer\PYGZhy{}position} \PYG{n+nv}{parrot} \PYG{n+nv}{selection\PYGZhy{}info}\PYG{p}{)}
+    \PYG{o}{\PYGZsq{}}\PYG{p}{(}\PYG{n+nv}{misc\PYGZhy{}info} \PYG{n+nv}{minor\PYGZhy{}modes} \PYG{n+nv}{checker} \PYG{n+nv}{input\PYGZhy{}method} \PYG{n+nv}{buffer\PYGZhy{}encoding} \PYG{n+nv}{major\PYGZhy{}mode} \PYG{n+nv}{process} \PYG{n+nv}{vcs} \PYG{l+s}{\PYGZdq{} \PYGZdq{}}\PYG{p}{)))} \PYG{c+c1}{; \PYGZlt{}\PYGZhy{}\PYGZhy{} added padding here}
+
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{all\PYGZhy{}the\PYGZhy{}icons\PYGZhy{}scale\PYGZhy{}factor} \PYG{l+m+mf}{0.9}\PYG{p}{)}  \PYG{c+c1}{;; 1.1.}
+
+\PYG{c+c1}{; mini\PYGZhy{}modeline}
+\PYG{p}{(}\PYG{n+nb}{use\PYGZhy{}package} \PYG{n+nv}{mini\PYGZhy{}modeline}
+  \PYG{n+nb}{:after} \PYG{n+nv}{doom\PYGZhy{}modeline}
+  \PYG{c+c1}{;; :hook ((after\PYGZhy{}init . mini\PYGZhy{}modeline\PYGZhy{}mode))}
+        \PYG{c+c1}{;; (aorst\PYGZhy{}\PYGZhy{}theme\PYGZhy{}change . aorst/mini\PYGZhy{}modeline\PYGZhy{}setup\PYGZhy{}faces)}
+        \PYG{c+c1}{;; (isearch\PYGZhy{}mode . aorst/mini\PYGZhy{}modeline\PYGZhy{}isearch)}
+        \PYG{c+c1}{;;(isearch\PYGZhy{}mode\PYGZhy{}end . aorst/mini\PYGZhy{}modeline\PYGZhy{}isearch\PYGZhy{}end)}
+  \PYG{n+nb}{:custom}
+  \PYG{p}{(}\PYG{n+nv}{mini\PYGZhy{}modeline\PYGZhy{}display\PYGZhy{}gui\PYGZhy{}line} \PYG{n+no}{nil}\PYG{p}{)}
+  \PYG{p}{(}\PYG{n+nv}{mini\PYGZhy{}modeline\PYGZhy{}l\PYGZhy{}format} \PYG{o}{\PYGZsq{}}\PYG{p}{(}\PYG{n+nb}{:eval} \PYG{p}{(}\PYG{n+nv}{string\PYGZhy{}trim\PYGZhy{}left} \PYG{p}{(}\PYG{n+nf}{eval} \PYG{n+nv}{mode\PYGZhy{}line\PYGZhy{}l\PYGZhy{}format}\PYG{p}{))))}
+  \PYG{c+c1}{;; (mini\PYGZhy{}modeline\PYGZhy{}r\PYGZhy{}format \PYGZsq{}(:eval (eval mode\PYGZhy{}line\PYGZhy{}r\PYGZhy{}format)))}
+  \PYG{p}{(}\PYG{n+nv}{mini\PYGZhy{}modeline\PYGZhy{}r\PYGZhy{}format} \PYG{o}{\PYGZsq{}}\PYG{p}{(}\PYG{n+nb}{:eval} \PYG{p}{(}\PYG{n+nv}{doom\PYGZhy{}modeline\PYGZhy{}format\PYGZhy{}\PYGZhy{}minibuffer\PYGZhy{}line}\PYG{p}{)))}
+  \PYG{n+nb}{:config}
+  \PYG{p}{(}\PYG{n+nv}{doom\PYGZhy{}modeline\PYGZhy{}def\PYGZhy{}modeline} \PYG{l+s+ss}{\PYGZsq{}minibuffer\PYGZhy{}line}
+    \PYG{c+c1}{;; \PYGZsq{}(modal workspace\PYGZhy{}name window\PYGZhy{}number matches buffer\PYGZhy{}info remote\PYGZhy{}host buffer\PYGZhy{}position word\PYGZhy{}count selection\PYGZhy{}info misc\PYGZhy{}info major\PYGZhy{}mode process vcs lsp checker))}
+    \PYG{c+c1}{;; \PYGZsq{}(modals workspace\PYGZhy{}name matches remote\PYGZhy{}host buffer\PYGZhy{}position parrot selection\PYGZhy{}info)}
+    \PYG{c+c1}{;; \PYGZsq{}(misc\PYGZhy{}info minor\PYGZhy{}modes checker input\PYGZhy{}method buffer\PYGZhy{}encoding major\PYGZhy{}mode process vcs))}
+    \PYG{o}{\PYGZsq{}}\PYG{p}{(}\PYG{n+nv}{modals} \PYG{n+nv}{buffer\PYGZhy{}info} \PYG{n+nv}{remote\PYGZhy{}host} \PYG{n+nv}{buffer\PYGZhy{}position} \PYG{n+nv}{parrot} \PYG{n+nv}{selection\PYGZhy{}info}\PYG{p}{)}
+    \PYG{o}{\PYGZsq{}}\PYG{p}{(}\PYG{n+nv}{misc\PYGZhy{}info} \PYG{n+nv}{minor\PYGZhy{}modes} \PYG{n+nv}{checker} \PYG{n+nv}{input\PYGZhy{}method} \PYG{n+nv}{buffer\PYGZhy{}encoding} \PYG{n+nv}{major\PYGZhy{}mode} \PYG{n+nv}{process} \PYG{n+nv}{vcs} \PYG{l+s}{\PYGZdq{} \PYGZdq{}}\PYG{p}{))}
+    \PYG{c+c1}{;; NOTE remove `buffer\PYGZhy{}info` once tabs setup!}
+  \PYG{n+nb}{:hook} \PYG{p}{(}\PYG{n+nv}{after\PYGZhy{}init} \PYG{o}{.} \PYG{n+nv}{mini\PYGZhy{}modeline\PYGZhy{}mode}\PYG{p}{)}
+\PYG{p}{)}
+\PYG{c+c1}{;; FIXME  make mini\PYGZhy{}modeline default}
+
+\PYG{c+c1}{;; (after! doom\PYGZhy{}modeline}
+\PYG{c+c1}{;;   (add\PYGZhy{}hook \PYGZsq{}after\PYGZhy{}init\PYGZhy{}hook \PYGZsh{}\PYGZsq{}mini\PYGZhy{}modeline\PYGZhy{}mode))}
+\PYG{p}{(}\PYG{n+nv}{global\PYGZhy{}hide\PYGZhy{}mode\PYGZhy{}line\PYGZhy{}mode} \PYG{l+m+mi}{1}\PYG{p}{)}
+
+\PYG{p}{(}\PYG{n+nv}{after!} \PYG{n+nv}{doom\PYGZhy{}modeline}
+  \PYG{p}{(}\PYG{n+nv}{add\PYGZhy{}hook} \PYG{l+s+ss}{\PYGZsq{}text\PYGZhy{}mode\PYGZhy{}hook} \PYG{n+nf}{\PYGZsh{}\PYGZsq{}}\PYG{n+nv}{mini\PYGZhy{}modeline\PYGZhy{}mode}\PYG{p}{))}
+
+\PYG{c+c1}{;; (doom\PYGZhy{}hide\PYGZhy{}modeline\PYGZhy{}mode 1)}
+
+\PYG{c+c1}{;; (use\PYGZhy{}package doom\PYGZhy{}modeline}
+\PYG{c+c1}{;;   :ensure t}
+\PYG{c+c1}{;;   :init (mini\PYGZhy{}modeline\PYGZhy{}mode 1))}
+
+\end{Verbatim}

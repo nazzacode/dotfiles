@@ -1,0 +1,43 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{p}{(}\PYG{n+nv}{add\PYGZhy{}to\PYGZhy{}list} \PYG{l+s+ss}{\PYGZsq{}auto\PYGZhy{}mode\PYGZhy{}alist} \PYG{o}{\PYGZsq{}}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}\PYGZbs{}\PYGZbs{}.epub\PYGZbs{}\PYGZbs{}\PYGZsq{}\PYGZdq{}} \PYG{o}{.} \PYG{n+nv}{nov\PYGZhy{}mode}\PYG{p}{))}
+
+\PYG{c+c1}{;; Font}
+\PYG{p}{(}\PYG{n+nb}{defun} \PYG{n+nv}{my\PYGZhy{}nov\PYGZhy{}font\PYGZhy{}setup} \PYG{p}{()}
+  \PYG{p}{(}\PYG{n+nv}{face\PYGZhy{}remap\PYGZhy{}add\PYGZhy{}relative} \PYG{l+s+ss}{\PYGZsq{}variable\PYGZhy{}pitch} \PYG{n+nb}{:family} \PYG{l+s}{\PYGZdq{}Liberation Serif\PYGZdq{}}
+                                           \PYG{n+nb}{:height} \PYG{l+m+mf}{1.0}\PYG{p}{))}
+\PYG{p}{(}\PYG{n+nv}{add\PYGZhy{}hook} \PYG{l+s+ss}{\PYGZsq{}nov\PYGZhy{}mode\PYGZhy{}hook} \PYG{l+s+ss}{\PYGZsq{}my\PYGZhy{}nov\PYGZhy{}font\PYGZhy{}setup}\PYG{p}{)}
+
+
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{nov\PYGZhy{}text\PYGZhy{}width} \PYG{n+no}{t}\PYG{p}{)}
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{visual\PYGZhy{}fill\PYGZhy{}column\PYGZhy{}center\PYGZhy{}text} \PYG{n+no}{t}\PYG{p}{)}
+\PYG{p}{(}\PYG{n+nv}{add\PYGZhy{}hook} \PYG{l+s+ss}{\PYGZsq{}nov\PYGZhy{}mode\PYGZhy{}hook} \PYG{l+s+ss}{\PYGZsq{}visual\PYGZhy{}line\PYGZhy{}mode}\PYG{p}{)}
+\PYG{p}{(}\PYG{n+nv}{add\PYGZhy{}hook} \PYG{l+s+ss}{\PYGZsq{}nov\PYGZhy{}mode\PYGZhy{}hook} \PYG{l+s+ss}{\PYGZsq{}visual\PYGZhy{}fill\PYGZhy{}column\PYGZhy{}mode}\PYG{p}{)}
+
+\PYG{c+c1}{;; Justified Text}
+\PYG{c+c1}{;; ERROR causing chaos with org\PYGZhy{}noter}
+\PYG{p}{(}\PYG{n+nb}{require} \PYG{l+s+ss}{\PYGZsq{}justify\PYGZhy{}kp}\PYG{p}{)}
+\PYG{c+c1}{;; (defun my\PYGZhy{}nov\PYGZhy{}window\PYGZhy{}configuration\PYGZhy{}change\PYGZhy{}hook ()}
+\PYG{c+c1}{;;   (my\PYGZhy{}nov\PYGZhy{}post\PYGZhy{}html\PYGZhy{}render\PYGZhy{}hook)}
+\PYG{c+c1}{;;   (remove\PYGZhy{}hook \PYGZsq{}window\PYGZhy{}configuration\PYGZhy{}change\PYGZhy{}hook}
+\PYG{c+c1}{;;                \PYGZsq{}my\PYGZhy{}nov\PYGZhy{}window\PYGZhy{}configuration\PYGZhy{}change\PYGZhy{}hook}
+\PYG{c+c1}{;;                t))}
+
+\PYG{c+c1}{;; (defun my\PYGZhy{}nov\PYGZhy{}post\PYGZhy{}html\PYGZhy{}render\PYGZhy{}hook ()}
+\PYG{c+c1}{;;   (if (get\PYGZhy{}buffer\PYGZhy{}window)}
+\PYG{c+c1}{;;       (let ((max\PYGZhy{}width (pj\PYGZhy{}line\PYGZhy{}width))}
+\PYG{c+c1}{;;             buffer\PYGZhy{}read\PYGZhy{}only)}
+\PYG{c+c1}{;;         (save\PYGZhy{}excursion}
+\PYG{c+c1}{;;           (goto\PYGZhy{}char (point\PYGZhy{}min))}
+\PYG{c+c1}{;;           (while (not (eobp))}
+\PYG{c+c1}{;;             (when (not (looking\PYGZhy{}at \PYGZdq{}\PYGZca{}[[:space:]]*\PYGZdl{}\PYGZdq{}))}
+\PYG{c+c1}{;;               (goto\PYGZhy{}char (line\PYGZhy{}end\PYGZhy{}position))}
+\PYG{c+c1}{;;               (when (\PYGZgt{} (shr\PYGZhy{}pixel\PYGZhy{}column) max\PYGZhy{}width)}
+\PYG{c+c1}{;;                 (goto\PYGZhy{}char (line\PYGZhy{}beginning\PYGZhy{}position))}
+\PYG{c+c1}{;;                 (pj\PYGZhy{}justify)))}
+\PYG{c+c1}{;;             (forward\PYGZhy{}line 1))))}
+\PYG{c+c1}{;;     (add\PYGZhy{}hook \PYGZsq{}window\PYGZhy{}configuration\PYGZhy{}change\PYGZhy{}hook}
+\PYG{c+c1}{;;               \PYGZsq{}my\PYGZhy{}nov\PYGZhy{}window\PYGZhy{}configuration\PYGZhy{}change\PYGZhy{}hook}
+\PYG{c+c1}{;;               nil t)))}
+
+\PYG{c+c1}{;; (add\PYGZhy{}hook \PYGZsq{}nov\PYGZhy{}post\PYGZhy{}html\PYGZhy{}render\PYGZhy{}hook \PYGZsq{}my\PYGZhy{}nov\PYGZhy{}post\PYGZhy{}html\PYGZhy{}render\PYGZhy{}hook)}
+\end{Verbatim}

@@ -166,7 +166,8 @@ Can be an integer to determine the exact padding."
    ((outline-7 &override) :foreground (doom-lighten grey 0.3))
    ((outline-8 &override) :foreground (doom-lighten cyan 0.6))
    ;;;; org <built-in>
-   ((org-block &override) :background (doom-darken bg-alt 0.1))
+   ;; ((org-block &override) :background (doom-darken bg-alt 0.1))
+   ((org-block &override) :background bg)
    ;; org src blocks
    ;; ((org-block-background &override)  bg)
    ((org-block-begin-line &override) :background (doom-lighten bg-alt 0.02)) ;bg)

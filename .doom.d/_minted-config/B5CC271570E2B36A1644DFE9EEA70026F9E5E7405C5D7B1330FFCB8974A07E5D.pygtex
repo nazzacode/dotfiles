@@ -1,0 +1,84 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+\PYG{c+c1}{;; TODO minibuffer modeline + centaur (vscode\PYGZhy{}esque)}
+
+\PYG{c+c1}{;; (custom\PYGZhy{}set\PYGZhy{}faces!}
+\PYG{c+c1}{;;     \PYGZsq{}(mode\PYGZhy{}line :family \PYGZdq{}Iosevka Aile\PYGZdq{})  ; :height 0.85)}
+\PYG{c+c1}{;;     \PYGZsq{}(mode\PYGZhy{}line\PYGZhy{}inactive :family \PYGZdq{}Iosevka Aile\PYGZdq{}))  ; :height 0.85))}
+
+\PYG{c+c1}{;; TODO return!}
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{doom\PYGZhy{}modeline\PYGZhy{}height} \PYG{l+m+mi}{10}
+      \PYG{c+c1}{;; doom\PYGZhy{}modeline\PYGZhy{}indent\PYGZhy{}info t}
+      \PYG{n+nv}{doom\PYGZhy{}modeline\PYGZhy{}vcs\PYGZhy{}max\PYGZhy{}length} \PYG{l+m+mi}{12}
+      \PYG{n+nv}{doom\PYGZhy{}modeline\PYGZhy{}buffer\PYGZhy{}file\PYGZhy{}name\PYGZhy{}style} \PYG{l+s+ss}{\PYGZsq{}truncate\PYGZhy{}upto\PYGZhy{}root}
+      \PYG{n+nv}{doom\PYGZhy{}modeline\PYGZhy{}icon} \PYG{n+no}{t}
+      \PYG{n+nv}{doom\PYGZhy{}modeline\PYGZhy{}major\PYGZhy{}mode\PYGZhy{}icon} \PYG{n+no}{t}\PYG{p}{)}
+
+\PYG{c+c1}{;; right padding}
+\PYG{p}{(}\PYG{n+nv}{after!} \PYG{n+nv}{doom\PYGZhy{}modeline}
+  \PYG{p}{(}\PYG{n+nv}{doom\PYGZhy{}modeline\PYGZhy{}def\PYGZhy{}modeline} \PYG{l+s+ss}{\PYGZsq{}main}
+    \PYG{o}{\PYGZsq{}}\PYG{p}{(}\PYG{n+nv}{bar} \PYG{n+nv}{matches} \PYG{n+nv}{buffer\PYGZhy{}info} \PYG{n+nv}{remote\PYGZhy{}host} \PYG{n+nv}{buffer\PYGZhy{}position} \PYG{n+nv}{parrot} \PYG{n+nv}{selection\PYGZhy{}info}\PYG{p}{)}
+    \PYG{o}{\PYGZsq{}}\PYG{p}{(}\PYG{n+nv}{misc\PYGZhy{}info} \PYG{n+nv}{minor\PYGZhy{}modes} \PYG{n+nv}{checker} \PYG{n+nv}{input\PYGZhy{}method} \PYG{n+nv}{buffer\PYGZhy{}encoding} \PYG{n+nv}{major\PYGZhy{}mode} \PYG{n+nv}{process} \PYG{n+nv}{vcs} \PYG{l+s}{\PYGZdq{} \PYGZdq{}}\PYG{p}{)))} \PYG{c+c1}{; \PYGZlt{}\PYGZhy{}\PYGZhy{} added padding here}
+
+\PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{all\PYGZhy{}the\PYGZhy{}icons\PYGZhy{}scale\PYGZhy{}factor} \PYG{l+m+mf}{1.1}\PYG{p}{)}
+\PYG{c+c1}{;; (defcustom doom\PYGZhy{}modeline\PYGZhy{}hud nil)}
+
+\PYG{c+c1}{;; (setq mini\PYGZhy{}modeline\PYGZhy{}mode t)}
+\PYG{c+c1}{;; (use\PYGZhy{}package mini\PYGZhy{}modeline}
+\PYG{c+c1}{;;   :after doom\PYGZhy{}modeline}
+\PYG{c+c1}{;;   :config}
+\PYG{c+c1}{;;   (mini\PYGZhy{}modeline\PYGZhy{}mode t))}
+
+\PYG{c+c1}{;; 2nd shot ...}
+\PYG{c+c1}{;; (use\PYGZhy{}package eldoc\PYGZhy{}eval)}
+\PYG{c+c1}{;; (use\PYGZhy{}package doom\PYGZhy{}modeline}
+\PYG{c+c1}{;;   ;; :demand t}
+\PYG{c+c1}{;;   ;; :custom}
+\PYG{c+c1}{;;   ;; (doom\PYGZhy{}modeline\PYGZhy{}buffer\PYGZhy{}file\PYGZhy{}name\PYGZhy{}style \PYGZsq{}truncate\PYGZhy{}all)}
+\PYG{c+c1}{;;   ;; (doom\PYGZhy{}modeline\PYGZhy{}bar\PYGZhy{}width (frame\PYGZhy{}parameter nil \PYGZsq{}left\PYGZhy{}fringe))}
+\PYG{c+c1}{;;   ;; (doom\PYGZhy{}modeline\PYGZhy{}height 10)}
+\PYG{c+c1}{;;   ;; (doom\PYGZhy{}modeline\PYGZhy{}icon t)}
+\PYG{c+c1}{;;   ;; (doom\PYGZhy{}modeline\PYGZhy{}icons\PYGZhy{}scale\PYGZhy{}factor 0.8)}
+\PYG{c+c1}{;;   ;; :config}
+\PYG{c+c1}{;;   ;; (set\PYGZhy{}face\PYGZhy{}attribute \PYGZsq{}doom\PYGZhy{}modeline nil :inherit \PYGZsq{}default)}
+\PYG{c+c1}{;;   ;; (set\PYGZhy{}face\PYGZhy{}attribute \PYGZsq{}doom\PYGZhy{}modeline\PYGZhy{}inactive nil :inherit \PYGZsq{}default)}
+\PYG{c+c1}{;;   )}
+
+\PYG{c+c1}{;; (setq doom\PYGZhy{}modeline\PYGZhy{}height 10}
+\PYG{c+c1}{;;    doom\PYGZhy{}modeline\PYGZhy{}buffer\PYGZhy{}file\PYGZhy{}name\PYGZhy{}style \PYGZsq{}truncate\PYGZhy{}all}
+\PYG{c+c1}{;;    doom\PYGZhy{}modeline\PYGZhy{}bar\PYGZhy{}width (frame\PYGZhy{}parameter nil \PYGZsq{}left\PYGZhy{}fringe)}
+\PYG{c+c1}{;;    doom\PYGZhy{}modeline\PYGZhy{}height 10}
+\PYG{c+c1}{;;    doom\PYGZhy{}modeline\PYGZhy{}icon nil}
+\PYG{c+c1}{;;    ;; doom\PYGZhy{}modeline\PYGZhy{}icons\PYGZhy{}scale\PYGZhy{}factor 0.8}
+\PYG{c+c1}{;; )}
+
+\PYG{c+c1}{;; (use\PYGZhy{}package mini\PYGZhy{}modeline}
+\PYG{c+c1}{;;   :after doom\PYGZhy{}modeline}
+\PYG{c+c1}{;;   :config}
+\PYG{c+c1}{;;   (doom\PYGZhy{}modeline\PYGZhy{}def\PYGZhy{}modeline \PYGZsq{}minibuffer\PYGZhy{}line}
+\PYG{c+c1}{;;     \PYGZsq{}(modals workspace\PYGZhy{}name window\PYGZhy{}number matches buffer\PYGZhy{}info remote\PYGZhy{}host buffer\PYGZhy{}position word\PYGZhy{}count selection\PYGZhy{}info misc\PYGZhy{}info major\PYGZhy{}mode process vcs lsp checker))}
+
+\PYG{c+c1}{;;   ;; (setq mini\PYGZhy{}modeline\PYGZhy{}r\PYGZhy{}format \PYGZsq{}(:eval (doom\PYGZhy{}modeline\PYGZhy{}format\PYGZhy{}\PYGZhy{}minibuffer\PYGZhy{}line)))}
+
+\PYG{c+c1}{;;   (setq mini\PYGZhy{}modeline\PYGZhy{}right\PYGZhy{}padding 1}
+\PYG{c+c1}{;;         mini\PYGZhy{}modeline\PYGZhy{}enhance\PYGZhy{}visual nil)}
+
+\PYG{c+c1}{;;   (set\PYGZhy{}face\PYGZhy{}attribute \PYGZsq{}mode\PYGZhy{}line nil :box nil)}
+\PYG{c+c1}{;;   (set\PYGZhy{}face\PYGZhy{}attribute \PYGZsq{}mini\PYGZhy{}modeline\PYGZhy{}mode\PYGZhy{}line nil :background (face\PYGZhy{}background \PYGZsq{}org\PYGZhy{}code) :height 0.2)}
+\PYG{c+c1}{;;   (set\PYGZhy{}face\PYGZhy{}attribute \PYGZsq{}mini\PYGZhy{}modeline\PYGZhy{}mode\PYGZhy{}line\PYGZhy{}inactive nil :background (face\PYGZhy{}background \PYGZsq{}fringe) :height 0.2)}
+
+\PYG{c+c1}{;;   :hook (after\PYGZhy{}init . mini\PYGZhy{}modeline\PYGZhy{}mode)}
+\PYG{c+c1}{;;   )}
+\PYG{p}{(}\PYG{n+nb}{use\PYGZhy{}package} \PYG{n+nv}{mini\PYGZhy{}modeline}
+  \PYG{n+nb}{:after} \PYG{n+nv}{doom\PYGZhy{}modeline}
+  \PYG{n+nb}{:config}
+  \PYG{p}{(}\PYG{n+nv}{doom\PYGZhy{}modeline\PYGZhy{}def\PYGZhy{}modeline} \PYG{l+s+ss}{\PYGZsq{}minibuffer\PYGZhy{}line}
+    \PYG{o}{\PYGZsq{}}\PYG{p}{(}\PYG{n+nv}{modals} \PYG{n+nv}{workspace\PYGZhy{}name} \PYG{n+nv}{window\PYGZhy{}number} \PYG{n+nv}{matches} \PYG{n+nv}{buffer\PYGZhy{}info} \PYG{n+nv}{remote\PYGZhy{}host} \PYG{n+nv}{buffer\PYGZhy{}position} \PYG{n+nv}{word\PYGZhy{}count} \PYG{n+nv}{selection\PYGZhy{}info} \PYG{n+nv}{misc\PYGZhy{}info} \PYG{n+nv}{major\PYGZhy{}mode} \PYG{n+nv}{process} \PYG{n+nv}{vcs} \PYG{n+nv}{lsp} \PYG{n+nv}{checker}\PYG{p}{))}
+
+  \PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{mini\PYGZhy{}modeline\PYGZhy{}r\PYGZhy{}format} \PYG{o}{\PYGZsq{}}\PYG{p}{(}\PYG{n+nb}{:eval} \PYG{p}{(}\PYG{n+nv}{doom\PYGZhy{}modeline\PYGZhy{}format\PYGZhy{}\PYGZhy{}minibuffer\PYGZhy{}line}\PYG{p}{)))}
+
+  \PYG{p}{(}\PYG{k}{setq} \PYG{n+nv}{mini\PYGZhy{}modeline\PYGZhy{}right\PYGZhy{}padding} \PYG{l+m+mi}{1}
+        \PYG{n+nv}{mini\PYGZhy{}modeline\PYGZhy{}enhance\PYGZhy{}visual} \PYG{n+no}{nil}\PYG{p}{)}
+
+  \PYG{n+nb}{:hook} \PYG{p}{(}\PYG{n+nv}{after\PYGZhy{}init} \PYG{o}{.} \PYG{n+nv}{mini\PYGZhy{}modeline\PYGZhy{}mode}\PYG{p}{)}
+  \PYG{p}{)}
+\end{Verbatim}
