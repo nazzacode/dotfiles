@@ -1,9 +1,14 @@
+;; [[file:config.org::*Better Defaults][Better Defaults:2]]
 (setq initial-major-mode 'org-mode)
+;; Better Defaults:2 ends here
 
+;; [[file:config.org::*User Info][User Info:1]]
 (setq user-full-name "Nathan Sharp"
       my-name "nazzacode"
       user-mail-address "nasharp@outlook.com")
+;; User Info:1 ends here
 
+;; [[file:config.org::*Theme][Theme:1]]
 ;; Dark
 ;; (setq doom-theme 'my-doom-dark+)
 (setq doom-theme 'doom-one)
@@ -13,7 +18,9 @@
 ;; (setq doom-theme 'doom-zenburn)
 ;; (setq doom-theme 'doom-nord-light)
 ;; (setq doom-theme 'modus-operandi)
+;; Theme:1 ends here
 
+;; [[file:config.org::*General][General:1]]
 (setq-default line-spacing 0.15
               word-wrap t)
 (setq display-line-numbers-type t          ; 'relative  ; or `nil'
@@ -46,7 +53,9 @@
 ;; (define-globalized-minor-mode global-rainbow-mode rainbow-mode
 ;;   (lambda () (rainbow-mode 1)))
 ;; (global-rainbow-mode 1)
+;; General:1 ends here
 
+;; [[file:config.org::*Fonts][Fonts:1]]
 (setq
   doom-font (font-spec :family "DM Mono" :size 22)
   ;; doom-font (font-spec :family "Hasklug Nerd Font Mono" :size 26 :height 1.0)
@@ -69,7 +78,9 @@
 ;;   :config
 ;;   (setq mixed-pitch-set-heigth t)
 ;;   (set-face-attribute 'variable-pitch nil :height 1.0))
+;; Fonts:1 ends here
 
+;; [[file:config.org::*Modeline][Modeline:1]]
 (setq doom-modeline-height 40
       ;; doom-modeline-indent-info t
       doom-modeline-vcs-max-length 12
@@ -112,7 +123,9 @@
 ;; FIXME breaking org roam insert (double #+title)
 ;; (after! doom-modeline
 ;;   (add-hook 'text-mode-hook #'mini-modeline-mode))
+;; Modeline:1 ends here
 
+;; [[file:config.org::*Org Modern][Org Modern:1]]
 (global-org-modern-mode)
 (set-face-attribute 'org-modern-symbol nil :family "DM Mono")
 
@@ -144,7 +157,9 @@
  ;;   " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
  ;; org-agenda-current-time-string
  ;; "⭠ now ─────────────────────────────────────────────────")
+;; Org Modern:1 ends here
 
+;; [[file:config.org::*Todo's][Todo's:1]]
 (after! org
   (setq org-todo-keywords '(
     (sequence "TODO(t)" "DOING(d)" "STRT(s)" "NEXT(n)" "PROJ(p)" "WAIT(w)" "MAYBE(m)" "ERROR(e)" "FIXME(f)" "UPDATE(u)" "MOVE(M)" "REMOVE(r)" "(x)" "|" "DONE(D)" "CANCEL(c)" "DEPRECATED(z)")
@@ -203,7 +218,9 @@
     ;; ("NO" . (+org-todo-cancel))))
     ))
 )
+;; Todo's:1 ends here
 
+;; [[file:config.org::*main][main:1]]
 ;; Default header args
 (setq org-babel-default-header-args
   '((:session . "none")
@@ -235,11 +252,15 @@
     (org-babel-execute:js body params)))
 
 ;; (defalias 'org-babel-execute:ts 'org-babel-execute:typescript) ; FIXME
+;; main:1 ends here
 
+;; [[file:config.org::*fix emacs-jupyter output results ansi formatting][fix emacs-jupyter output results ansi formatting:1]]
 (defun display-ansi-colors ()
 (ansi-color-apply-on-region (point-min) (point-max)))
 (add-hook 'org-babel-after-execute-hook #'display-ansi-colors)
+;; fix emacs-jupyter output results ansi formatting:1 ends here
 
+;; [[file:config.org::*Latex Export][Latex Export:1]]
 (require 'ox-extra)
 (ox-extras-activate '(ignore-headlines))
 
@@ -311,7 +332,9 @@
       ("\\section{%s}" . "\\section*{%s}")
       ("\\subsection{%s}" . "\\subsection*{%s}")
       ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))))
+;; Latex Export:1 ends here
 
+;; [[file:config.org::*emacs-jupyter][emacs-jupyter:1]]
 ;; TypeScript
 (setq org-babel-default-header-args:jupyter-typescript '(
   (:session . "ts")
@@ -338,7 +361,9 @@
   ;;(org-babel-jupyter-override-src-block "python") ;; alias all python to jupyter-python
   ;;(org-babel-jupyter-override-src-block "typescript") ;; alias all python to jupyter-python
 )
+;; emacs-jupyter:1 ends here
 
+;; [[file:config.org::*General][General:1]]
 (setq org-roam-directory "~/org/roam")
 
       ;; +org-roam-open-buffer-on-find-file nil)
@@ -346,7 +371,9 @@
 ; FIXME: way to exclude nodes in roam-dir from search graph
 ;; (setq org-roam-db-node-include-function (lambda ()
 ;;   (not (member "ROAM_EXCLUDE" (org-get-tags)))))
+;; General:1 ends here
 
+;; [[file:config.org::*Org Roam Capture Templates][Org Roam Capture Templates:1]]
 (setq org-roam-capture-templates
 ;; Default
   `(("d" "default" plain "%?"
@@ -439,20 +466,26 @@
 \n* TODO
 \n* DONE")
     :unnarrowed t)))
+;; Org Roam Capture Templates:1 ends here
 
+;; [[file:config.org::*Dired][Dired:1]]
 ;; only open one dired buffer at a time
 
 (setf dired-kill-when-opening-new-dired-buffer t)
 
 (add-hook 'dired-mode-hook 'dired-hide-details-mode)
+;; Dired:1 ends here
 
+;; [[file:config.org::*Writeroom mode][Writeroom mode:1]]
 (with-eval-after-load 'writeroom-mode
   (define-key writeroom-mode-map (kbd "C-M-<") #'writeroom-decrease-width)
   (define-key writeroom-mode-map (kbd "C-M->") #'writeroom-increase-width)
   (define-key writeroom-mode-map (kbd "C-M-=") #'writeroom-adjust-width))
 
 (add-hook 'writeroom-mode-hook #'(lambda () (text-scale-increase 1)))
+;; Writeroom mode:1 ends here
 
+;; [[file:config.org::*LSP][LSP:1]]
 (setq lsp-ui-doc-enable t
       lsp-ui-doc-show-with-cursor t
       lsp-lens-enable t
@@ -465,9 +498,12 @@
       lsp-signature-render-documentation t
       lsp-completion-show-detail t
       lsp-completion-show-kind t)
+;; LSP:1 ends here
 
+;; [[file:config.org::*Tree sittier][Tree sittier:1]]
 (use-package! tree-sitter
   :config
   (require 'tree-sitter-langs)
   (global-tree-sitter-mode)
   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
+;; Tree sittier:1 ends here

@@ -2,7 +2,7 @@
 #+author: Nathan Sharp (@nazzacode)
 #+description: Nathan's (@nazzacode's) Personal Doom Emacs config.
 #+filetags: emacs config dotfiles
-#+property: header-args :results silent
+#+property: header-args :results silent :comments link
 
 # TODO: auto-tangle not working ?
 
