@@ -287,15 +287,15 @@ Harness the performance advantages of lexical-binding (I think?). See:
 #+end_src
 #
 * Org
-** General (inc. UI)
+** FIXME General (inc. UI)
 :PROPERTIES:
 :ID:       c6cc679a-b4e7-463f-8082-a8ac0bbbdf2e
 :END:
 #+begin_src elisp :tangle no
 (after! org
   (add-hook! 'org-mode-hook #'+org-pretty-mode   ; hides emphasis markers and toggles "pretty entities"
-                            #'org-appear-mode    ; expand invisible emphasis markers etc.
-                            #'mixed-pitch-mode)) ; uses var-pitch font for text; writeroom does this (and doesnt turn it off on exit!)
+                            #'org-appear-mode))    ; expand invisible emphasis markers etc.
+                            ;; #'mixed-pitch-mode)) ; uses var-pitch font for text; writeroom does this (and doesnt turn it off on exit!)
 (after! org
   (setq org-directory "~/org"              ; dir for agenda etc.
         org-startup-folded 't
@@ -845,13 +845,14 @@ See: [[https://www.orgroam.com/manual.html][org-roam manual]]
     :immediate-finish t
     :if-new (file+head "CodeChallanges/${slug}.org"
 ":PROPERTIES:
-:Source:
+:Source: %^{aliases}
 :Difficulty:
 :Rating:
 :END:\n
 
 ,#+title: ${title}
 ,#+filetags: code-challange rust
+,#+property: header-args :tangle src/bin/${slug}.rs :comments link
 
 \n* Question
 \n** Examples
@@ -860,9 +861,11 @@ See: [[https://www.orgroam.com/manual.html][org-roam manual]]
 : Output:
 
 \n* Solution
+\n#+name: solution
 \n#+begin_src rustic
 \n#+end_src
 
+\n#+name: testing
 \n* Testing
 \n#+begin_src rustic
 \n#+end_src

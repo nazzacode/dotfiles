@@ -372,13 +372,14 @@
     :immediate-finish t
     :if-new (file+head "CodeChallanges/${slug}.org"
 ":PROPERTIES:
-:Source:
+:Source: %^{aliases}
 :Difficulty:
 :Rating:
 :END:\n
 
 #+title: ${title}
 #+filetags: code-challange rust
+#+property: header-args :tangle src/bin/${slug}.rs :comments link
 
 \n* Question
 \n** Examples
@@ -387,9 +388,11 @@
 : Output:
 
 \n* Solution
+\n#+name: solution
 \n#+begin_src rustic
 \n#+end_src
 
+\n#+name: testing
 \n* Testing
 \n#+begin_src rustic
 \n#+end_src
