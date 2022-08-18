@@ -4,8 +4,6 @@
 #+filetags: emacs config dotfiles
 #+property: header-args :results silent :comments link
 
-# TODO: auto-tangle not working ?
-
 * Global Configuration
 ** Better Defaults
 Harness the performance advantages of lexical-binding (I think?). See:
@@ -17,7 +15,8 @@ Harness the performance advantages of lexical-binding (I think?). See:
 #+END_SRC
 
 #+BEGIN_src elisp :tangle yes
-(setq initial-major-mode 'org-mode)
+(setq initial-major-mode 'org-mode
+      image-use-external-converter t)
 #+END_src
 
 #+begin_src elisp
@@ -61,7 +60,7 @@ Harness the performance advantages of lexical-binding (I think?). See:
 #+BEGIN_SRC elisp :tangle yes
 ;; Dark
 ;; (setq doom-theme 'my-doom-dark+)
-(setq doom-theme 'doom-one)
+(setq doom-theme 'my-doom-one)
 ;; (setq doom-theme 'my-doom-gruvbox)
 ;; Light
 ;; (setq doom-theme 'doom-acario-light)
@@ -72,6 +71,16 @@ Harness the performance advantages of lexical-binding (I think?). See:
 #
 ** General
 #+begin_src elisp :tangle yes
+;; (add-hook 'window-setup-hook 'on-after-init)
+(defun on-frame-open (&optional frame)
+  "If the FRAME created in terminal don't load background color."
+  (unless (display-graphic-p frame)
+    (set-face-background 'default "unspecified-bg" frame)))
+
+(add-hook 'after-make-frame-functions 'on-frame-open)
+
+
+
 (setq-default line-spacing 0.15
               word-wrap t)
 (setq display-line-numbers-type t          ; 'relative  ; or `nil'
@@ -123,22 +132,105 @@ Harness the performance advantages of lexical-binding (I think?). See:
   doom-unicode-font (font-spec :family "Symbola")          ; good unicode support (prev :size 30)
   ;; doom-big-font (font-spec :family "Fira Mono" :size 19))
 )
-;; (doom-big-font-mode 1)  ; re add?
-
-;; (use-package! mixed-pitch
-;;   :hook (org-mode . mixed-pitch-mode)
-;;   :config
-;;   (setq mixed-pitch-set-heigth t)
-;;   (set-face-attribute 'variable-pitch nil :height 1.0))
+;; text zoom in/out ammount
+(setq text-scale-mode-step 1.05)
 #+end_src
 #
+** Transparency
+#+begin_src elisp :tangle yes
+;; ;; background only transparency (Emacs 29)
 
-** Dashboard
+ ;;(set-frame-parameter (selected-frame) 'alpha '(<active> . <inactive>))
+ ;;(set-frame-parameter (selected-frame) 'alpha <both>)
+ (set-frame-parameter (selected-frame) 'alpha 93)
+ (add-to-list 'default-frame-alist '(alpha . 93))
+
+ (defun toggle-transparency ()
+   (interactive)
+   (let ((alpha (frame-parameter nil 'alpha)))
+     (set-frame-parameter
+      nil 'alpha
+      (if (eql (cond ((numberp alpha) alpha)
+                     ((numberp (cdr alpha)) (cdr alpha))
+                     ;; Also handle undocumented (<active> <inactive>) form.
+                     ((numberp (cadr alpha)) (cadr alpha)))
+               100)
+          '(93 . 93) '(100 . 100)))))
+ (global-set-key (kbd "C-c t") 'toggle-transparency)
+
+ ;; (global-set-key (kbd "SPC t T") 'toggle-transparency)
+
+
+;; no background in termincal emacs
+;; (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+;; (load-theme 'my-awesome-theme t)
+(set-face-background 'default nil)
+(set-face-attribute 'default nil :background nil)
+
+(defun on-frame-open (frame)
+  (if (not (display-graphic-p frame))
+    (set-face-background 'default "unspecified-bg" frame)))
+(on-frame-open (selected-frame))
+(add-hook 'after-make-frame-functions 'on-frame-open)
+
+(defun on-after-init ()
+  (unless (display-graphic-p (selected-frame))
+    (set-face-background 'default "unspecified-bg" (selected-frame))))
+
+(add-hook 'window-setup-hook 'on-after-init)
+#+end_src
+
+** padding/boarder/margins
+#+begin_src elisp :tangle yes
+ ;; (internal-border-width . 10)
+;; (set-window-margins (selected-window) 1 1)
+ ;; (setq-default left-margin-width 10 right-margin-width 8) ; Define new widths.
+(setq-default left-margin-width 1 right-margin-width 1)
+(add-hook! '+popup-buffer-mode-hook
+  (set-window-margins (selected-window) 1 1))
+#+end_src
+
+** Window dividers
+#+begin_src elisp :tangle yes
+;; size
+(setq window-divider-default-bottom-width 2 ; in pixels
+      window-divider-default-right-width 2)
+(window-divider-mode +1)
+;; color
+; do in theme 'vertical-bar'
+#+end_src
+
+** FIXME Scroll bar (yascroll)
+#+begin_src elisp :tangle yes
+(add-hook 'prog-mode-hook 'yascroll-bar-mode)
+(add-hook 'org-mode-hook 'yascroll-bar-mode)
+(setq yascroll:delay-to-hide 'nil)
+#+end_src
+#
+** Which key (keybind menu minibuffer)
+#+begin_src elisp :tangle no
+;; removes 'evil' from head of strings
+(after! which-key
+(pushnew!
+  which-key-replacement-alist
+  '(("" . "\\`+?evil[-:]?\\(?:a-\\)?\\(.*\\)") . (nil . "◂\\1"))
+  '(("\\`g s" . "\\`evilem--?motion-\\(.*\\)") . (nil . "◃\\1"))
+  ))
+#+end_src
+
+** ~emacs-terminal-cursor-changer~ :package:
+#+begin_src elisp :tangle yes
+(unless (display-graphic-p)
+        (require 'evil-terminal-cursor-changer)
+        (evil-terminal-cursor-changer-activate))
+#+end_src
+
+* Dashboard
 #+begin_src elisp :tangle no
 ;; (setq doom-dashboard-widget-banner "~/.doom.d/doom_splash.txt")
 (require 'dashboard)
 (dashboard-setup-startup-hook)
-; Set the title
+                                        ; Set the title
 (setq dashboard-banner-logo-title "Welcome to Emacs Dashboard")
 ;; Set the banner
 (setq dashboard-startup-banner "~/.doom.d/doom_splash.txt")
@@ -157,7 +249,7 @@ Harness the performance advantages of lexical-binding (I think?). See:
                         ;; (bookmarks . 5)
                         ;; (projects . 5)
                         (agenda . 5)))
-                        ;; (registers . 5)
+;; (registers . 5)
 
 
 (setq dashboard-set-heading-icons t)
@@ -170,33 +262,34 @@ Harness the performance advantages of lexical-binding (I think?). See:
                              ("Agenda for the coming week:" . "Agenda:")))
 #+end_src
 
-** Modeline
+* Modeline
 #+begin_src elisp :tangle yes
-(setq doom-modeline-height 40
+(setq doom-modeline-height 25
       ;; doom-modeline-indent-info t
       doom-modeline-vcs-max-length 12
       doom-modeline-buffer-file-name-style 'truncate-upto-root
-      doom-modeline-icon t
+      doom-modeline-icon nil
       doom-modeline-major-mode-icon t
       doom-modeline-enable-word-count t
       ;; doom-modeline-hud t ;; ?
-      doom-modeline-major-mode-color-icon nil)
+      ;; doom-modeline-major-mode-color-icon nil)
+      )
 
 ;; main modline
-(after! doom-modeline
-  (doom-modeline-def-modeline 'main
-    '(bar matches buffer-info remote-host buffer-position parrot selection-info)
-    '(misc-info minor-modes checker input-method buffer-encoding major-mode process vcs " "))) ; <-- added padding here
+;; (after! doom-modeline
+;;   (doom-modeline-def-modeline 'main
+;;     '(bar matches buffer-info remote-host buffer-position parrot selection-info)
+;;     '(misc-info minor-modes checker input-method buffer-encoding major-mode process vcs " "))) ; <-- added padding here
 
 (setq all-the-icons-scale-factor 0.9)  ;; 1.1.
 
-; mini-modeline
+                                        ; mini-modeline
 (use-package mini-modeline
   :after doom-modeline
-  ;; :hook ((after-init . mini-modeline-mode))
-        ;; (aorst--theme-change . aorst/mini-modeline-setup-faces)
-        ;; (isearch-mode . aorst/mini-modeline-isearch)
-        ;;(isearch-mode-end . aorst/mini-modeline-isearch-end)
+  :hook ((after-init . mini-modeline-mode))
+  (aorst--theme-change . aorst/mini-modeline-setup-faces)
+  (isearch-mode . aorst/mini-modeline-isearch)
+  (isearch-mode-end . aorst/mini-modeline-isearch-end)
   :custom
   (mini-modeline-display-gui-line nil)
   ;; (mini-modeline-l-format '(:eval (string-trim-left (eval mode-line-l-format)))) ; FIXME
@@ -206,7 +299,7 @@ Harness the performance advantages of lexical-binding (I think?). See:
   (doom-modeline-def-modeline 'minibuffer-line
     '(modals buffer-info remote-host buffer-position parrot selection-info)
     '(misc-info minor-modes checker input-method buffer-encoding major-mode process vcs " "))
-    ;; NOTE remove `buffer-info` once tabs setup!
+  ;; NOTE remove `buffer-info` once tabs setup!
   :hook (after-init . mini-modeline-mode))
 
 (global-hide-mode-line-mode 1)
@@ -217,27 +310,7 @@ Harness the performance advantages of lexical-binding (I think?). See:
 #+end_src
 
 #
-** FIXME Scroll bar (yascroll)
-#+begin_src elisp
-;; FIXME only in prog? mode
-(global-yascroll-bar-mode 1)
-(setq yascroll-scroll-bar "right-fringe"
-      yascroll:disabled-modes '(image-mode eshell-mode helpful-mode)  ; is this syntax correct?
-      yascroll:delay-to-hide 5)  ; 'nil)
 
-#+end_src
-#
-** Which key (keybind menu minibuffer)
-#+begin_src elisp :tangle no
-;; removes 'evil' from head of strings
-(after! which-key
-(pushnew!
-  which-key-replacement-alist
-  '(("" . "\\`+?evil[-:]?\\(?:a-\\)?\\(.*\\)") . (nil . "◂\\1"))
-  '(("\\`g s" . "\\`evilem--?motion-\\(.*\\)") . (nil . "◃\\1"))
-  ))
-#+end_src
-#
 * Completion (company)
 ** FIXME main
 #+begin_src elisp
@@ -291,7 +364,7 @@ Harness the performance advantages of lexical-binding (I think?). See:
 :PROPERTIES:
 :ID:       c6cc679a-b4e7-463f-8082-a8ac0bbbdf2e
 :END:
-#+begin_src elisp :tangle no
+#+begin_src elisp :tangle yes
 (after! org
   (add-hook! 'org-mode-hook #'+org-pretty-mode   ; hides emphasis markers and toggles "pretty entities"
                             #'org-appear-mode))    ; expand invisible emphasis markers etc.
@@ -301,7 +374,7 @@ Harness the performance advantages of lexical-binding (I think?). See:
         org-startup-folded 't
         org-num-skip-unnumbered 't         ; skip `:UNNUMBERED:` from numbering
         org-ellipsis "  "
-        display-line-numbers-type 'nil     ; no line numbers by default in org
+        ;; display-line-numbers-type 'nil     ; no line numbers by default in org
         ;; org-image-actual-width 450      ; set default width ; FIXME cannot override
         ;; org-startup-with-latex-preview 't ; TODO test breaking?
         org-startup-shrink-all-tables 't
@@ -311,10 +384,12 @@ Harness the performance advantages of lexical-binding (I think?). See:
         ;; org-appear-autosubmarkers 't       ; auto apear subscript/superscript
         ;; org-appear-autoentities 't         ; auto apear \alpha etc.
         ;; org-appear-autokeywords 't         ; auto apear elements in `org-hidden-keywords'
-        org-startup-with-inline-images 't))
+        org-startup-with-inline-images 't
+        org-indent-indentation-per-level 0
+        org-startup-folded 't))
 #+end_src
 
-** Org Modern
+** Org Modern :package:
 #+begin_src elisp :tangle yes
 (global-org-modern-mode)
 (set-face-attribute 'org-modern-symbol nil :family "DM Mono")
@@ -331,8 +406,12 @@ Harness the performance advantages of lexical-binding (I think?). See:
 ;;   (set-face-foreground face (face-attribute 'default :background)))
 ;; (set-face-background 'fringe (face-attribute 'default :background))
 
+(setq org-modern-star nil)  ;; not loading!
+(setq org-modern-hide-stars nil)
+
+;; Recommended settings
 (setq
-;; Edit settings
+
    org-auto-align-tags nil
    org-tags-column 0
    org-catch-invisible-edits 'show-and-error
@@ -575,14 +654,21 @@ Harness the performance advantages of lexical-binding (I think?). See:
 (ox-extras-activate '(ignore-headlines))
 
 (after! ox-latex
-  (setq org-latex-pdf-process '("latexmk -f -pdf %f -output-directory=%o -shell-escape")))
+  (setq org-latex-prefer-user-labels t)
+  (setq org-latex-compiler "xelatex")
+  (setq org-latex-pdf-process '("latexmk -xelatex -f -pdf %f -output-directory=%o -shell-escape")))
+  ;; (setq org-latex-pdf-process
+  ;;   '("xelatex -interaction nonstopmode -output-directory %o %f -shell-escape"
+  ;;     "xelatex -interaction nonstopmode -output-directory %o %f -shell-escape"
+  ;;     "xelatex -interaction nonstopmode -output-directory %o %f -shell-escape")))
+  ;; ;; ^ for multiple passes
 
-;; Need from latex minted package
+  ;; Need from latex minted package
 (setq org-latex-listings 'minted
       org-latex-minted-options '(("breaklines" "true")
                                  ;; ("" "")
                                  ("breakanywhere" "true")
-                                 ;; ("framesep" "2mm")
+                                ;; ("framesep" "2mm")
                                  ("baselinestretch" "1.1")    ;; line spacing
                                  ;; ("fontsize" "\footnotesize")  ;;
                                  ;; ("fontsize" "16")  ;;
@@ -593,7 +679,7 @@ Harness the performance advantages of lexical-binding (I think?). See:
                                  ;; ("frame" "single")))         ;; frame line
 ))
 
-(setq org-latex-packages-alist '(("" "minted")))
+(setq org-latex-packages-alist '(("" "minted")("" "fontspec")))
 
 (setq org-latex-caption-above nil)
 
@@ -676,9 +762,12 @@ You can include this function in `org-font-lock-set-keywords-hook'."
 :PROPERTIES:
 :ID:       4272fde4-d8c9-4932-af2c-01d2522f7baa
 :END:
+
 #+begin_src elisp
 ;; syntax hilighting for latex fragments
 (setq org-highlight-latex-and-related '(native script entities))
+
+;; (setq org-latex-create-formula-image-program 'imagemagick) ; Recommended
 
 ;; prevent background redering uglyness
 ;; OLD: https://stackoverflow.com/questions/69474043/emacs-org-mode-background-color-of-latex-fragments-with-org-highlight-latex-a
@@ -845,14 +934,14 @@ See: [[https://www.orgroam.com/manual.html][org-roam manual]]
     :immediate-finish t
     :if-new (file+head "CodeChallanges/${slug}.org"
 ":PROPERTIES:
-:Source: %^{aliases}
+:Source: %^{source}
 :Difficulty:
 :Rating:
 :END:\n
 
 ,#+title: ${title}
 ,#+filetags: code-challange rust
-,#+property: header-args :tangle src/bin/${slug}.rs :comments link
+,#+property: header-args :tangle src/${slug}.rs :comments link
 
 \n* Question
 \n** Examples
@@ -916,7 +1005,7 @@ See: [[https://www.orgroam.com/manual.html][org-roam manual]]
 
 ** Hide radio-target syntax in node name
 NOt needed anymore?
-#+begin_src elisp
+#+begin_src elisp :tangle yes
 (defun org-link-display-format-h (s)
   "Replace radio links in string S with their description.
 If there is no description, use the link target."
@@ -1049,7 +1138,7 @@ Refer to `org-agenda-prefix-format' for more information."
        (match-end 1)))))
 #+end_src
 #
-* UPDATE Calendar
+* Calendar
 #+begin_src elisp :tangle no
 ;; gcal integration
 (require 'calfw)

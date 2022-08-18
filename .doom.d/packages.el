@@ -7,6 +7,7 @@
 (package! company-math)      ; latex unicode completion menu
 (package! dashboard)
 (package! eldoc-eval)
+(package! evil-terminal-cursor-changer)
 (package! graphviz-dot-mode) ; graph diagrams
 (package! highlight-indent-guides)
 (package! hypothesis :recipe (:host github :repo "Kungsgeten/hypothesis")) ; webpage highlighting and notes

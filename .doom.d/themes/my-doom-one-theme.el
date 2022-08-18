@@ -1,4 +1,6 @@
-;;; my-doom-one-theme.el --- inspired by Atom One Dark -*- lexical-binding: t; no-byte-compile: t; -*-
+;;; my-doom-one-theme.el --- inspired by Atom One Dark
+;;;
+;; -*- lexical-binding: t; no-byte-compile: t; -*-
 ;;
 ;; Copyright (C) 2016-2021 Henrik Lissner
 ;;
@@ -48,14 +50,14 @@ Can be an integer to determine the exact padding."
   "A dark theme inspired by Atom One Dark."
 
   ;; name        default   256           16
-  ((bg         '("#282c34" "black"       "black"  ))
+  ((bg-alt         '("#282c34" "black"       "black"  ))
    (fg         '("#bbc2cf" "#bfbfbf"     "brightwhite"  ))
 
    ;; These are off-color variants of bg/fg, used primarily for `solaire-mode',
    ;; but can also be useful as a basis for subtle highlights (e.g. for hl-line
    ;; or region), especially when paired with the `doom-darken', `doom-lighten',
  ;; and `doom-blend' helper functions.
-   (bg-alt     '("#21242b" "black"       "black"        ))
+   (bg     '("#21242b" "black"       "black"        ))
    (fg-alt     '("#5B6268" "#2d2d2d"     "white"        ))
 
    ;; These should represent a spectrum from bg to fg, where base0 is a starker
@@ -88,7 +90,7 @@ Can be an integer to determine the exact padding."
    ;; These *must* be included in every doom themes, or your theme will throw an
    ;; error, as they are used in the base theme defined in doom-themes-base.
    (highlight      blue)
-   (vertical-bar   (doom-darken base1 0.1))
+   (vertical-bar   (doom-lighten base1 0.1))  ;; vertical-border / window-divider
    (selection      dark-blue)
    (builtin        magenta)
    (comments       (if my-doom-one-brighter-comments dark-cyan base5))

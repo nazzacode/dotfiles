@@ -1,5 +1,6 @@
 ;; [[file:config.org::*Better Defaults][Better Defaults:2]]
-(setq initial-major-mode 'org-mode)
+(setq initial-major-mode 'org-mode
+      image-use-external-converter t)
 ;; Better Defaults:2 ends here
 
 ;; [[file:config.org::*User Info][User Info:1]]
@@ -11,7 +12,7 @@
 ;; [[file:config.org::*Theme][Theme:1]]
 ;; Dark
 ;; (setq doom-theme 'my-doom-dark+)
-(setq doom-theme 'doom-one)
+(setq doom-theme 'my-doom-one)
 ;; (setq doom-theme 'my-doom-gruvbox)
 ;; Light
 ;; (setq doom-theme 'doom-acario-light)
@@ -21,6 +22,16 @@
 ;; Theme:1 ends here
 
 ;; [[file:config.org::*General][General:1]]
+;; (add-hook 'window-setup-hook 'on-after-init)
+(defun on-frame-open (&optional frame)
+  "If the FRAME created in terminal don't load background color."
+  (unless (display-graphic-p frame)
+    (set-face-background 'default "unspecified-bg" frame)))
+
+(add-hook 'after-make-frame-functions 'on-frame-open)
+
+
+
 (setq-default line-spacing 0.15
               word-wrap t)
 (setq display-line-numbers-type t          ; 'relative  ; or `nil'
@@ -71,41 +82,110 @@
   doom-unicode-font (font-spec :family "Symbola")          ; good unicode support (prev :size 30)
   ;; doom-big-font (font-spec :family "Fira Mono" :size 19))
 )
-;; (doom-big-font-mode 1)  ; re add?
-
-;; (use-package! mixed-pitch
-;;   :hook (org-mode . mixed-pitch-mode)
-;;   :config
-;;   (setq mixed-pitch-set-heigth t)
-;;   (set-face-attribute 'variable-pitch nil :height 1.0))
+;; text zoom in/out ammount
+(setq text-scale-mode-step 1.05)
 ;; Fonts:1 ends here
 
+;; [[file:config.org::*Transparency][Transparency:1]]
+;; ;; background only transparency (Emacs 29)
+
+ ;;(set-frame-parameter (selected-frame) 'alpha '(<active> . <inactive>))
+ ;;(set-frame-parameter (selected-frame) 'alpha <both>)
+ (set-frame-parameter (selected-frame) 'alpha 93)
+ (add-to-list 'default-frame-alist '(alpha . 93))
+
+ (defun toggle-transparency ()
+   (interactive)
+   (let ((alpha (frame-parameter nil 'alpha)))
+     (set-frame-parameter
+      nil 'alpha
+      (if (eql (cond ((numberp alpha) alpha)
+                     ((numberp (cdr alpha)) (cdr alpha))
+                     ;; Also handle undocumented (<active> <inactive>) form.
+                     ((numberp (cadr alpha)) (cadr alpha)))
+               100)
+          '(93 . 93) '(100 . 100)))))
+ (global-set-key (kbd "C-c t") 'toggle-transparency)
+
+ ;; (global-set-key (kbd "SPC t T") 'toggle-transparency)
+
+
+;; no background in termincal emacs
+;; (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+;; (load-theme 'my-awesome-theme t)
+(set-face-background 'default nil)
+(set-face-attribute 'default nil :background nil)
+
+(defun on-frame-open (frame)
+  (if (not (display-graphic-p frame))
+    (set-face-background 'default "unspecified-bg" frame)))
+(on-frame-open (selected-frame))
+(add-hook 'after-make-frame-functions 'on-frame-open)
+
+(defun on-after-init ()
+  (unless (display-graphic-p (selected-frame))
+    (set-face-background 'default "unspecified-bg" (selected-frame))))
+
+(add-hook 'window-setup-hook 'on-after-init)
+;; Transparency:1 ends here
+
+;; [[file:config.org::*padding/boarder/margins][padding/boarder/margins:1]]
+;; (internal-border-width . 10)
+;; (set-window-margins (selected-window) 1 1)
+ ;; (setq-default left-margin-width 10 right-margin-width 8) ; Define new widths.
+(setq-default left-margin-width 1 right-margin-width 1)
+(add-hook! '+popup-buffer-mode-hook
+  (set-window-margins (selected-window) 1 1))
+;; padding/boarder/margins:1 ends here
+
+;; [[file:config.org::*Window dividers][Window dividers:1]]
+;; size
+(setq window-divider-default-bottom-width 2 ; in pixels
+      window-divider-default-right-width 2)
+(window-divider-mode +1)
+;; color
+; do in theme 'vertical-bar'
+;; Window dividers:1 ends here
+
+;; [[file:config.org::*FIXME Scroll bar (yascroll)][FIXME Scroll bar (yascroll):1]]
+(add-hook 'prog-mode-hook 'yascroll-bar-mode)
+(add-hook 'org-mode-hook 'yascroll-bar-mode)
+(setq yascroll:delay-to-hide 'nil)
+;; FIXME Scroll bar (yascroll):1 ends here
+
+;; [[file:config.org::*~emacs-terminal-cursor-changer~][~emacs-terminal-cursor-changer~:1]]
+(unless (display-graphic-p)
+        (require 'evil-terminal-cursor-changer)
+        (evil-terminal-cursor-changer-activate))
+;; ~emacs-terminal-cursor-changer~:1 ends here
+
 ;; [[file:config.org::*Modeline][Modeline:1]]
-(setq doom-modeline-height 40
+(setq doom-modeline-height 25
       ;; doom-modeline-indent-info t
       doom-modeline-vcs-max-length 12
       doom-modeline-buffer-file-name-style 'truncate-upto-root
-      doom-modeline-icon t
+      doom-modeline-icon nil
       doom-modeline-major-mode-icon t
       doom-modeline-enable-word-count t
       ;; doom-modeline-hud t ;; ?
-      doom-modeline-major-mode-color-icon nil)
+      ;; doom-modeline-major-mode-color-icon nil)
+      )
 
 ;; main modline
-(after! doom-modeline
-  (doom-modeline-def-modeline 'main
-    '(bar matches buffer-info remote-host buffer-position parrot selection-info)
-    '(misc-info minor-modes checker input-method buffer-encoding major-mode process vcs " "))) ; <-- added padding here
+;; (after! doom-modeline
+;;   (doom-modeline-def-modeline 'main
+;;     '(bar matches buffer-info remote-host buffer-position parrot selection-info)
+;;     '(misc-info minor-modes checker input-method buffer-encoding major-mode process vcs " "))) ; <-- added padding here
 
 (setq all-the-icons-scale-factor 0.9)  ;; 1.1.
 
-; mini-modeline
+                                        ; mini-modeline
 (use-package mini-modeline
   :after doom-modeline
-  ;; :hook ((after-init . mini-modeline-mode))
-        ;; (aorst--theme-change . aorst/mini-modeline-setup-faces)
-        ;; (isearch-mode . aorst/mini-modeline-isearch)
-        ;;(isearch-mode-end . aorst/mini-modeline-isearch-end)
+  :hook ((after-init . mini-modeline-mode))
+  (aorst--theme-change . aorst/mini-modeline-setup-faces)
+  (isearch-mode . aorst/mini-modeline-isearch)
+  (isearch-mode-end . aorst/mini-modeline-isearch-end)
   :custom
   (mini-modeline-display-gui-line nil)
   ;; (mini-modeline-l-format '(:eval (string-trim-left (eval mode-line-l-format)))) ; FIXME
@@ -115,7 +195,7 @@
   (doom-modeline-def-modeline 'minibuffer-line
     '(modals buffer-info remote-host buffer-position parrot selection-info)
     '(misc-info minor-modes checker input-method buffer-encoding major-mode process vcs " "))
-    ;; NOTE remove `buffer-info` once tabs setup!
+  ;; NOTE remove `buffer-info` once tabs setup!
   :hook (after-init . mini-modeline-mode))
 
 (global-hide-mode-line-mode 1)
@@ -124,6 +204,31 @@
 ;; (after! doom-modeline
 ;;   (add-hook 'text-mode-hook #'mini-modeline-mode))
 ;; Modeline:1 ends here
+
+;; [[file:config.org::*FIXME General (inc. UI)][FIXME General (inc. UI):1]]
+(after! org
+  (add-hook! 'org-mode-hook #'+org-pretty-mode   ; hides emphasis markers and toggles "pretty entities"
+                            #'org-appear-mode))    ; expand invisible emphasis markers etc.
+                            ;; #'mixed-pitch-mode)) ; uses var-pitch font for text; writeroom does this (and doesnt turn it off on exit!)
+(after! org
+  (setq org-directory "~/org"              ; dir for agenda etc.
+        org-startup-folded 't
+        org-num-skip-unnumbered 't         ; skip `:UNNUMBERED:` from numbering
+        org-ellipsis "  "
+        ;; display-line-numbers-type 'nil     ; no line numbers by default in org
+        ;; org-image-actual-width 450      ; set default width ; FIXME cannot override
+        ;; org-startup-with-latex-preview 't ; TODO test breaking?
+        org-startup-shrink-all-tables 't
+        org-startup-indented 'nil          ; dont indent in nested headings
+        org-id-link-to-org-use-id 't
+        ;; org-appear-autolinks 't            ; auto appear links
+        ;; org-appear-autosubmarkers 't       ; auto apear subscript/superscript
+        ;; org-appear-autoentities 't         ; auto apear \alpha etc.
+        ;; org-appear-autokeywords 't         ; auto apear elements in `org-hidden-keywords'
+        org-startup-with-inline-images 't
+        org-indent-indentation-per-level 0
+        org-startup-folded 't))
+;; FIXME General (inc. UI):1 ends here
 
 ;; [[file:config.org::*Org Modern][Org Modern:1]]
 (global-org-modern-mode)
@@ -141,8 +246,12 @@
 ;;   (set-face-foreground face (face-attribute 'default :background)))
 ;; (set-face-background 'fringe (face-attribute 'default :background))
 
+(setq org-modern-star nil)  ;; not loading!
+(setq org-modern-hide-stars nil)
+
+;; Recommended settings
 (setq
-;; Edit settings
+
    org-auto-align-tags nil
    org-tags-column 0
    org-catch-invisible-edits 'show-and-error
@@ -265,14 +374,21 @@
 (ox-extras-activate '(ignore-headlines))
 
 (after! ox-latex
-  (setq org-latex-pdf-process '("latexmk -f -pdf %f -output-directory=%o -shell-escape")))
+  (setq org-latex-prefer-user-labels t)
+  (setq org-latex-compiler "xelatex")
+  (setq org-latex-pdf-process '("latexmk -xelatex -f -pdf %f -output-directory=%o -shell-escape")))
+  ;; (setq org-latex-pdf-process
+  ;;   '("xelatex -interaction nonstopmode -output-directory %o %f -shell-escape"
+  ;;     "xelatex -interaction nonstopmode -output-directory %o %f -shell-escape"
+  ;;     "xelatex -interaction nonstopmode -output-directory %o %f -shell-escape")))
+  ;; ;; ^ for multiple passes
 
-;; Need from latex minted package
+  ;; Need from latex minted package
 (setq org-latex-listings 'minted
       org-latex-minted-options '(("breaklines" "true")
                                  ;; ("" "")
                                  ("breakanywhere" "true")
-                                 ;; ("framesep" "2mm")
+                                ;; ("framesep" "2mm")
                                  ("baselinestretch" "1.1")    ;; line spacing
                                  ;; ("fontsize" "\footnotesize")  ;;
                                  ;; ("fontsize" "16")  ;;
@@ -283,7 +399,7 @@
                                  ;; ("frame" "single")))         ;; frame line
 ))
 
-(setq org-latex-packages-alist '(("" "minted")))
+(setq org-latex-packages-alist '(("" "minted")("" "fontspec")))
 
 (setq org-latex-caption-above nil)
 
@@ -399,14 +515,14 @@
     :immediate-finish t
     :if-new (file+head "CodeChallanges/${slug}.org"
 ":PROPERTIES:
-:Source: %^{aliases}
+:Source: %^{source}
 :Difficulty:
 :Rating:
 :END:\n
 
 #+title: ${title}
 #+filetags: code-challange rust
-#+property: header-args :tangle src/bin/${slug}.rs :comments link
+#+property: header-args :tangle src/${slug}.rs :comments link
 
 \n* Question
 \n** Examples
@@ -467,6 +583,19 @@
 \n* DONE")
     :unnarrowed t)))
 ;; Org Roam Capture Templates:1 ends here
+
+;; [[file:config.org::*Hide radio-target syntax in node name][Hide radio-target syntax in node name:1]]
+(defun org-link-display-format-h (s)
+  "Replace radio links in string S with their description.
+If there is no description, use the link target."
+  (save-match-data
+    (replace-regexp-in-string
+     org-radio-target-regexp
+     (lambda (m) (or (match-string 2 m) (match-string 1 m)))
+     s nil t)))
+
+(advice-add  'org-link-display-format :filter-return 'org-link-display-format-h)
+;; Hide radio-target syntax in node name:1 ends here
 
 ;; [[file:config.org::*Dired][Dired:1]]
 ;; only open one dired buffer at a time
