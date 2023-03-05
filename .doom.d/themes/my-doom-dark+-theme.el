@@ -1,12 +1,13 @@
 ;;; my-doom-dark+-theme.el --- inspired by dark+ Theme by equinusocio -*- lexical-binding: t; no-byte-compile: t; -*-
+
 (require 'doom-themes)
 
-;;
 (defgroup doom-dark+-theme nil
   "Options for the `doom-dark' theme."
   :group 'doom-themes)
 
-(defcustom doom-dark+-padded-modeline doom-themes-padded-modeline
+;; (defcustom doom-dark+-padded-modeline doom-themespadded-modeline
+(defcustom doom-dark+-padded-modeline nil
   "If non-nil, adds a 4px padding to the mode-line.
 Can be an integer to determine the exact padding."
   :group 'doom-dark+-theme
@@ -22,9 +23,11 @@ Can be an integer to determine the exact padding."
   "A dark theme inspired by dark+ Theme by equinusocio"
 
   ;; name        default   256       16
-  ((bg         '("#1C1C1C" "#1C1C1C" nil))
-   (bg-alt     '("#2B2B2B" "#2B2B2B" nil))
+  ;; ((bg         '("#1C1C1C" "#1C1C1C" nil)) ; old
+  ;;  (bg-alt     '("#2B2B2B" "#2B2B2B" nil)) ; old
    ;; (bg-alt     '("#303030" "#303030"  nil))
+  ((bg         '("#242424" "#242424" nil))
+   (bg-alt     '("#292929" "#292929" nil))
    (base0      '("#111111" "#111111"   "black"))
    (base1      '("#1d1d1d" "#1C1C1C" "brightblack"))
    (base2      '("#181818" "#181818" "brightblack")) ;; src_block_backgroud
@@ -55,10 +58,10 @@ Can be an integer to determine the exact padding."
 
    ;; face categories -- required for all themes
    (highlight      fg) ; base6)
-   (vertical-bar   base4) ; fg
+   (vertical-bar   (doom-lighten bg-alt 0.15)) ; window divider
    (selection      base4)
    (builtin        magenta)
-   (comments       green)
+   (comments       base7)
    (doc-comments   base7)
    (constants      blue)
    (functions      light-yellow)
@@ -85,7 +88,7 @@ Can be an integer to determine the exact padding."
 
    (-modeline-pad
     (when doom-dark+-padded-modeline
-      (if (integerp doom-dark+-padded-modeline) doom-dark+-padded-modeline 1)))) ;; 4
+      (if (integerp doom-dark+-padded-modeline) doom-dark+-padded-modeline 0)))) ;; 4
 
   ;;;; Base theme face overrides
   ((lazy-highlight :background base4 :foreground fg :distant-foreground fg :weight 'bold)
@@ -155,16 +158,26 @@ Can be an integer to determine the exact padding."
    ;;;; man <built-in>
    (Man-overstrike :inherit 'bold :foreground magenta)
    (Man-underline :inherit 'underline :foreground blue)
-   ;; outline / heading
+   ;; outline  (headings)
    ;;;; outline <built-in>
-   ((outline-1 &override) :foreground (doom-lighten cyan 0.3))
-   ((outline-2 &override) :foreground (doom-lighten blue 0.3))
-   ((outline-3 &override) :foreground (doom-lighten teal 0.3))
-   ((outline-4 &override) :foreground (doom-lighten dark-cyan 0.3))
-   ((outline-5 &override) :foreground (doom-lighten dark-blue 0.3))
-   ((outline-6 &override) :foreground (doom-lighten light-green 0.3))
-   ((outline-7 &override) :foreground (doom-lighten grey 0.3))
-   ((outline-8 &override) :foreground (doom-lighten cyan 0.6))
+   ;; ((outline-1 &override) :foreground (doom-darken base8 0.2))
+   ;; ((outline-2 &override) :foreground (doom-lighten cyan 0.55))
+   ;; ((outline-3 &override) :foreground (doom-lighten violet 0.55))
+   ;; ((outline-4 &override) :foreground (doom-lighten yellow 0.55))
+   ;; ((outline-5 &override) :foreground (doom-lighten green 0.55))
+   ;; ((outline-6 &override) :foreground (doom-lighten orange 0.55))
+   ;; ((outline-7 &override) :foreground (doom-lighten teal 0.55))
+   ;; ((outline-8 &override) :foreground (doom-lighten red 0.5))
+
+   ((outline-1 &override) :foreground (doom-darken fg 0.2))
+   ((outline-2 &override) :foreground (doom-darken fg 0.2))
+   ((outline-3 &override) :foreground (doom-darken fg 0.2))
+   ((outline-4 &override) :foreground (doom-darken fg 0.2))
+   ((outline-5 &override) :foreground (doom-darken fg 0.2))
+   ((outline-6 &override) :foreground (doom-darken fg 0.2))
+   ((outline-7 &override) :foreground (doom-darken fg 0.2))
+   ((outline-8 &override) :foreground (doom-darken fg 0.2))
+   ;;
    ;;;; org <built-in>
    ;; ((org-block &override) :background (doom-darken bg-alt 0.1))
    ((org-block &override) :background bg)
@@ -191,6 +204,7 @@ Can be an integer to determine the exact padding."
    (rjsx-attr :foreground cyan :slant 'italic :weight 'medium)
    ;;;; tooltip
    (tooltip :background base2 :foreground fg)
+   ;;; yascroll
    ;;;; treemacs
    (treemacs-root-face :foreground fg :weight 'ultra-bold :height 1.2)
    (doom-themes-treemacs-root-face :foreground fg :weight 'ultra-bold :height 1.2)
