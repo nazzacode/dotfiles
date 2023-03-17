@@ -26,6 +26,7 @@ setopt auto_cd
 
 HIST_STAMPS="dd.mm.yyyy"
 
+
 export EDITOR='emacs'
 
 # Standard plugins can be found in $ZSH/plugins/
@@ -33,20 +34,21 @@ export EDITOR='emacs'
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-    fzf
     git
+    fzf
     thefuck  # press ESC twice to correct
     vi-mode
-    zsh-autocomplete
     zsh-autosuggestions
     zsh-completions
     zsh-history-substring-search
     zsh-syntax-highlighting  # must be last
 )
 
+
 # - * - User configuration - * -
 
 # export MANPATH="/usr/local/man:$MANPATH"
+
 
 # PATH
 # path+=('~/.emacs.d/bin') # new syntax? something wrong?

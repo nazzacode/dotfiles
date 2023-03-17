@@ -3,99 +3,195 @@
 #+DESCRIPTION: Nathan's (@nazzacode's) Personal Doom Emacs config.
 #+FILETAGS: emacs config dotfiles
 #+PROPERTY: header-args :results silent :comments link :tangle yes
-#+STARTUP: folded hideblocks nohide
-* COMMENT Inbox
-#+begin_src elisp
-(custom-set-variables
- '(package-archives
-   (quote
-    (("gnu" . "https://elpa.gnu.org/packages/")
-     ("ox-odt" . "https://kjambunathan.github.io/elpa/")))))
+#+STARTUP: showeverything
 
-(use-package dom)
-(use-package org-extra-emphasis)
-     #+end_src
-     
+* Table of Contents :toc:
+- [[#global-configuration][Global Configuration]]
+  - [[#better-defaults][Better Defaults]]
+  - [[#user-info][User Info]]
+- [[#user-interface-ui][User interface (UI)]]
+  - [[#theme][Theme]]
+  - [[#general][General]]
+  - [[#fonts][Fonts]]
+  - [[#transparency][Transparency]]
+  - [[#paddingboardermargins][Padding/boarder/margins]]
+  - [[#window-dividers][Window dividers]]
+  - [[#scroll-bar-yascroll][Scroll bar (~yascroll~)]]
+  - [[#column-indicator][Column indicator]]
+  - [[#emacs-terminal-cursor-changer][~emacs-terminal-cursor-changer~]]
+  - [[#disable-spellcheck-spell-fu-not-flyspell][Disable spellcheck (~spell-fu~ (not ~flyspell~))]]
+- [[#dashboard][Dashboard]]
+- [[#modeline][Modeline]]
+- [[#completion-company][Completion (company)]]
+  - [[#fixme-main][FIXME main]]
+  - [[#fixme-mycompany-show-doc-buffer][FIXME ~my/company-show-doc-buffer~]]
+- [[#org][Org]]
+  - [[#fixme-general-inc-ui][FIXME General (inc. UI)]]
+  - [[#org-modern][Org Modern]]
+  - [[#headings-what-about-it][Headings what about it]]
+  - [[#todos][Todo's]]
+  - [[#tags][Tags]]
+  - [[#tables][Tables]]
+  - [[#babel-src-blocks][Babel (src blocks)]]
+  - [[#hideshow-properties-drawer][Hide/Show Properties Drawer]]
+  - [[#export][Export]]
+  - [[#hide-radio-links][Hide radio links]]
+  - [[#latex-fragments][Latex fragments]]
+  - [[#packages][Packages]]
+- [[#org-roam][Org-roam]]
+  - [[#general-1][General]]
+  - [[#org-roam-capture-templates][Org Roam Capture Templates]]
+  - [[#hide-radio-target-syntax-in-node-name][Hide radio-target syntax in node name]]
+  - [[#packages-1][Packages]]
+- [[#dired][Dired]]
+- [[#agenda][Agenda]]
+  - [[#general-2][General]]
+  - [[#clean-category-column-garbage][Clean category column garbage]]
+- [[#calendar][Calendar]]
+- [[#latex][Latex]]
+  - [[#latex-fragments-1][Latex Fragments]]
+- [[#packages-2][Packages]]
+  - [[#pdf-tools][Pdf (tools)]]
+  - [[#novel][Nov.el]]
+  - [[#graphviz-dot][Graphviz (dot)]]
+  - [[#writeroom-mode][Writeroom mode]]
+  - [[#lsp][LSP]]
+  - [[#tree-sittier][Tree sittier]]
+  - [[#org-mode-packages][Org mode packages]]
+  - [[#org-roam-packages][Org-roam packages]]
+- [[#languages][Languages]]
+  - [[#typescript][Typescript]]
+  - [[#solidity][Solidity]]
+  - [[#julia][Julia]]
+- [[#my-functions][My Functions]]
+- [[#my-keybindings][My Keybindings]]
+  - [[#visual-fill-column-better-zen-mode][Visual Fill Column (better zen mode)]]
+
 * Global Configuration
-** FIXME Lexical binding
+** Better Defaults
 Harness the performance advantages of lexical-binding (I think?). See:
   1. [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Lexical-Binding.html][GNU: Lexical Binding]]
   2. [[https://nullprogram.com/blog/2017/01/30/][How to Write Fast(er) Emacs Lisp]]
-#+BEGIN_SRC elisp :tangle no
-;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
+
+#+BEGIN_SRC elisp
+;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 #+END_SRC
 
-** Better defaults
-#+BEGIN_src elisp :tangle yes
+#+BEGIN_SRC elisp
 (setq initial-major-mode 'org-mode
-      image-use-external-converter t
-      lisp-indent-offset 2)
-#+END_src
+      image-use-external-converter t)
+#+END_SRC
 
-** User info
-"For GOG configuration, email clients, file templates and snippets." - Doom Emacs
-#+BEGIN_SRC elisp :tangle yes
+#+begin_src elisp
+(setq auto-save-default t
+      initial-major-mode 'org-mode
+      make-backup-files t
+      lisp-indent-offset 2)
+
+(setq backup-by-copying t
+      delete-old-versions t
+      kept-new-versions 6
+      kept-old-versions 2
+      version-control t)
+
+(setq-default tab-width 2)
+(setq straight-allow-recipe-inheritance nil)
+#+end_src
+
+#+BEGIN_SRC elisp :tangle no
+;; pixel scroll
+(pixel-scroll-precision-mode 1)
+
+;; scroll one line at a time (less "jumpy" than defaults)
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 1)) ;; one line at a time
+      mouse-wheel-progressive-speed nil            ;; don't accelerate scrolling
+      mouse-wheel-follow-mouse 't                  ;; scroll window under mouse
+      scroll-step 1)                               ;; keyboard scroll one line at a time
+
+; prevents: Source file ... newer than byte compiled file; using older file"
+(setq load-prefer-newer t)
+#+END_SRC
+
+** User Info
+"For GOG configuration, email clients, file templates and snippets." - Doom
+#+BEGIN_SRC elisp
 (setq user-full-name "Nathan Sharp"
       my-name "nazzacode"
       user-mail-address "nasharp@outlook.com")
 #+END_SRC
 #
-* User Interface (UI) :UI:
-** General
-#+begin_src elisp :tangle yes
-(setq-default word-wrap t)
-              ;; line-spacing 0.15)
-(setq display-line-numbers-type t         ; 'relative  ; or `nil'
-      +ivy-buffer-preview t               ; preview buffer on switch
-      emojify-emoji-set "emojione-v2.2.6" ; increase resolution from default "emojione-v2.2.6-22"
-      emojify-display-style 'unicode
-      large-file-warning-threshold nil)
-(remove-hook 'doom-first-buffer-hook #'global-hl-line-mode) ; don't highlight the line
-(add-hook 'dired-mode-hook 'all-the-icons-dired-mode) ; icons in dired
-#+end_src
-
-** Fringes
-#+begin_src elisp :tangle yes
-;; ;;; Fringes
-;; (add-hook! 'doom-init-ui-hook (fringe-mode '20)) ; FIXME very not loading on startup
-;; (setq fringe-mode '('4  . '8)) ; FIXME very not loading on startup
-;; (set-fringe-mode nil)
-#+end_src
-
+* User interface (UI)
 ** Theme
-#+BEGIN_SRC elisp :tangle yes
+#+BEGIN_SRC elisp
 ;; Dark
 ;; (setq doom-theme 'my-doom-dark+)
-;; (setq doom-theme 'my-doom-one)
+(setq doom-theme 'my-doom-one)
 ;; (setq doom-theme 'my-doom-gruvbox)
 ;; Light
 ;; (setq doom-theme 'doom-acario-light)
 ;; (setq doom-theme 'doom-zenburn)
 ;; (setq doom-theme 'doom-nord-light)
 ;; (setq doom-theme 'modus-operandi)
-(setq doom-theme 'modus-vivendi)
 #+END_SRC
 
-** Modus themes
-#+begin_src elisp tangle yes
-(map! :leader
-      (:prefix-map ("t" . "toggle")
-       :desc "modus theme" "t" #'modus-themes-toggle))
-#+end_src
+** General
+#+begin_src elisp
+;; (add-hook 'window-setup-hook 'on-after-init)
+(defun on-frame-open (&optional frame)
+  "If the FRAME created in terminal don't load background color."
+  (unless (display-graphic-p frame)
+    (set-face-background 'default "unspecified-bg" frame)))
 
+(add-hook 'after-make-frame-functions 'on-frame-open)
+
+(setq-default line-spacing 0.15
+              word-wrap t)
+(setq display-line-numbers-type t          ; 'relative  ; or `nil'
+      +ivy-buffer-preview t                ; preview buffer on switch
+      ;; emojify-emoji-set ""  ; increase resolution from default "emojione-v2.2.6-22"
+      emojify-emoji-set "emojione-v2.2.6"  ; increase resolution from default "emojione-v2.2.6-22"
+      ;; fringe-mode 'nil  ; should be a number
+      emojify-display-style 'unicode
+      large-file-warning-threshold nil)
+;; Don't highlight the line
+(remove-hook 'doom-first-buffer-hook #'global-hl-line-mode)
+;; Icons in dired
+(add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
+;; Disable git gutter by default
+(global-git-gutter-mode -1)
+(setq git-gutter:disabled-modes
+      '(fundamental-mode image-mode pdf-view-mode org-mode prog-mode dired-mode))
+;; Highlight-indent-guide (package)
+(setq highlight-indent-guides-method 'character
+      highlight-indent-guides-responsive 'stack)
+(add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
+(add-hook 'org-mode-hook 'highlight-indent-guides-mode)  ; FIXME background off in code blocks
+;; ;; Fringes
+;; (add-hook! 'doom-init-ui-hook (fringe-mode '20)) ; FIXME very not loading on startup
+;; (setq fringe-mode '('4  . '8)) ; FIXME very not loading on startup
+;; (set-fringe-mode nil)
+
+;; ;; Raibow-mode: colorise strings that represent colors. e.g. #fffffff
+;; ;; BUG: causing a mess in doom load screen
+;; (define-globalized-minor-mode global-rainbow-mode rainbow-mode
+;;   (lambda () (rainbow-mode 1)))
+;; (global-rainbow-mode 1)
+#+end_src
+#
 ** Fonts
-#+begin_src elisp :tangle yes
-;; FIXME breaks scaling
+#+begin_src elisp
 (setq
-  doom-font (font-spec :family "DM Mono" :size 28) ;; ! `doom-big-mode' breaks when `:size'`
+  ;; doom-font (font-spec :family "DM Mono" :size 22)
+  ;; doom-font (font-spec :family "Hack" :size 22)
+  ;; doom-font (font-spec :family "Aldrich" :size 22)
   ;; doom-font (font-spec :family "Hasklug Nerd Font Mono" :size 26 :height 1.0)
   ;; doom-font (font-spec :family "Agave Nerd Font Mono")
-  ;; doom-font (font-spec :family "Cousine Nerd Font Mono" ) ;; TODO size
+  doom-font (font-spec :family "Cousine Nerd Font Mono" :height 1.0 ) ;; TODO size
   ;; doom-font (font-spec :family "Noto Sans")
   ;; doom-font (font-spec :family "Source Sans Pro")
   ;; doom-variable-pitch-font (font-spec :family "ETBookOT")
-  doom-variable-pitch-font (font-spec :family "Source Sans Pro")
-  doom-serif-font (font-spec :family "ETBookOT")
+  ;; doom-variable-pitch-font (font-spec :family "Source Sans Pro")
+  ;; doom-serif-font (font-spec :family "ETBookOT")
   ;; doom-variable-pitch-font (font-spec :family "Iosevka Aile") ; :size 32 :height 1.5)
   ;; doom-variable-pitch-font (font-spec :family "TSCu_Comic")
   doom-unicode-font (font-spec :family "Symbola")          ; good unicode support (prev :size 30)
@@ -103,141 +199,194 @@ Harness the performance advantages of lexical-binding (I think?). See:
 )
 ;; text zoom in/out ammount
 (setq text-scale-mode-step 1.05)
-
-;; (set-face-attribute 'fixed-pitch nil :family "DM Mono" :inherit 'default)
 #+end_src
-
-** Transparency :fn:
-#+begin_src elisp :tangle yes
+#
+** Transparency
+#+begin_src elisp
 ;; ;; background only transparency (Emacs 29)
-;;(set-frame-parameter (selected-frame) 'alpha '(<active> . <inactive>))
-;;(set-frame-parameter (selected-frame) 'alpha <both>)
-;;; Emacs 28
-(set-frame-parameter (selected-frame) 'alpha 85) ; 93
-(add-to-list 'default-frame-alist '(alpha . 85)) ; 93
 
-(defun toggle-transparency ()
-  (interactive)
-  (let ((alpha (frame-parameter nil 'alpha)))
-    (set-frame-parameter
-     nil 'alpha
-     (if (eql (cond ((numberp alpha) alpha)
-                    ((numberp (cdr alpha)) (cdr alpha))
-                    ;; Also handle undocumented (<active> <inactive>) form.
-                    ((numberp (cadr alpha)) (cadr alpha)))
-              100)
-         '(85 . 85) '(100 . 100)))))
-(global-set-key (kbd "C-c t") 'toggle-transparency)
-;; (map! :leader
-;;       (:prefix-map ("t" . "toggle")
-;;        :desc "transparency" "x" 'toggle-transparency))
+ ;;(set-frame-parameter (selected-frame) 'alpha '(<active> . <inactive>))
+ ;;(set-frame-parameter (selected-frame) 'alpha <both>)
+ (set-frame-parameter (selected-frame) 'alpha 93)
+ (add-to-list 'default-frame-alist '(alpha . 93))
 
-;;; no background in termincal emacs
+ (defun toggle-transparency ()
+   (interactive)
+   (let ((alpha (frame-parameter nil 'alpha)))
+     (set-frame-parameter
+      nil 'alpha
+      (if (eql (cond ((numberp alpha) alpha)
+                     ((numberp (cdr alpha)) (cdr alpha))
+                     ;; Also handle undocumented (<active> <inactive>) form.
+                     ((numberp (cadr alpha)) (cadr alpha)))
+               100)
+          '(93 . 93) '(100 . 100)))))
+ (global-set-key (kbd "C-c t") 'toggle-transparency)
+
+ ;; (global-set-key (kbd "SPC t T") 'toggle-transparency)
+
+;; no background in termincal emacs
+;; (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+;; (load-theme 'my-awesome-theme t)
 (set-face-background 'default nil)
 (set-face-attribute 'default nil :background nil)
+
+(defun on-frame-open (frame)
+  (if (not (display-graphic-p frame))
+    (set-face-background 'default "unspecified-bg" frame)))
+(on-frame-open (selected-frame))
+(add-hook 'after-make-frame-functions 'on-frame-open)
+
+(defun on-after-init ()
+  (unless (display-graphic-p (selected-frame))
+    (set-face-background 'default "unspecified-bg" (selected-frame))))
+
+(add-hook 'window-setup-hook 'on-after-init)
 #+end_src
 
-** padding/boarder/margins
-#+begin_src elisp :tangle yes
+** Padding/boarder/margins
+#+begin_src elisp
+ ;; (internal-border-width . 10)
+;; (set-window-margins (selected-window) 1 1)
+ ;; (setq-default left-margin-width 10 right-margin-width 8) ; Define new widths
 (setq-default left-margin-width 1 right-margin-width 1)
 (add-hook! '+popup-buffer-mode-hook
   (set-window-margins (selected-window) 1 1))
 #+end_src
 
 ** Window dividers
-#+begin_src elisp :tangle yes
-(window-divider-mode +1) ;; visible window divider
-(setq window-divider-default-bottom-width 3 ; size in pixels
-      window-divider-default-right-width 3)
-;; NOTE: name in theme: 'vertical-bar'
+#+begin_src elisp
+;; size
+(setq window-divider-default-bottom-width 2 ; in pixels
+      window-divider-default-right-width 2)
+(window-divider-mode +1)
+;; color
+; do in theme 'vertical-bar'
 #+end_src
 
-** ~highligh-indent-guide~ (code fences) :package:
-#+begin_src elisp :tangle yes
-;; Highlight-indent-guide (package)
-(setq highlight-indent-guides-method 'character
-      highlight-indent-guides-responsive 'stack)
-(add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
-(add-hook 'org-mode-hook 'highlight-indent-guides-mode)  ; FIXME background off in code blocks
-#+end_src
-** diff-hl (git diff fringe) :package:UI:
-#+begin_src elisp :tangle yes
-;;   (global-diff-hl-mode -1) ;; FIXME
-(map! :leader
-      (:prefix-map ("t" . "toggle")
-       :desc "git diff-hl fringe" "d" #'diff-hl-mode))
-#+end_src
-
-** FIXME yascroll (scroll bar) :UI:package:
-#+begin_src elisp :tangle no
-(add-hook! 'prog-mode-hook #'yascroll-bar-mode)
-(add-hook! 'org-mode-hook #'yascroll-bar-mode)
+** Scroll bar (~yascroll~)
+#+begin_src elisp
+(add-hook 'prog-mode-hook 'yascroll-bar-mode)
+(add-hook 'org-mode-hook 'yascroll-bar-mode)
 (setq yascroll:delay-to-hide 'nil)
-;; (add-hook 'yascroll-bar-mode-hook (fringe-mode '8))
-
-;; (custom-set-faces!
-;;  `(yascroll:thumb-fringe :foreground ,(doom-color 'base7) :background ,(doom-color 'base7))
-;;  `(yascroll:thumb-text-area :foreground ,(doom-color 'base7) :background ,(doom-color 'base7)))
 #+end_src
 #
-** ~emacs-terminal-cursor-changer~ (vim state in term) :package:
-#+begin_src elisp :tangle yes
+** Column indicator
+#+begin_src elisp
+(setq-default display-fill-column-indicator-column 80)
+#+end_src
+# ** Which key (keybind menu minibuffer)
+#+begin_src elisp :tangle no
+;; removes 'evil' from head of strings
+(after! which-key
+(pushnew!
+  which-key-replacement-alist
+  '(("" . "\\`+?evil[-:]?\\(?:a-\\)?\\(.*\\)") . (nil . "◂\\1"))
+  '(("\\`g s" . "\\`evilem--?motion-\\(.*\\)") . (nil . "◃\\1"))
+  ))
+#+end_src
+
+** ~emacs-terminal-cursor-changer~ :package:
+#+begin_src elisp
 (unless (display-graphic-p)
         (require 'evil-terminal-cursor-changer)
         (evil-terminal-cursor-changer-activate))
 #+end_src
 
-** Don't load background in terminal :fn:
-#+begin_src elisp :tangle yes
-(defun on-frame-open (&optional frame)
-  "If the FRAME created in terminal don't load background color."
-  (unless (display-graphic-p frame)
-    (set-face-background 'default "unspecified-bg" frame)))
-(add-hook 'after-make-frame-functions 'on-frame-open)
-;; (defun on-frame-open (frame)
-;;   (if (not (display-graphic-p frame))
-;;     (set-face-background 'default "unspecified-bg" frame)))
-;; (on-frame-open (selected-frame))
-;; (add-hook 'after-make-frame-functions 'on-frame-open)
-;; (defun on-after-init ()
-;;   (unless (display-graphic-p (selected-frame))
-;;     (set-face-background 'default "unspecified-bg" (selected-frame))))
-;; (add-hook 'window-setup-hook 'on-after-init)
+** Disable spellcheck (~spell-fu~ (not ~flyspell~))
+#+begin_src elisp
+(remove-hook 'text-mode-hook #'spell-fu-mode)
 #+end_src
 
-** no 'relative' line numbers :fn:
-# FIXME: make load on startup
-#+begin_src elisp :tangle yes
-;; lib: lisp/lib/ui.el
-(eval-after-load "ui" ;; <- TODO package name?
-'(defun doom/toggle-line-numbers ()
-  "Toggle line numbers.
-Cycles through regular, relative and no line numbers. The order depends on what
-`display-line-numbers-type' is set to. If you're using Emacs 26+, and
-visual-line-mode is on, this skips relative and uses visual instead.
-See `display-line-numbers' for what these values mean."
-  (interactive)
-  (defvar doom--line-number-style display-line-numbers-type)
-  (let* ((styles `(t nil))
-         (order (cons display-line-numbers-type (remq display-line-numbers-type styles)))
-         (queue (memq doom--line-number-style order))
-         (next (if (= (length queue) 1)
-                   (car order)
-                 (car (cdr queue)))))
-    (setq doom--line-number-style next)
-    (setq display-line-numbers next)
-    (message "Switched to %s line numbers"
-
-             (pcase next
-               (`t "normal")
-               (`nil "disabled")
-               (_ (symbol-name next))))))
-)
-#+end_src
-
-* UPDATE Completion: Company
-** FIXME main
+* Dashboard
 #+begin_src elisp :tangle no
+;; (setq doom-dashboard-widget-banner "~/.doom.d/doom_splash.txt")
+(require 'dashboard)
+(dashboard-setup-startup-hook)
+                                        ; Set the title
+(setq dashboard-banner-logo-title "Welcome to Emacs Dashboard")
+;; Set the banner
+(setq dashboard-startup-banner "~/.doom.d/doom_splash.txt")
+;; Value can be
+;; 'official which displays the official emacs logo
+;; 'logo which displays an alternative emacs logo
+;; 1, 2 or 3 which displays one of the text banners
+;; "path/to/your/image.gif", "path/to/your/image.png" or "path/to/your/text.txt" which displays whatever gif/image/text you would prefer
+;; Content is not centered by default. To center, set
+(setq dashboard-center-content t)
+
+;; To disable shortcut "jump" indicators for each section, set
+;; (setq dashboard-show-shortcuts nil)
+
+(setq dashboard-items '((recents  . 5)
+                        ;; (bookmarks . 5)
+                        ;; (projects . 5)
+                        (agenda . 5)))
+;; (registers . 5)
+
+
+(setq dashboard-set-heading-icons t)
+(setq dashboard-set-file-icons t)
+;; (setq dashboard-set-navigator t) ??
+(setq dashboard-set-init-info t)
+;; (setq dashboard-week-agenda t)
+(setq dashboard-item-names '(("Recent Files:" . "Recent:")
+                             ("Agenda for today:" . "Today's agenda:")
+                             ("Agenda for the coming week:" . "Agenda:")))
+#+end_src
+
+* Modeline
+#+begin_src elisp
+(setq doom-modeline-height 25
+      ;; doom-modeline-indent-info t
+      doom-modeline-vcs-max-length 12
+      doom-modeline-buffer-file-name-style 'truncate-upto-root
+      doom-modeline-icon nil
+      doom-modeline-major-mode-icon t
+      doom-modeline-enable-word-count t
+      ;; doom-modeline-hud t ;; ?
+      ;; doom-modeline-major-mode-color-icon nil)
+      )
+
+;; main modline
+;; (after! doom-modeline
+;;   (doom-modeline-def-modeline 'main
+;;     '(bar matches buffer-info remote-host buffer-position parrot selection-info)
+;;     '(misc-info minor-modes checker input-method buffer-encoding major-mode process vcs " "))) ; <-- added padding here
+
+(setq all-the-icons-scale-factor 0.9)  ;; 1.1.
+
+                                        ; mini-modeline
+(use-package mini-modeline
+  :after doom-modeline
+  :hook ((after-init . mini-modeline-mode))
+  (aorst--theme-change . aorst/mini-modeline-setup-faces)
+  (isearch-mode . aorst/mini-modeline-isearch)
+  (isearch-mode-end . aorst/mini-modeline-isearch-end)
+  :custom
+  (mini-modeline-display-gui-line nil)
+  ;; (mini-modeline-l-format '(:eval (string-trim-left (eval mode-line-l-format)))) ; FIXME
+  ;; (mini-modeline-r-format '(:eval (eval mode-line-r-format)))
+  (mini-modeline-r-format '(:eval (doom-modeline-format--minibuffer-line)))
+  :config
+  (doom-modeline-def-modeline 'minibuffer-line
+    '(modals buffer-info remote-host buffer-position parrot selection-info)
+    '(misc-info minor-modes checker input-method buffer-encoding major-mode process vcs " "))
+  ;; NOTE remove `buffer-info` once tabs setup!
+  :hook (after-init . mini-modeline-mode))
+
+(global-hide-mode-line-mode 1)
+
+;; FIXME breaking org roam insert (double #+title)
+;; (after! doom-modeline
+;;   (add-hook 'text-mode-hook #'mini-modeline-mode))
+#+end_src
+
+#
+
+* Completion (company)
+** FIXME main
+#+begin_src elisp
 ;; FIXME causing crashing!
 ;; TODO  full completion backend in org mode src blocks?
 
@@ -265,9 +414,10 @@ See `display-line-numbers' for what these values mean."
 (add-to-list 'company-backends 'company-math-symbols-unicode) ; FIXME requires hot reload! (try a hook?)
 ;; (add-hook 'after-init-hook 'global-company-mode)
 #+end_src
+
 ** FIXME ~my/company-show-doc-buffer~ :fn:
-# MAYBE: breaking org-roam capture
-#+begin_src elisp :tangle yes
+# breaking org-raom capture
+#+begin_src elisp :tangle no
 (defun my/company-show-doc-buffer ()
   "Temporarily show the documentation buffer for the selection."
   (interactive)
@@ -281,49 +431,99 @@ See `display-line-numbers' for what these values mean."
 (with-eval-after-load 'company
   (define-key company-active-map (kbd "M-<f1>") #'my/company-show-doc-buffer))
 #+end_src
-
+#
 * Org
-** General (inc. UI)
-#+begin_src elisp :tangle yes
+** FIXME General (inc. UI)
+:PROPERTIES:
+:ID:       c6cc679a-b4e7-463f-8082-a8ac0bbbdf2e
+:END:
+#+begin_src elisp
 (after! org
-  (add-hook! 'org-mode-hook #'+org-pretty-mode    ; hides emphasis markers and toggles "pretty entities"
-                            #'org-appear-mode))     ; expand invisible emphasis markers when insdie them etc.
-                            ;; #'org-bars-mode))     ; indentation guides for org mode headings
+  (add-hook! 'org-mode-hook #'+org-pretty-mode   ; hides emphasis markers and toggles "pretty entities"
+                            #'org-appear-mode))    ; expand invisible emphasis markers etc.
+                            ;; #'mixed-pitch-mode)) ; uses var-pitch font for text; writeroom does this (and doesnt turn it off on exit!)
 (after! org
-  (setq org-directory "~/org"               ; dir for agenda etc.
+  (setq org-directory "~/org"              ; dir for agenda etc.
         org-startup-folded 't
-        org-num-skip-unnumbered 't          ; skip `:unnumbered:` from numbering
-        org-ellipsis "  "
-        ;; org-ellipsis "  "
-        ;; display-line-numbers-type 'nil      ; no line numbers by default in org
-        ;; org-image-actual-width 450          ; set default width ; FIXME cannot override
-        ;; org-startup-with-latex-preview 't   ; TODO test breaking?
+        org-num-skip-unnumbered 't         ; skip `:UNNUMBERED:` from numbering
+        org-ellipsis "  "
+        ;; display-line-numbers-type 'nil     ; no line numbers by default in org
+        ;; org-image-actual-width 450      ; set default width ; FIXME cannot override
+        ;; org-startup-with-latex-preview 't ; TODO test breaking?
         org-startup-shrink-all-tables 't
-        org-startup-indented 't             ; dont indent in nested headings
+        org-startup-indented 'nil          ; dont indent in nested headings
         org-id-link-to-org-use-id 't
-        org-appear-autolinks 't            ; auto appear links
-        org-appear-autosubmarkers 't       ; auto apear subscript/superscript             ; FIXME very slow? {
-        org-appear-autoentities 't         ; auto apear \alpha etc.
-        org-appear-autokeywords 't         ; auto apear elements in `org-hidden-keywords' ; } END FIXME
+        ;; org-appear-autolinks 't            ; auto appear links
+        ;; org-appear-autosubmarkers 't       ; auto apear subscript/superscript
+        ;; org-appear-autoentities 't         ; auto apear \alpha etc.
+        ;; org-appear-autokeywords 't         ; auto apear elements in `org-hidden-keywords'
         org-startup-with-inline-images 't
-        ;; org-indent-indentation-per-level 0   ; indentation of body per heading
-        ;; org-hide-leading-stars 'nil
+        org-indent-indentation-per-level 0
         org-startup-folded 't))
+#+end_src
 
-;; FIXME Remove org-ellipsis
-(defun org-no-ellipsis-in-headlines ()
-  "Remove use of ellipsis in headlines. See `buffer-invisibility-spec'."
-  (remove-from-invisibility-spec '(outline . t))
-  (add-to-invisibility-spec 'outline))
-(add-hook! 'org-mode-hook 'org-no-ellipsis-in-headlines)
+** Org Modern :package:
+#+begin_src elisp
+(global-org-modern-mode)
+(set-face-attribute 'org-modern-symbol nil :family "DM Mono")
 
+;; Add frame borders and window dividers
+;; (modify-all-frames-parameters
+;;  '((right-divider-width . 10)
+;;    (internal-border-width . 10)))
+
+;; (dolist (face '(window-divider
+;;                 window-divider-first-pixel
+;;                 window-divider-last-pixel))
+;;   (face-spec-reset-face face)
+;;   (set-face-foreground face (face-attribute 'default :background)))
+;; (set-face-background 'fringe (face-attribute 'default :background))
+
+(setq org-modern-star nil)  ;; not loading!
+(setq org-modern-hide-stars nil)
+
+;; Recommended settings
+(setq
+
+   org-auto-align-tags nil
+   org-tags-column 0
+   org-catch-invisible-edits 'show-and-error
+   org-special-ctrl-a/e t
+   org-insert-heading-respect-content t)
+ ;; ;; Agenda styling
+ ;; org-agenda-tags-column 0
+ ;; org-agenda-block-separator ?─
+ ;; org-agenda-time-grid
+ ;; '((daily today require-timed)
+ ;;   (800 1000 1200 100 1600 1800 2000)
+ ;;   " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
+ ;; org-agenda-current-time-string
+ ;; "⭠ now ─────────────────────────────────────────────────")
+#+end_src
+#
+
+** Headings what about it
+#+begin_src elisp
+;; `weights:' can be [normal, semi-bold, bold]
+(custom-set-faces!
+  '(outline-1 :weight normal :height 1.0) ;1.26) ;1.12)
+  '(outline-2 :weight normal :height 1.0) ;1.16) ;1.08)
+  '(outline-3 :weight normal :height 1.0) ;1.10) ;1.05)
+  '(outline-4 :weight normal :height 1.0) ;1.06) ;1.03)
+  '(outline-5 :weight normal :height 1.0) ;1.04) ;1.02)
+  '(outline-6 :weight normal :height 1.0) ;1.02) ;1.01)
+  '(outline-7 :weight normal)
+  '(outline-8 :weight normal)
+  '(org-document-title :weight normal :height 1.0)); 1.8)) ; 1.2
+
+;; Previous symbols: '( "◉" "○" "⎊" "⎉" "⊛" "⊚" "◦" "◘")
 #+end_src
 
 ** Todo's
-#+begin_src elisp :tangle yes
+#+begin_src elisp
 (after! org
   (setq org-todo-keywords '(
-    (sequence "TODO(t)" "DOING(d)" "STRT(s)" "NEXT(n)" "PROJ(p)" "WAIT(w)" "MAYBE(m)" "ERROR(e)" "FIXME(f)" "UPDATE(u)" "REVIEW(r)" "MOVE(M)" "REMOVE(R)" "(x)" "|" "DONE(D)" "CANCEL(c)" "DEPRECATED(z)")
+    (sequence "TODO(t)" "DOING(d)" "STRT(s)" "NEXT(n)" "PROJ(p)" "WAIT(w)" "MAYBE(m)" "ERROR(e)" "FIXME(f)" "UPDATE(u)" "MOVE(M)" "REMOVE(r)" "(x)" "|" "DONE(D)" "CANCEL(c)" "DEPRECATED(z)")
     (sequence "[ ](T)" "[-](-)" "[?](?)" "[!](1)" "|" "[X](X)" "[.](.)")
     (sequence "EPIC(E)" "SPRINT(S)" "|")  ;; need trailing bar or last is DONE state
     (sequence "OKAY(o)" "YES(y)" "|" "NO(N)")))
@@ -339,7 +539,6 @@ See `display-line-numbers' for what these values mean."
     ("ERROR" . (:foreground "IndianRed" :weight semi-bold))
     ("FIXME" . (:foreground "IndianRed4" :weight semi-bold))
     ("UPDATE" . (:weight semi-bold))
-    ("REVIEW" . (:foreground "DarkSeaGreen3" :weight semi-bold))
     ("REMOVE" . (:foreground "IndianRed4" :weight semi-bold))
     ("CANCEL" . (:foreground "grey11" :weight semi-bold +org-todo-cancel))
     ;;
@@ -364,22 +563,24 @@ See `display-line-numbers' for what these values mean."
     ("ERROR" :background "IndianRed" :foreground "black")
     ("FIXME" :background "IndianRed4" :foreground "black")
     ("UPDATE" :background "sea green" :foreground "black")
-    ("REVIEW" :background "DarkSeaGreen3" :foreground "black")
     ("REMOVE" :background "IndianRed4" :foreground "black")
     ("CANCEL" :background "grey11" :foreground "black")
     ;;
     ("SPRINT" :background "light goldenrod" :foreground "black")
     ("EPIC" :background "PeachPuff3" :foreground "black")
-    ;; FIXME casuing message errors
-    ("[ ]" :background nil :foreground "DarkSeaGreen")
-    ("[X]" :background nil :foreground "grey11")
-    ("[-]" :background nil :foreground "RoyalBlue") ; update (RoyalBlue broken)
-    ("[?]" :background nil :foreground "light goldenrod")
-    ("[!]" :background nil :foreground "IndianRed"))))
-    ;; ("YES" :foreground "DarkSeaGreen3"))
-    ;; ("NO" (+org-todo-cancel))
+    ;;
+    ;; ("[ ]" :background "green" :foreground "black")
+    ;; ("[X]" :foreground "black")
+    ;; ("[-]" :foreground "black")
+    ;; ("[?]" :foreground "black")
+    ;; ("[!]" :foreground "black")))
+    ;;
+    ;; ("YES" . (:foreground "DarkSeaGreen3"))
+    ;; ("NO" . (+org-todo-cancel))))
+    ))
+)
 #+end_src
-
+#
 ** Tags
 #+begin_src elisp
 (setq org-tag-persistent-alist
@@ -395,9 +596,10 @@ See `display-line-numbers' for what these values mean."
         ("xini" . ?X)
         ("money" . ?£)
         (:endgroup . nil)
-        ("noexport" . ?x)))
+        ("noexport" . ?x)
+))
 #+end_src
-
+#
 ** Tables
 #+begin_src elisp :tangle no
 ;; Horizontal scrolling for tables
@@ -410,28 +612,20 @@ See `display-line-numbers' for what these values mean."
 ;; (setq valign-fancy-bar 'non-nil)
 #+end_src
 #
-
 ** Babel (src blocks)
-*** Default header args
-#+begin_src elisp :tangle yes
+*** main
+#+begin_src elisp
+;; Default header args
 (setq org-babel-default-header-args
-  '((:session  . "none")
-    (:results  . "replace")
-    (:exports  . "both")
-    (:cache    . "no")
-    (:noweb    . "no")
-    (:hlines   . "no")
-    (:tangle   . "no")
-    (:eval     . "never-export")
+  '((:session . "none")
+    (:results . "replace")
+    (:exports . "code")
+    (:cache . "no")
+    (:noweb . "no")
+    (:hlines . "no")
+    (:tangle . "no")
     (:comments . "link")))
-#+end_src
-
-*** Languages
-#+begin_src elisp :tangle yes
-;;; Setup
-(setq ob-mermaid-cli-path "~/node_modules/.bin/mmdc") ; set up mermaid
-
-;;; Main
+;; Babel languages
 (org-babel-do-load-languages
   'org-babel-load-languages
     '((C. t)
@@ -440,42 +634,63 @@ See `display-line-numbers' for what these values mean."
       (js . t)
       (json . t)
       (julia . t)
-      (mermaid . t)
       (nix .t)
       (python . t)
       (rust . t)
       ;; (sh . t)
       (typescript . t)
-      (jupyter . t)))  ; NOTE: jupyter must be last
-
-;;; Typescript
+      (jupyter . t)))  ; NOTE: jupyter must be load last
+;; Typescript
 (defun org-babel-execute:typescript (body params)
   (let ((org-babel-js-cmd "npx ts-node < "))
     (org-babel-execute:js body params)))
 
 ;; (defalias 'org-babel-execute:ts 'org-babel-execute:typescript) ; FIXME
 #+end_src
-
-*** fix Emacs-jupyter output results ansi formatting
-#+begin_src elisp :tangle yes
+#
+*** fix emacs-jupyter output results ansi formatting
+#+begin_src elisp
 (defun display-ansi-colors ()
 (ansi-color-apply-on-region (point-min) (point-max)))
 (add-hook 'org-babel-after-execute-hook #'display-ansi-colors)
 #+end_src
+#
+** Hide/Show Properties Drawer :fn:
+:PROPERTIES:
+:ID:       8efa6cae-1ae0-470a-a4fb-999fe506a2a5
+:END:
+#+begin_src elisp
+;; Funtion to hide/unhide the properties drawer
+(defun org-hide-properties ()
+  "Hide all org-mode headline property drawers in buffer. Could be slow if it has a lot of overlays."
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (while (re-search-forward
+            "^ *:properties:\n\\( *:.+?:.*\n\\)+ *:end:\n" nil t)
+      (let ((ov_this (make-overlay (match-beginning 0) (match-end 0))))
+        (overlay-put ov_this 'display "")
+        (overlay-put ov_this 'hidden-prop-drawer t))))
+  (put 'org-toggle-properties-hide-state 'state 'hidden))
 
-*** Make org-edit-special (src block) popup in current buffer
-#+begin_src elisp :tangle yes
-(after! org
-  (setq org-src-window-setup 'current-window)
-  (set-popup-rule! "^\\*Org Src" :ignore t))
+(defun org-show-properties ()
+  "Show all org-mode property drawers hidden by org-hide-properties."
+  (interactive)
+  (remove-overlays (point-min) (point-max) 'hidden-prop-drawer t)
+  (put 'org-toggle-properties-hide-state 'state 'shown))
+
+(defun org-toggle-properties ()
+  "Toggle visibility of property drawers."
+  (interactive)
+  (if (eq (get 'org-toggle-properties-hide-state 'state) 'hidden)
+      (org-show-properties)
+    (org-hide-properties)))
 #+end_src
-
+#
 ** Export
 *** General
 #+begin_src elisp :tangle no
 (setq org-export-headline-levels 6) ; I like nesting
-
-(setq org-list-allow-alphabetical t) ; allow alphabetic counters
 
 ;; show git version on creator string
 (setq org-export-creator-string
@@ -503,7 +718,7 @@ See `display-line-numbers' for what these values mean."
 #+end_src
 #
 *** Latex Export
-#+begin_src elisp :tangle yes
+#+begin_src elisp
 (require 'ox-extra)
 (ox-extras-activate '(ignore-headlines))
 
@@ -533,7 +748,7 @@ See `display-line-numbers' for what these values mean."
                                  ;; ("frame" "single")))         ;; frame line
 ))
 
-;; (setq org-latex-packages-alist '(("" "minted")("" "fontspec")))
+(setq org-latex-packages-alist '(("" "minted")("" "fontspec")))
 
 (setq org-latex-caption-above nil)
 
@@ -584,22 +799,40 @@ See `display-line-numbers' for what these values mean."
       ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))))
 #+end_src
 #
+** Hide radio links :UI:
+Hides expanded view of radio tags like links. Works, but a bit forgotten how to toggle (org hidden links?)
+#+begin_src elisp
+(defcustom org-hidden-links-additional-re "\\(<<<\\)[[:print:]]+?\\(>>>\\)"
+  "Regular expression that matches strings where the invisible-property of the sub-matches 1 and 2 is set to org-link."
+  :type '(choice (const :tag "Off" nil) regexp)
+  :group 'org-link)
+(make-variable-buffer-local 'org-hidden-links-additional-re)
 
+(defun org-activate-hidden-links-additional (limit)
+  "Put invisible-property org-link on strings matching `org-hide-links-additional-re'."
+  (if org-hidden-links-additional-re
+      (re-search-forward org-hidden-links-additional-re limit t)
+    (goto-char limit)
+    nil))
+
+(defun org-hidden-links-hook-function ()
+  "Add rule for `org-activate-hidden-links-additional' to `org-font-lock-extra-keywords'.
+You can include this function in `org-font-lock-set-keywords-hook'."
+  (add-to-list 'org-font-lock-extra-keywords
+                              '(org-activate-hidden-links-additional
+                                (1 '(face org-target invisible org-link))
+                (2 '(face org-target invisible org-link)))))
+
+(add-hook 'org-font-lock-set-keywords-hook #'org-hidden-links-hook-function)
+
+#+end_src
+#
 ** Latex fragments :UI:
 :PROPERTIES:
 :ID:       4272fde4-d8c9-4932-af2c-01d2522f7baa
 :END:
-#+begin_src elisp
-(setq org-format-latex-options
-  (list
-        :foreground 'default  ;; or `auto'
-        ;; :background 'auto
-        :scale 1.1  ;; bigger latex fragment
-        ;; :html-foreground "Black"
-        ;; :html-background "Transparent"
-        ;; :html-scale 1.0
-        :matchers '("begin" "$1" "$" "$$" "\\(" "\\[")))
 
+#+begin_src elisp
 ;; syntax hilighting for latex fragments
 (setq org-highlight-latex-and-related '(native script entities))
 
@@ -620,31 +853,45 @@ See `display-line-numbers' for what these values mean."
 ;; specify the justification you want
 (plist-put org-format-latex-options :justify 'center)
 #+end_src
-
-** Org Bars (outline vertical guides) :package:UI:
-#+begin_src elisp :tangle yes
-(require 'org-bars)
-(after! org (add-hook 'org-mode-hook #'org-bars-mode))
-(setq org-bars-stars '(:empty "*" :invisible "*" :visible "*"))
-;; (setq org-bars-extra-pixels-height 6) ;; fix gaps in org-bars
-#+end_src
-
-** Org Modern :package:UI:
-#+begin_src elisp :tangle yes
-(global-org-modern-mode)
-(set-face-attribute 'org-modern-symbol nil :family "DM Mono")
-(setq org-modern-star nil)
-(setq org-modern-hide-stars nil)
-#+end_src
-
-** Org Cite :package:
+#
+** Packages
+:PROPERTIES:
+:ID:       36686cfd-9aaa-4886-bbfd-c5e64f9e1f67
+:END:
+*** Org Cite
 #+begin_src elisp :tangle no
 ;; (setq org-cite-global-bibliography "~/org/roam/Zotero/bibliography.bib")
 (setq org-cite-csl-styles-dir "~/org/roam/Zotero/styles")
 #+end_src
 #
-** emacs-jupyter :package:
-#+begin_src elisp :tangle yes
+*** DEPRECATED Org-ref
+#+begin_src emacs-lisp
+;; FIXME startup error
+;; (require 'doi-utils)
+
+;; (setq reftex-default-bibliography '("~/org/roam/bibliography.bib"))
+
+;; ;; see org-ref for use of these variables
+;; (setq org-ref-default-bibliography '("~/org/roam/PDFs/bibliography.bib")
+;;       org-ref-bibliography-notes "~/org/roam/PDFs"   ; TODO not in use
+;;       org-ref-pdf-directory "~/org/roam/PDFs/"       ; academic papers
+;;       org-ref-completion-library 'org-ref-ivy-cite
+;;       org-ref-get-pdf-filename-function 'org-ref-get-pdf-filename-helm-bibtex
+;;       org-ref-bibliography-notes "~/org/roam/PDFs"
+;;       org-ref-notes-directory "~/org/roam/PDFs"
+;;       org-ref-notes-function 'orb-edit-notes)
+#+end_src
+#
+*** TODO Helm-bibtex
+#+begin_src elisp
+(after! org
+  (setq bibtex-completion-bibliography "~/org/roam/Zotero/bibliography.bib"
+        bibtex-completion-library-path "~/org/roam/Zotero/storage/."
+        bibtex-completion-notes-path "~/org/roam/Zotero/storage"))
+#+end_src
+#
+*** emacs-jupyter
+#+begin_src elisp
 ;; TypeScript
 (setq org-babel-default-header-args:jupyter-typescript '(
   (:session . "ts")
@@ -673,7 +920,7 @@ See `display-line-numbers' for what these values mean."
 )
 #+end_src
 #
-** Org-noter :package:
+*** Org-noter
 #+begin_src elisp
 (use-package org-noter
   :after (:any org pdf-view)
@@ -681,14 +928,14 @@ See `display-line-numbers' for what these values mean."
   (setq org-noter-always-create-frame nil))  ; stop opening frames
 #+end_src
 #
-** Hypothesis :package:
+*** Hypothesis
 Hypothesis is a great web extension for highlighting and taking notes on web pages. The emacs extension allows these to be imported into org mode.
 #+begin_src elisp
 (setq hypothesis-username "nazzacode"
       hypothesis-token "6879-DJYjeV3gat2emzWKlSGkQu20tQTvQK3s7xVSepSdjfA")
 #+end_src
 #
-** FIXME org-download :package:
+*** FIXME org-download
 Screenshot capture direct to orgmode.
 #+begin_src elisp :tangle no
 
@@ -708,76 +955,15 @@ Screenshot capture direct to orgmode.
   ;;        ("a-y" . org-download-yank)))
 #+end_src
 #
-** DEPRECATED org-special-blocks-extra :package:
+*** org-special-blocks-extra
 #+begin_src elisp :tangle no
 (add-hook #'org-mode-hook #'org-special-block-extras-mode)
 #+end_src
 #
-** DEPRECATED Hide radio links :UI:fn:
-Hides expanded view of radio tags like links. Works, but a bit forgotten how to toggle (org hidden links?)
-#+begin_src elisp
-(defcustom org-hidden-links-additional-re "\\(<<<\\)[[:print:]]+?\\(>>>\\)"
-  "Regular expression that matches strings where the invisible-property of the sub-matches 1 and 2 is set to org-link."
-  :type '(choice (const :tag "Off" nil) regexp)
-  :group 'org-link)
-(make-variable-buffer-local 'org-hidden-links-additional-re)
-
-(defun org-activate-hidden-links-additional (limit)
-  "Put invisible-property org-link on strings matching `org-hide-links-additional-re'."
-  (if org-hidden-links-additional-re
-      (re-search-forward org-hidden-links-additional-re limit t)
-    (goto-char limit)
-    nil))
-
-(defun org-hidden-links-hook-function ()
-  "Add rule for `org-activate-hidden-links-additional' to `org-font-lock-extra-keywords'.
-You can include this function in `org-font-lock-set-keywords-hook'."
-  (add-to-list 'org-font-lock-extra-keywords
-                              '(org-activate-hidden-links-additional
-                                (1 '(face org-target invisible org-link))
-                (2 '(face org-target invisible org-link)))))
-
-(add-hook 'org-font-lock-set-keywords-hook #'org-hidden-links-hook-function)
-
-#+end_src
-#
-** Hide/show properties drawer :fn:
-:PROPERTIES:
-:ID:       8efa6cae-1ae0-470a-a4fb-999fe506a2a5
-:END:
-#+begin_src elisp
-;; Funtion to hide/unhide the properties drawer
-(defun my/org-toggle-properties ()
-  "Hide all org-mode headline property drawers in buffer. Could be slow if it has a lot of overlays."
-  (interactive)
-  (save-excursion
-    (goto-char (point-min))
-    (while (re-search-forward
-            "^ *:properties:\n\\( *:.+?:.*\n\\)+ *:end:\n" nil t)
-      (let ((ov_this (make-overlay (match-beginning 0) (match-end 0))))
-        (overlay-put ov_this 'display "")
-        (overlay-put ov_this 'hidden-prop-drawer t))))
-  (put 'org-toggle-properties-hide-state 'state 'hidden))
-
-(defun org-show-properties ()
-  "Show all org-mode property drawers hidden by org-hide-properties."
-  (interactive)
-  (remove-overlays (point-min) (point-max) 'hidden-prop-drawer t)
-  (put 'org-toggle-properties-hide-state 'state 'shown))
-
-(defun org-toggle-properties ()
-  "Toggle visibility of property drawers."
-  (interactive)
-  (if (eq (get 'org-toggle-properties-hide-state 'state) 'hidden)
-      (org-show-properties)
-    (org-hide-properties)))
-#+end_src
-#
-
 * Org-roam
 ** General
-See: [[https://www.orgroam.com/manual.html][org-roam manu  al]]
-#+begin_src elisp :tangle yes
+See: [[https://www.orgroam.com/manual.html][org-roam manual]]
+#+begin_src elisp
 (setq org-roam-directory "~/org/roam")
 
       ;; +org-roam-open-buffer-on-find-file nil)
@@ -791,7 +977,7 @@ See: [[https://www.orgroam.com/manual.html][org-roam manu  al]]
 :PROPERTIES:
 :ID:       f1adfb35-ad24-4956-9d91-22461b485a94
 :END:
-#+begin_src elisp :tangle yes
+#+begin_src elisp
 (setq org-roam-capture-templates
 ;; Default
   `(("d" "default" plain "%?"
@@ -812,45 +998,37 @@ See: [[https://www.orgroam.com/manual.html][org-roam manu  al]]
 ;;            :unnarrowed t)))
 
 ;; Code Challange
-  ("c" "Code Challenge" plain "%?"
+  ("c" "Code Challange" plain "%?"
     :unnarrowed t
     :immediate-finish t
-    :if-new (file+head "CodeChallenges/${slug}.org"
+    :if-new (file+head "CodeChallanges/${slug}.org"
 ":PROPERTIES:
 :Source: %^{source}
 :Difficulty:
 :Rating:
-:END:
+:END:\n
+
 ,#+title: ${title}
 ,#+filetags: code-challange rust
-,#+property: header-args :tangle src/bin/${slug}.rs :comments link
+,#+property: header-args :tangle src/${slug}.rs :comments link
 
 \n* Question
-
-,*Example 1*
+\n** Examples
+\n*** Example 1
 : Input:
 : Output:
 
-,* Solution
-,#+begin_src rustic
-struct Solution {}
-impl Solution {
-    pub fn foo() {
-    }
-}
-,#+end_src
+\n* Solution
+\n#+name: solution
+\n#+begin_src rustic
+\n#+end_src
 
+\n#+name: testing
 \n* Testing
-,#+begin_src rustic
-#[cfg(test)]
-mod tests {
-    use super::*;
-    #[test]
-    fn test1() { assert_eq!(Solution::foo(), 1) }
-}
-,#+end_src
+\n#+begin_src rustic
+\n#+end_src
+\n* Runtime Analysis"))
 
-,* Runtime Analysis"))
 
 ;; Debug/Troubleshooting
   ("D" "Debug/Error/Fix-me" plain "%?"
@@ -896,7 +1074,7 @@ mod tests {
 
 ** Hide radio-target syntax in node name
 NOt needed anymore?
-#+begin_src elisp :tangle yes
+#+begin_src elisp
 (defun org-link-display-format-h (s)
   "Replace radio links in string S with their description.
 If there is no description, use the link target."
@@ -909,7 +1087,11 @@ If there is no description, use the link target."
 (advice-add  'org-link-display-format :filter-return 'org-link-display-format-h)
 #+end_src
 #
-** DEPRECATED Org-roam-bibtex (ORB)
+** Packages
+:PROPERTIES:
+:ID:       0a2cd5a0-816a-462f-9e9e-c0b6e92d086d
+:END:
+*** DEPRECATED Org-roam-bibtex (ORB)
 #+begin_src elisp :tangle no
 (use-package! org-roam-bibtex
   :after (org-roam)
@@ -942,7 +1124,7 @@ If there is no description, use the link target."
 ;;      :unnarrowed t))))
 #+end_src
 #
-** org-roam-ui
+*** org-roam-ui
 #+begin_src elisp
 (use-package! websocket
     :after org-roam)
@@ -960,91 +1142,13 @@ If there is no description, use the link target."
           org-roam-ui-open-on-start t))
 #+end_src
 #
-* Modeline
-** main
-#+begin_src elisp :tangle yes
-(setq doom-modeline-height 25
-      ;; doom-modeline-indent-info t
-      doom-modeline-vcs-max-length 12
-      doom-modeline-buffer-file-name-style 'truncate-upto-root
-      doom-modeline-icon nil
-      doom-modeline-major-mode-icon t
-      doom-modeline-enable-word-count t
-      ;; doom-modeline-hud t ;; ?
-      ;; doom-modeline-major-mode-color-icon nil)
-      )
-
-;; main modline
-;; (after! doom-modeline
-;;   (doom-modeline-def-modeline 'main
-;;     '(bar matches buffer-info remote-host buffer-position parrot selection-info)
-;;     '(misc-info minor-modes checker input-method buffer-encoding major-mode process vcs " "))) ; <-- added padding here
-
-(setq all-the-icons-scale-factor 0.9)  ;; 1.1.
-#+end_src
-
-** mini-modeline
-#+begin_src elisp :tangle yes
-;;; mini-modeline
-(use-package mini-modeline
-  :after doom-modeline
-  :hook ((after-init . mini-modeline-mode))
-  (aorst--theme-change . aorst/mini-modeline-setup-faces)
-  (isearch-mode . aorst/mini-modeline-isearch)
-  (isearch-mode-end . aorst/mini-modeline-isearch-end)
-  :custom
-  (mini-modeline-display-gui-line nil)
-  ;; (mini-modeline-l-format '(:eval (string-trim-left (eval mode-line-l-format)))) ; FIXME
-  ;; (mini-modeline-r-format '(:eval (eval mode-line-r-format)))
-  (mini-modeline-r-format '(:eval (doom-modeline-format--minibuffer-line)))
-  :config
-  (doom-modeline-def-modeline 'minibuffer-line
-    '(modals buffer-info remote-host buffer-position parrot selection-info)
-    '(misc-info minor-modes checker input-method buffer-encoding major-mode process vcs " "))
-  ;; NOTE remove `buffer-info` once tabs setup!
-  :hook (after-init . mini-modeline-mode))
-
-(global-hide-mode-line-mode 1)
-
-;; FIXME breaking org roam insert (double #+title)
-;; (after! doom-modeline
-;;   (add-hook 'text-mode-hook #'mini-modeline-mode))
-#+end_src
-
-;; TODO UPDATE: based on  https://github.com/seagle0128/doom-modeline/issues/315
-#+begin_src elisp :tangle no
-;; (use-package! doom-modeline
-;;   :custom
-;;   (doom-modeline-buffer-file-name-style 'truncate-except-project)
-;;   (doom-modeline-icon nil))
-
-(use-package! mini-modeline
-  :after doom-modeline
-  :config
-  (doom-modeline-def-modeline 'minibuffer-line
-    '(modals workspace-name window-number matches buffer-info remote-host buffer-position word-count selection-info misc-info major-mode process vcs lsp checker))
-
-  (setq mini-modeline-r-format '(:eval (doom-modeline-format--minibuffer-line)))
-
-  (setq mini-modeline-right-padding 1
-        mini-modeline-enhance-visual t)
-
-  (set-face-attribute 'mode-line nil :box nil)
-  (set-face-attribute 'mini-modeline-mode-line nil :background (face-background 'fringe) :height 0.2)
-  (set-face-attribute 'mini-modeline-mode-line-inactive nil :background (face-background 'fringe) :height 0.2)
-
-  (mini-modeline-mode 1))
-#+end_src
-
 * Dired
-#+begin_src elisp :tangle yes
+#+begin_src elisp
 ;; only open one dired buffer at a time
 
 (setf dired-kill-when-opening-new-dired-buffer t)
 
 (add-hook 'dired-mode-hook 'dired-hide-details-mode)
-
-(setq dired-listing-switches "-lAX --group-directories-first")
 #+end_src
 #
 * Agenda
@@ -1102,7 +1206,7 @@ Refer to `org-agenda-prefix-format' for more information."
        (match-beginning 1)
        (match-end 1)))))
 #+end_src
-
+#
 * Calendar
 #+begin_src elisp :tangle no
 ;; gcal integration
@@ -1145,49 +1249,20 @@ Refer to `org-agenda-prefix-format' for more information."
 
 #+end_src
 #
-* Dashboard
-#+begin_src elisp :tangle no
-;; (setq doom-dashboard-widget-banner "~/.doom.d/doom_splash.txt")
-(require 'dashboard)
-(dashboard-setup-startup-hook)
-                                        ; Set the title
-(setq dashboard-banner-logo-title "Welcome to Emacs Dashboard")
-;; Set the banner
-(setq dashboard-startup-banner "~/.doom.d/doom_splash.txt")
-;; Value can be
-;; 'official which displays the official emacs logo
-;; 'logo which displays an alternative emacs logo
-;; 1, 2 or 3 which displays one of the text banners
-;; "path/to/your/image.gif", "path/to/your/image.png" or "path/to/your/text.txt" which displays whatever gif/image/text you would prefer
-;; Content is not centered by default. To center, set
-(setq dashboard-center-content t)
-
-;; To disable shortcut "jump" indicators for each section, set
-;; (setq dashboard-show-shortcuts nil)
-
-(setq dashboard-items '((recents  . 5)
-                        ;; (bookmarks . 5)
-                        ;; (projects . 5)
-                        (agenda . 5)))
-;; (registers . 5)
-
-
-(setq dashboard-set-heading-icons t)
-(setq dashboard-set-file-icons t)
-;; (setq dashboard-set-navigator t) ??
-(setq dashboard-set-init-info t)
-;; (setq dashboard-week-agenda t)
-(setq dashboard-item-names '(("Recent Files:" . "Recent:")
-                             ("Agenda for today:" . "Today's agenda:")
-                             ("Agenda for the coming week:" . "Agenda:")))
+* Latex
+#+begin_src elisp
+(setq org-format-latex-options
+  (list
+        :foreground 'default  ;; or `auto'
+        ;; :background 'auto
+        :scale 1.1  ;; bigger latex fragment
+        ;; :html-foreground "Black"
+        ;; :html-background "Transparent"
+        ;; :html-scale 1.0
+        :matchers '("begin" "$1" "$" "$$" "\\(" "\\[")))
 #+end_src
-
-* Treemacs (file/project explorer)
-#+begin_src elisp :tangle yes
-(setq doom-themes-treemacs-enable-variable-pitch nil
-     treemacs-width-is-initially-locked 'nil)
-#+end_src
-
+#
+** [[id:4272fde4-d8c9-4932-af2c-01d2522f7baa][Latex Fragments]]
 * Packages
 ** Pdf (tools)
 #+begin_src elisp
@@ -1200,20 +1275,91 @@ Refer to `org-agenda-prefix-format' for more information."
 
 ;; restore pdf to previous reading position
 (add-hook 'pdf-view-mode-hook 'pdf-view-restore-mode)
-#+end_src
 
+;; ;; Double page spread
+;; (defun my-pdf-view-double-scroll-up-or-next-page (&optional arg)
+;;   "Scroll page up ARG lines if possible, else go to the next page.
+
+;; When `pdf-view-continuous' is non-nil, scrolling upward at the
+;; bottom edge of the page moves to the next page. Otherwise, go to
+;; next page only on typing SPC (ARG is nil)."
+;;   (interactive "P")
+;;   (if (or pdf-view-continuous (null arg))
+;;       (let ((hscroll (window-hscroll))
+;;             (cur-page (pdf-view-current-page)))
+;;         (when (or (= (window-vscroll) (image-scroll-up arg))
+;;                   ;; Workaround rounding/off-by-one issues.
+;;                   (memq pdf-view-display-size
+;;                         '(fit-height fit-page)))
+;;           (pdf-view-next-page 2)
+;;           (when (/= cur-page (pdf-view-current-page))
+;;             (image-bob)
+;;             (image-bol 1))
+;;           (set-window-hscroll (selected-window) hscroll)))
+;;     (image-scroll-up arg)))
+
+;; (defun my-pdf-view-double-scroll-horizontal-view ()
+;;   (interactive)
+;;   (my-pdf-view-double-scroll-up-or-next-page)
+;;   (other-window 1)
+;;   (my-pdf-view-double-scroll-up-or-next-page)
+;;   (other-window 1))
+
+;; (defun my-pdf-view-double-scroll-vertical-view ()
+;;   (interactive)
+;;   (my-pdf-view-double-scroll-up-or-next-page)
+;;   (shrink-window 1)
+;;   (other-window 1)
+;;   (my-pdf-view-double-scroll-up-or-next-page)
+;;   (enlarge-window 1)
+;;   (other-window 1))
+
+
+#+end_src
+#
 ** Nov.el
 #+begin_src elisp :tangle no
 (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
+
 ;; Font
 (defun my-nov-font-setup ()
   (face-remap-add-relative 'variable-pitch :family "Liberation Serif"
                                            :height 1.0))
 (add-hook 'nov-mode-hook 'my-nov-font-setup)
+
+
 (setq nov-text-width t)
 (setq visual-fill-column-center-text t)
 (add-hook 'nov-mode-hook 'visual-line-mode)
 (add-hook 'nov-mode-hook 'visual-fill-column-mode)
+
+;; Justified Text
+;; ERROR causing chaos with org-noter
+(require 'justify-kp)
+;; (defun my-nov-window-configuration-change-hook ()
+;;   (my-nov-post-html-render-hook)
+;;   (remove-hook 'window-configuration-change-hook
+;;                'my-nov-window-configuration-change-hook
+;;                t))
+
+;; (defun my-nov-post-html-render-hook ()
+;;   (if (get-buffer-window)
+;;       (let ((max-width (pj-line-width))
+;;             buffer-read-only)
+;;         (save-excursion
+;;           (goto-char (point-min))
+;;           (while (not (eobp))
+;;             (when (not (looking-at "^[[:space:]]*$"))
+;;               (goto-char (line-end-position))
+;;               (when (> (shr-pixel-column) max-width)
+;;                 (goto-char (line-beginning-position))
+;;                 (pj-justify)))
+;;             (forward-line 1))))
+;;     (add-hook 'window-configuration-change-hook
+;;               'my-nov-window-configuration-change-hook
+;;               nil t)))
+
+;; (add-hook 'nov-post-html-render-hook 'my-nov-post-html-render-hook)
 #+end_src
 #
 ** Graphviz (dot)
@@ -1226,24 +1372,24 @@ Refer to `org-agenda-prefix-format' for more information."
   (after! org
     (setcdr (assoc "dot" org-src-lang-modes)
             'graphviz-dot)))
+
 ;; ;; TODO Completions
 ;; (use-package! company-graphviz-dot
 ;;   :after graphviz-dot-mode)
 #+end_src
 #
 ** Writeroom mode
-#+begin_src elisp :tangle yes
+#+begin_src elisp
 (with-eval-after-load 'writeroom-mode
   (define-key writeroom-mode-map (kbd "C-M-<") #'writeroom-decrease-width)
   (define-key writeroom-mode-map (kbd "C-M->") #'writeroom-increase-width)
   (define-key writeroom-mode-map (kbd "C-M-=") #'writeroom-adjust-width))
 
 (add-hook 'writeroom-mode-hook #'(lambda () (text-scale-increase 1)))
-(add-hook 'writeroom-mode-hook #'(lambda () (mixed-pitch-mode -1)))
 #+end_src
 
 ** LSP
-#+begin_src elisp :tangle yes
+#+begin_src elisp
 (setq lsp-ui-doc-enable t
       lsp-ui-doc-show-with-cursor t
       lsp-lens-enable t
@@ -1256,12 +1402,10 @@ Refer to `org-agenda-prefix-format' for more information."
       lsp-signature-render-documentation t
       lsp-completion-show-detail t
       lsp-completion-show-kind t)
-
-(setq lsp-headerline-breadcrumb-enable-diagnostics nil)
 #+end_src
 
 ** Tree sittier
-#+begin_src elisp :tangle yes
+#+begin_src elisp
 (use-package! tree-sitter
   :config
   (require 'tree-sitter-langs)
@@ -1303,7 +1447,7 @@ Refer to `org-agenda-prefix-format' for more information."
 ;; (require 'solidity-flycheck)
 
 ;; ;; Linter Paths
-;; (setq solidity-solc-path "/usr/bin/solc                   js")
+;; (setq solidity-solc-path "/usr/bin/solcjs")
 ;; (setq solidity-solium-path "/usr/bin/solium")
 
 ;; (require 'solidity-mode)
@@ -1316,10 +1460,10 @@ Refer to `org-agenda-prefix-format' for more information."
 
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
-;; (setq solidity-solc-path "/usr/bin/solc                   js")
+;; (setq solidity-solc-path "/usr/bin/solcjs")
 
 (setq solidity-solium-path "/usr/bin/solium")
-;; (setq flycheck-solidity-solium-soliumrcfile "~/.soliumrc. json")
+;; (setq flycheck-solidity-solium-soliumrcfile "~/.soliumrc.json")
 
 (setq solidity-flycheck-solium-checker-active t)
 
@@ -1332,8 +1476,8 @@ Refer to `org-agenda-prefix-format' for more information."
 ;;       company-backends))))
 #+end_src
 #
-** TODO                                                      Julia
-* My Functions :my:
+** TODO Julia
+* My Functions
 #+begin_src elisp :tangle no
 (defun my-split-pararagraph-into-lines ()
   "Split current paragraph into lines with one sentence each."
@@ -1357,31 +1501,8 @@ Refer to `org-agenda-prefix-format' for more information."
           (backward-delete-char 1))))))
 #+end_src
 
-* My Keybindings :my:
-:PROPERTIES:
-:ID:       f92454e0-c4da-451a-9da9-ae118c1d8947
-:END:
-** main
-Important note from the [[https://discourse.doomemacs.org/t/how-to-re-bind-keys/56][doom documentation on keybindings]]:
-#+begin_quote
-Emacs reads keymaps to determine what to do when you type in a key sequence. A keymap is a mapping of key sequences to commands (and each key=>command mapping is a keybind). At any time Emacs has a hierarchy of active keymaps, all vying for precedence.
+* My Keybindings
+** Visual Fill Column (better zen mode)
+#+begin_src elisp
 
-*Keymaps with higher precedence will override keymaps with lower precedence.* i.e. If you press a key, Emacs will travel down the list of active keymaps from highest to lowest precedence until it finds a matching keybind.
-#+end_quote
-
-#+begin_src elisp :tangle yes
-(map! :leader
-      (:prefix-map ("t" . "toggle")
-       :desc "mixed pitch mode" "p" #'mixed-pitch-mode))
 #+end_src
-
-** VS code emulation
-    #+begin_src elisp  :tangle yes
-;; comment lines
-;; ! not working
-;; (map! :map global-map "<C-/>" #'evilnc-comment-or-uncomment-lines)
-;; :) working
-(define-key global-map (kbd "C-/") #'evilnc-comment-or-uncomment-lines)
-
-;; TODO: move lines up/down
-    #+end_src
