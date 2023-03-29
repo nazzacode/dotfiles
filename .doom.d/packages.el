@@ -8,14 +8,17 @@
 (package! dashboard)
 (package! eldoc-eval)
 (package! evil-terminal-cursor-changer)
+(package! good-scroll)
 (package! graphviz-dot-mode) ; graph diagrams
 (package! highlight-indent-guides)
 (package! hypothesis :recipe (:host github :repo "Kungsgeten/hypothesis")) ; webpage highlighting and notes
 (package! justify-kp :recipe (:host github :repo "Fuco1/justify-kp"))  ; nice paragraph justification for novel mode
 (package! mini-modeline)     ; modeline embedded in minibuffer
+(package! mixed-pitch)
 (package! nov)               ; epub reader
 (package! ob-typescript)
 (package! org-appear)        ; show emphasis markers when inside fragment
+(package! org-bars :recipe (:host github :repo "tonyaldon/org-bars"))
 (package! org-contrib)       ; extra utilities such as the :ignore: tag
 (package! org-download)      ; screenshots
 (package! org-fragtog)       ; auto latex fragement rendering
@@ -39,6 +42,7 @@
 (package! treemacs-icons-dired)  ; treemacs icons
 (package! ts-comint)         ; typescript REPL
 (package! valign)            ; pretty tables
+(package! visual-fill-column)
 (package! websocket)
 (package! winum)             ; numbers windows in some way?
 (package! yascroll)          ; ascii scrollbar

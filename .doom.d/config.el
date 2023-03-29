@@ -29,10 +29,39 @@
       user-mail-address "nasharp@outlook.com")
 ;; User Info:1 ends here
 
+;; [[file:config.org::*General][General:1]]
+(setq-default word-wrap t)
+              ;; line-spacing 0.15)
+(setq display-line-numbers-type t         ; 'relative  ; or `nil'
+      +ivy-buffer-preview t               ; preview buffer on switch
+      emojify-emoji-set "emojione-v2.2.6" ; increase resolution from default "emojione-v2.2.6-22"
+      emojify-display-style 'unicode
+      large-file-warning-threshold nil)
+(remove-hook 'doom-first-buffer-hook #'global-hl-line-mode) ; don't highlight the line
+(add-hook 'dired-mode-hook 'all-the-icons-dired-mode) ; icons in dired
+;; General:1 ends here
+
+;; [[file:config.org::*Fringes][Fringes:1]]
+;; ;;; Fringes
+;; (add-hook! 'doom-init-ui-hook (fringe-mode '20)) ; FIXME very not loading on startup
+;; (setq fringe-mode '('4  . '8)) ; FIXME very not loading on startup
+;; (set-fringe-mode nil)
+
+;;; Prevent word wrap changing fringe indicator
+;; This should cover most modes: https://www.gnu.org/software/emacs/manual/html_node/elisp/Basic-Major-Modes.html
+;; (add-hook! '(prog-mode-hook special-mode-hook text-mode-hook)
+;;   (setf fringe-indicator-alist (remove '(continuation nil nil) fringe-indicator-alist))
+;;   (toggle-word-wrap -1))
+
+;;; Remove overflow character
+(setq-default fringe-indicator-alist
+              (delq (assq 'truncation fringe-indicator-alist) fringe-indicator-alist))
+;; Fringes:1 ends here
+
 ;; [[file:config.org::*Theme][Theme:1]]
 ;; Dark
-;; (setq doom-theme 'my-doom-dark+)
-(setq doom-theme 'my-doom-one)
+(setq doom-theme 'my-doom-dark+)
+;; (setq doom-theme 'my-doom-one)
 ;; (setq doom-theme 'my-doom-gruvbox)
 ;; Light
 ;; (setq doom-theme 'doom-acario-light)
@@ -85,25 +114,41 @@
 ;; General:1 ends here
 
 ;; [[file:config.org::*Fonts][Fonts:1]]
+;; - must set ~doom-font~ size for (disable)-~doom-big-mode~ to return font to orginal size.
 (setq
+  ;;; TODO Doom Font: EXPLAIN
+  ;; doom-font (font-spec :size 28)
+  ;; doom-font (font-spec :family "Cousine Nerd Font Mono" :size 28)
+
   ;; doom-font (font-spec :family "DM Mono" :size 22)
   ;; doom-font (font-spec :family "Hack" :size 22)
   ;; doom-font (font-spec :family "Aldrich" :size 22)
   ;; doom-font (font-spec :family "Hasklug Nerd Font Mono" :size 26 :height 1.0)
   ;; doom-font (font-spec :family "Agave Nerd Font Mono")
-  doom-font (font-spec :family "Cousine Nerd Font Mono" :height 1.0 ) ;; TODO size
   ;; doom-font (font-spec :family "Noto Sans")
-  ;; doom-font (font-spec :family "Source Sans Pro")
-  ;; doom-variable-pitch-font (font-spec :family "ETBookOT")
+ doom-font (font-spec :family "Source Code Pro" :size 28 :height 1.0)
+  ;;; Variable Pitch:
+  ;; doom-variable-pitch-font (font-spec :height 1.0)
+  ;; doom-variable-pitch-font (font-spec :family "Cousine Nerd Font Mono" :height 1.0)
+ ;; doom-variable-pitch-font (font-spec :family "ETBookOT" :height 1.5)
   ;; doom-variable-pitch-font (font-spec :family "Source Sans Pro")
-  ;; doom-serif-font (font-spec :family "ETBookOT")
   ;; doom-variable-pitch-font (font-spec :family "Iosevka Aile") ; :size 32 :height 1.5)
   ;; doom-variable-pitch-font (font-spec :family "TSCu_Comic")
-  doom-unicode-font (font-spec :family "Symbola")          ; good unicode support (prev :size 30)
-  ;; doom-big-font (font-spec :family "Fira Mono" :size 19))
+  ;; doom-serif-font (font-spec :family "ETBookOT")
+  ;;; Unicode:
+ doom-unicode-font (font-spec :family "Symbola")          ; good unicode support (prev :size 30)
+  ;;; Big:
+  ;; doom-big-font (font-spec :size 32) ;; NOTE: setting fucks shit up!
 )
 ;; text zoom in/out ammount
 (setq text-scale-mode-step 1.05)
+
+
+(use-package! mixed-pitch
+  ;; :hook (org-mode . mixed-pitch-mode)
+  :config
+  (setq mixed-pitch-set-heigth t)
+  (set-face-attribute 'variable-pitch nil :height 2))
 ;; Fonts:1 ends here
 
 ;; [[file:config.org::*Transparency][Transparency:1]]
@@ -162,25 +207,35 @@
 (setq window-divider-default-bottom-width 2 ; in pixels
       window-divider-default-right-width 2)
 (window-divider-mode +1)
-;; color
-; do in theme 'vertical-bar'
+;; color: do in theme 'vertical-bar'
 ;; Window dividers:1 ends here
 
-;; [[file:config.org::*Scroll bar (~yascroll~)][Scroll bar (~yascroll~):1]]
-(add-hook 'prog-mode-hook 'yascroll-bar-mode)
-(add-hook 'org-mode-hook 'yascroll-bar-mode)
-(setq yascroll:delay-to-hide 'nil)
-;; Scroll bar (~yascroll~):1 ends here
+;; [[file:config.org::*Column cutoff ~visual-fill-mode~][Column cutoff ~visual-fill-mode~:1]]
+(setq-default visual-fill-column-width 90)
+(defvar my-visual-fill-column-width 85)
+;; (setq visual-fill-column-width 'my-visual-fill-column-width)
+(setq visual-fill-column-width 90)
+;; Column cutoff ~visual-fill-mode~:1 ends here
 
 ;; [[file:config.org::*Column indicator][Column indicator:1]]
-(setq-default display-fill-column-indicator-column 80)
+(setq-default display-fill-column-indicator-column 79)
+(setq display-fill-column-indicator-column 79)
+(setq-default display-fill-column-indicator-character ?\u00A6) ; 2502)
 ;; Column indicator:1 ends here
 
-;; [[file:config.org::*~emacs-terminal-cursor-changer~][~emacs-terminal-cursor-changer~:1]]
+;; [[file:config.org::*~highligh-indent-guide~ (code fences)][~highligh-indent-guide~ (code fences):1]]
+;; Highlight-indent-guide (package)
+(setq highlight-indent-guides-method 'character
+      highlight-indent-guides-responsive 'stack)
+(add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
+(add-hook 'org-mode-hook 'highlight-indent-guides-mode)  ; FIXME background off in code blocks
+;; ~highligh-indent-guide~ (code fences):1 ends here
+
+;; [[file:config.org::*~emacs-terminal-cursor-changer~ (vim state in term)][~emacs-terminal-cursor-changer~ (vim state in term):1]]
 (unless (display-graphic-p)
         (require 'evil-terminal-cursor-changer)
         (evil-terminal-cursor-changer-activate))
-;; ~emacs-terminal-cursor-changer~:1 ends here
+;; ~emacs-terminal-cursor-changer~ (vim state in term):1 ends here
 
 ;; [[file:config.org::*Disable spellcheck (~spell-fu~ (not ~flyspell~))][Disable spellcheck (~spell-fu~ (not ~flyspell~)):1]]
 (remove-hook 'text-mode-hook #'spell-fu-mode)
@@ -264,6 +319,7 @@
 ;; [[file:config.org::*FIXME General (inc. UI)][FIXME General (inc. UI):1]]
 (after! org
   (add-hook! 'org-mode-hook #'+org-pretty-mode   ; hides emphasis markers and toggles "pretty entities"
+                            #'visual-fill-column-mode
                             #'org-appear-mode))    ; expand invisible emphasis markers etc.
                             ;; #'mixed-pitch-mode)) ; uses var-pitch font for text; writeroom does this (and doesnt turn it off on exit!)
 (after! org
@@ -279,7 +335,7 @@
         org-id-link-to-org-use-id 't
         ;; org-appear-autolinks 't            ; auto appear links
         ;; org-appear-autosubmarkers 't       ; auto apear subscript/superscript
-        ;; org-appear-autoentities 't         ; auto apear \alpha etc.
+      ;; org-appear-autoentities 't         ; auto apear \alpha etc.
         ;; org-appear-autokeywords 't         ; auto apear elements in `org-hidden-keywords'
         org-startup-with-inline-images 't
         org-indent-indentation-per-level 0
@@ -517,7 +573,7 @@
                                  ;; ("frame" "single")))         ;; frame line
 ))
 
-(setq org-latex-packages-alist '(("" "minted")("" "fontspec")))
+;; (setq org-latex-packages-alist '(("" "minted")("" "fontspec")))
 
 (setq org-latex-caption-above nil)
 
@@ -835,6 +891,25 @@ If there is no description, use the link target."
         :matchers '("begin" "$1" "$" "$$" "\\(" "\\[")))
 ;; Latex:1 ends here
 
+;; [[file:config.org::*~good-scroll~][~good-scroll~:1]]
+(good-scroll-mode 1)
+;; ~good-scroll~:1 ends here
+
+;; [[file:config.org::*LSP][LSP:1]]
+(setq lsp-ui-doc-enable t
+      lsp-ui-doc-show-with-cursor t
+      lsp-lens-enable t
+      lsp-headerline-breadcrumb-enable t
+      lsp-ui-sideline-enable t
+      lsp-ui-sideline-show-code-actions t
+      lsp-ui-sideline-enable t
+      lsp-ui-sideline-show-hover t
+      lsp-modeline-code-actions-enable t
+      lsp-signature-render-documentation t
+      lsp-completion-show-detail t
+      lsp-completion-show-kind t)
+;; LSP:1 ends here
+
 ;; [[file:config.org::*Pdf (tools)][Pdf (tools):1]]
 ;; more fine-grained zooming
 (setq pdf-view-resize-factor 1.05)
@@ -885,6 +960,14 @@ If there is no description, use the link target."
 ;;   (other-window 1))
 ;; Pdf (tools):1 ends here
 
+;; [[file:config.org::*Tree sittier][Tree sittier:1]]
+(use-package! tree-sitter
+  :config
+  (require 'tree-sitter-langs)
+  (global-tree-sitter-mode)
+  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
+;; Tree sittier:1 ends here
+
 ;; [[file:config.org::*Writeroom mode][Writeroom mode:1]]
 (with-eval-after-load 'writeroom-mode
   (define-key writeroom-mode-map (kbd "C-M-<") #'writeroom-decrease-width)
@@ -894,29 +977,43 @@ If there is no description, use the link target."
 (add-hook 'writeroom-mode-hook #'(lambda () (text-scale-increase 1)))
 ;; Writeroom mode:1 ends here
 
-;; [[file:config.org::*LSP][LSP:1]]
-(setq lsp-ui-doc-enable t
-      lsp-ui-doc-show-with-cursor t
-      lsp-lens-enable t
-      lsp-headerline-breadcrumb-enable t
-      lsp-ui-sideline-enable t
-      lsp-ui-sideline-show-code-actions t
-      lsp-ui-sideline-enable t
-      lsp-ui-sideline-show-hover t
-      lsp-modeline-code-actions-enable t
-      lsp-signature-render-documentation t
-      lsp-completion-show-detail t
-      lsp-completion-show-kind t)
-;; LSP:1 ends here
+;; [[file:config.org::*mixed pitch mode][mixed pitch mode:1]]
+(map! :leader
+      (:prefix-map ("t" . "toggle")
+       :desc "mixed pitch mode" "p" #'mixed-pitch-mode))
+;; mixed pitch mode:1 ends here
 
-;; [[file:config.org::*Tree sittier][Tree sittier:1]]
-(use-package! tree-sitter
-  :config
-  (require 'tree-sitter-langs)
-  (global-tree-sitter-mode)
-  (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
-;; Tree sittier:1 ends here
+;; [[file:config.org::*VS code emulation][VS code emulation:1]]
+;; comment lines
+(define-key global-map (kbd "C-/") #'evilnc-comment-or-uncomment-lines)
+;; TODO move lines up/down
+;; VS code emulation:1 ends here
 
-;; [[file:config.org::*Visual Fill Column (better zen mode)][Visual Fill Column (better zen mode):1]]
+;; [[file:config.org::*outline (~lsp-ui-imenu~)][outline (~lsp-ui-imenu~):1]]
+(map! :leader
+      (:prefix-map ("t" . "toggle")
+       :desc "lsp-ui-imenu ([o]utline contents)" "o" #'lsp-ui-imenu))
+;; outline (~lsp-ui-imenu~):1 ends here
 
-;; Visual Fill Column (better zen mode):1 ends here
+;; [[file:config.org::*Column cutoff ~visual-fill-column~ (better zen/writeroom mode)][Column cutoff ~visual-fill-column~ (better zen/writeroom mode):1]]
+(add-hook 'visual-fill-column-mode-hook (setq visual-fill-column-width my-visual-fill-column-width))
+
+(map! :leader
+      (:prefix-map ("t" . "toggle")
+       :desc "visual fill column" "z" #'visual-fill-column-mode))
+       ;; :desc "visual fill column" "z" (lambda () (interactive) (setq visual-fill-column-width my-visual-fill-column-width) (#'visual-fill-column-mode))))
+;; Column cutoff ~visual-fill-column~ (better zen/writeroom mode):1 ends here
+
+;; [[file:config.org::*git diff fringe(~diff-hl~)][git diff fringe(~diff-hl~):1]]
+;;   (global-diff-hl-mode -1) ;; FIXME
+(map! :leader
+      (:prefix-map ("t" . "toggle")
+       :desc "git diff-hl fringe" "d" #'diff-hl-mode))
+;; git diff fringe(~diff-hl~):1 ends here
+
+;; [[file:config.org::*Org Bars (outline vertical guides)][Org Bars (outline vertical guides):1]]
+(require 'org-bars)
+(after! org (add-hook 'org-mode-hook #'org-bars-mode))
+;; (setq org-bars-sars '(:empty "*" :invisible "*" :visible "*"))
+;; (setq org-bars-extra-pixels-height 6) ;; fix gaps in org-bars
+;; Org Bars (outline vertical guides):1 ends here
