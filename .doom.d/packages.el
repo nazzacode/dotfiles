@@ -28,7 +28,7 @@
 (package! org-roam-bibtex)   ; org + roam + bibtex
 (package! org-roam-ui :recipe (:host github :repo "org-roam/org-roam-ui" :files ("*.el" "out"))) ; graph explorer for org roam
 (package! org-special-block-extras)
-(package! org-superstar)     ; fancy headings and bullets
+;; (package! org-superstar)     ; fancy headings and bullets
 (package! pdf-continuous-scroll-mode :disable (not (and (fboundp 'init-image-library) (init-image-library 'svg))))
 (package! pdf-continuous-scroll-mode :recipe (:host github :repo "dalanicolai/pdf-continuous-scroll-mode.el"))
 (package! pdf-view-restore)

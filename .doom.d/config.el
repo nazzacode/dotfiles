@@ -30,15 +30,15 @@
 ;; User Info:1 ends here
 
 ;; [[file:config.org::*General][General:1]]
-(setq-default word-wrap t)
-              ;; line-spacing 0.15)
+(setq-default word-wrap t
+              line-spacing 0.0)
 (setq display-line-numbers-type t         ; 'relative  ; or `nil'
       +ivy-buffer-preview t               ; preview buffer on switch
       emojify-emoji-set "emojione-v2.2.6" ; increase resolution from default "emojione-v2.2.6-22"
       emojify-display-style 'unicode
       large-file-warning-threshold nil)
 (remove-hook 'doom-first-buffer-hook #'global-hl-line-mode) ; don't highlight the line
-(add-hook 'dired-mode-hook 'all-the-icons-dired-mode) ; icons in dired
+(add-hook 'dired-mode-hook 'all-the-icons-dired-mode)       ; icons in dired
 ;; General:1 ends here
 
 ;; [[file:config.org::*Fringes][Fringes:1]]
@@ -69,49 +69,6 @@
 ;; (setq doom-theme 'doom-nord-light)
 ;; (setq doom-theme 'modus-operandi)
 ;; Theme:1 ends here
-
-;; [[file:config.org::*General][General:1]]
-;; (add-hook 'window-setup-hook 'on-after-init)
-(defun on-frame-open (&optional frame)
-  "If the FRAME created in terminal don't load background color."
-  (unless (display-graphic-p frame)
-    (set-face-background 'default "unspecified-bg" frame)))
-
-(add-hook 'after-make-frame-functions 'on-frame-open)
-
-(setq-default line-spacing 0.15
-              word-wrap t)
-(setq display-line-numbers-type t          ; 'relative  ; or `nil'
-      +ivy-buffer-preview t                ; preview buffer on switch
-      ;; emojify-emoji-set ""  ; increase resolution from default "emojione-v2.2.6-22"
-      emojify-emoji-set "emojione-v2.2.6"  ; increase resolution from default "emojione-v2.2.6-22"
-      ;; fringe-mode 'nil  ; should be a number
-      emojify-display-style 'unicode
-      large-file-warning-threshold nil)
-;; Don't highlight the line
-(remove-hook 'doom-first-buffer-hook #'global-hl-line-mode)
-;; Icons in dired
-(add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
-;; Disable git gutter by default
-(global-git-gutter-mode -1)
-(setq git-gutter:disabled-modes
-      '(fundamental-mode image-mode pdf-view-mode org-mode prog-mode dired-mode))
-;; Highlight-indent-guide (package)
-(setq highlight-indent-guides-method 'character
-      highlight-indent-guides-responsive 'stack)
-(add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
-(add-hook 'org-mode-hook 'highlight-indent-guides-mode)  ; FIXME background off in code blocks
-;; ;; Fringes
-;; (add-hook! 'doom-init-ui-hook (fringe-mode '20)) ; FIXME very not loading on startup
-;; (setq fringe-mode '('4  . '8)) ; FIXME very not loading on startup
-;; (set-fringe-mode nil)
-
-;; ;; Raibow-mode: colorise strings that represent colors. e.g. #fffffff
-;; ;; BUG: causing a mess in doom load screen
-;; (define-globalized-minor-mode global-rainbow-mode rainbow-mode
-;;   (lambda () (rainbow-mode 1)))
-;; (global-rainbow-mode 1)
-;; General:1 ends here
 
 ;; [[file:config.org::*Fonts][Fonts:1]]
 ;; - must set ~doom-font~ size for (disable)-~doom-big-mode~ to return font to orginal size.
@@ -210,12 +167,12 @@
 ;; color: do in theme 'vertical-bar'
 ;; Window dividers:1 ends here
 
-;; [[file:config.org::*Column cutoff ~visual-fill-mode~][Column cutoff ~visual-fill-mode~:1]]
+;; [[file:config.org::*Column cutoff ~visual-fill-mode~)][Column cutoff ~visual-fill-mode~):1]]
 (setq-default visual-fill-column-width 90)
 (defvar my-visual-fill-column-width 85)
 ;; (setq visual-fill-column-width 'my-visual-fill-column-width)
 (setq visual-fill-column-width 90)
-;; Column cutoff ~visual-fill-mode~:1 ends here
+;; Column cutoff ~visual-fill-mode~):1 ends here
 
 ;; [[file:config.org::*Column indicator][Column indicator:1]]
 (setq-default display-fill-column-indicator-column 79)
@@ -240,6 +197,15 @@
 ;; [[file:config.org::*Disable spellcheck (~spell-fu~ (not ~flyspell~))][Disable spellcheck (~spell-fu~ (not ~flyspell~)):1]]
 (remove-hook 'text-mode-hook #'spell-fu-mode)
 ;; Disable spellcheck (~spell-fu~ (not ~flyspell~)):1 ends here
+
+;; [[file:config.org::*No background color in terminal][No background color in terminal:1]]
+;; NO background color in terminal
+(defun on-frame-open (&optional frame)
+  "If the FRAME created in terminal don't load background color."
+  (unless (display-graphic-p frame)
+    (set-face-background 'default "unspecified-bg" frame)))
+(add-hook 'after-make-frame-functions 'on-frame-open)
+;; No background color in terminal:1 ends here
 
 ;; [[file:config.org::*Modeline][Modeline:1]]
 (setq doom-modeline-height 25
@@ -316,7 +282,7 @@
 ;; (add-hook 'after-init-hook 'global-company-mode)
 ;; FIXME main:1 ends here
 
-;; [[file:config.org::*FIXME General (inc. UI)][FIXME General (inc. UI):1]]
+;; [[file:config.org::*General (including UI)][General (including UI):1]]
 (after! org
   (add-hook! 'org-mode-hook #'+org-pretty-mode   ; hides emphasis markers and toggles "pretty entities"
                             #'visual-fill-column-mode
@@ -326,64 +292,28 @@
   (setq org-directory "~/org"              ; dir for agenda etc.
         org-startup-folded 't
         org-num-skip-unnumbered 't         ; skip `:UNNUMBERED:` from numbering
-        org-ellipsis "  "
+        org-ellipsis " "                   ; "  "
         ;; display-line-numbers-type 'nil     ; no line numbers by default in org
         ;; org-image-actual-width 450      ; set default width ; FIXME cannot override
         ;; org-startup-with-latex-preview 't ; TODO test breaking?
         org-startup-shrink-all-tables 't
-        org-startup-indented 'nil          ; dont indent in nested headings
+        ;; org-startup-indented 'nil          ; dont indent in nested headings
         org-id-link-to-org-use-id 't
         ;; org-appear-autolinks 't            ; auto appear links
         ;; org-appear-autosubmarkers 't       ; auto apear subscript/superscript
-      ;; org-appear-autoentities 't         ; auto apear \alpha etc.
+        ;; org-appear-autoentities 't         ; auto apear \alpha etc.
         ;; org-appear-autokeywords 't         ; auto apear elements in `org-hidden-keywords'
         org-startup-with-inline-images 't
-        org-indent-indentation-per-level 0
+        org-indent-indentation-per-level 2
         org-startup-folded 't))
-;; FIXME General (inc. UI):1 ends here
 
-;; [[file:config.org::*Org Modern][Org Modern:1]]
-(global-org-modern-mode)
-(set-face-attribute 'org-modern-symbol nil :family "DM Mono")
+(setq org-adapt-indentation t)
+;; General (including UI):1 ends here
 
-;; Add frame borders and window dividers
-;; (modify-all-frames-parameters
-;;  '((right-divider-width . 10)
-;;    (internal-border-width . 10)))
-
-;; (dolist (face '(window-divider
-;;                 window-divider-first-pixel
-;;                 window-divider-last-pixel))
-;;   (face-spec-reset-face face)
-;;   (set-face-foreground face (face-attribute 'default :background)))
-;; (set-face-background 'fringe (face-attribute 'default :background))
-
-(setq org-modern-star nil)  ;; not loading!
-(setq org-modern-hide-stars nil)
-
-;; Recommended settings
-(setq
-
-   org-auto-align-tags nil
-   org-tags-column 0
-   org-catch-invisible-edits 'show-and-error
-   org-special-ctrl-a/e t
-   org-insert-heading-respect-content t)
- ;; ;; Agenda styling
- ;; org-agenda-tags-column 0
- ;; org-agenda-block-separator ?─
- ;; org-agenda-time-grid
- ;; '((daily today require-timed)
- ;;   (800 1000 1200 100 1600 1800 2000)
- ;;   " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
- ;; org-agenda-current-time-string
- ;; "⭠ now ─────────────────────────────────────────────────")
-;; Org Modern:1 ends here
-
-;; [[file:config.org::*Headings what about it][Headings what about it:1]]
+;; [[file:config.org::*Headings][Headings:1]]
 ;; `weights:' can be [normal, semi-bold, bold]
 (custom-set-faces!
-  '(outline-1 :weight normal :height 1.0) ;1.26) ;1.12)
+  '(outline-1 :weight normal :height 1.0 :underline "orange") ;1.26) ;1.12)
   '(outline-2 :weight normal :height 1.0) ;1.16) ;1.08)
   '(outline-3 :weight normal :height 1.0) ;1.10) ;1.05)
   '(outline-4 :weight normal :height 1.0) ;1.06) ;1.03)
@@ -394,7 +324,7 @@
   '(org-document-title :weight normal :height 1.0)); 1.8)) ; 1.2
 
 ;; Previous symbols: '( "◉" "○" "⎊" "⎉" "⊛" "⊚" "◦" "◘")
-;; Headings what about it:1 ends here
+;; Headings:1 ends here
 
 ;; [[file:config.org::*Todo's][Todo's:1]]
 (after! org
@@ -671,30 +601,6 @@ You can include this function in `org-font-lock-set-keywords-hook'."
 (plist-put org-format-latex-options :justify 'center)
 ;; Latex fragments:1 ends here
 
-;; [[file:config.org::*DEPRECATED Org-ref][DEPRECATED Org-ref:1]]
-;; FIXME startup error
-;; (require 'doi-utils)
-
-;; (setq reftex-default-bibliography '("~/org/roam/bibliography.bib"))
-
-;; ;; see org-ref for use of these variables
-;; (setq org-ref-default-bibliography '("~/org/roam/PDFs/bibliography.bib")
-;;       org-ref-bibliography-notes "~/org/roam/PDFs"   ; TODO not in use
-;;       org-ref-pdf-directory "~/org/roam/PDFs/"       ; academic papers
-;;       org-ref-completion-library 'org-ref-ivy-cite
-;;       org-ref-get-pdf-filename-function 'org-ref-get-pdf-filename-helm-bibtex
-;;       org-ref-bibliography-notes "~/org/roam/PDFs"
-;;       org-ref-notes-directory "~/org/roam/PDFs"
-;;       org-ref-notes-function 'orb-edit-notes)
-;; DEPRECATED Org-ref:1 ends here
-
-;; [[file:config.org::*Helm-bibtex][Helm-bibtex:1]]
-(after! org
-  (setq bibtex-completion-bibliography "~/org/roam/Zotero/bibliography.bib"
-        bibtex-completion-library-path "~/org/roam/Zotero/storage/."
-        bibtex-completion-notes-path "~/org/roam/Zotero/storage"))
-;; Helm-bibtex:1 ends here
-
 ;; [[file:config.org::*emacs-jupyter][emacs-jupyter:1]]
 ;; TypeScript
 (setq org-babel-default-header-args:jupyter-typescript '(
@@ -724,17 +630,34 @@ You can include this function in `org-font-lock-set-keywords-hook'."
 )
 ;; emacs-jupyter:1 ends here
 
-;; [[file:config.org::*Org-noter][Org-noter:1]]
+;; [[file:config.org::*REMOVE helm-bibtex][REMOVE helm-bibtex:1]]
+(after! org
+  (setq bibtex-completion-bibliography "~/org/roam/Zotero/bibliography.bib"
+        bibtex-completion-library-path "~/org/roam/Zotero/storage/."
+        bibtex-completion-notes-path "~/org/roam/Zotero/storage"))
+;; REMOVE helm-bibtex:1 ends here
+
+;; [[file:config.org::*UPDATE hypothesis][UPDATE hypothesis:1]]
+(setq hypothesis-username "nazzacode"
+      hypothesis-token "6879-DJYjeV3gat2emzWKlSGkQu20tQTvQK3s7xVSepSdjfA")
+;; UPDATE hypothesis:1 ends here
+
+;; [[file:config.org::*org-bars (heading indentation guides)][org-bars (heading indentation guides):1]]
+(require 'org-bars)
+(after! org (add-hook 'org-mode-hook #'org-bars-mode))
+;; (setq org-bars-stars '(:empty "*" :invisible "*" :visible "*"))
+;; (setq org-bars-stars '(:empty "◦" :invisible "•" :visible "⦿"))
+(setq org-bars-stars '(:empty "*" :invisible "+" :visible "-"))
+(setq org-bars-extra-pixels-height 0) ;; fix gaps in org-bars
+(setq org-bars-with-dynamic-stars-p 't)
+;; org-bars (heading indentation guides):1 ends here
+
+;; [[file:config.org::*org-noter][org-noter:1]]
 (use-package org-noter
   :after (:any org pdf-view)
   :config
   (setq org-noter-always-create-frame nil))  ; stop opening frames
-;; Org-noter:1 ends here
-
-;; [[file:config.org::*Hypothesis][Hypothesis:1]]
-(setq hypothesis-username "nazzacode"
-      hypothesis-token "6879-DJYjeV3gat2emzWKlSGkQu20tQTvQK3s7xVSepSdjfA")
-;; Hypothesis:1 ends here
+;; org-noter:1 ends here
 
 ;; [[file:config.org::*General][General:1]]
 (setq org-roam-directory "~/org/roam")
@@ -1010,10 +933,3 @@ If there is no description, use the link target."
       (:prefix-map ("t" . "toggle")
        :desc "git diff-hl fringe" "d" #'diff-hl-mode))
 ;; git diff fringe(~diff-hl~):1 ends here
-
-;; [[file:config.org::*Org Bars (outline vertical guides)][Org Bars (outline vertical guides):1]]
-(require 'org-bars)
-(after! org (add-hook 'org-mode-hook #'org-bars-mode))
-;; (setq org-bars-sars '(:empty "*" :invisible "*" :visible "*"))
-;; (setq org-bars-extra-pixels-height 6) ;; fix gaps in org-bars
-;; Org Bars (outline vertical guides):1 ends here

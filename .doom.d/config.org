@@ -61,16 +61,17 @@ Harness the performance advantages of lexical-binding (I think?). See:
 * User Interface (UI) :UI:
 ** General
 #+begin_src elisp :tangle yes
-(setq-default word-wrap t)
-              ;; line-spacing 0.15)
+(setq-default word-wrap t
+              line-spacing 0.0)
 (setq display-line-numbers-type t         ; 'relative  ; or `nil'
       +ivy-buffer-preview t               ; preview buffer on switch
       emojify-emoji-set "emojione-v2.2.6" ; increase resolution from default "emojione-v2.2.6-22"
       emojify-display-style 'unicode
       large-file-warning-threshold nil)
 (remove-hook 'doom-first-buffer-hook #'global-hl-line-mode) ; don't highlight the line
-(add-hook 'dired-mode-hook 'all-the-icons-dired-mode) ; icons in dired
+(add-hook 'dired-mode-hook 'all-the-icons-dired-mode)       ; icons in dired
 #+end_src
+
 
 ** Fringes
 #+begin_src elisp :tangle yes
@@ -103,51 +104,6 @@ Harness the performance advantages of lexical-binding (I think?). See:
 ;; (setq doom-theme 'doom-nord-light)
 ;; (setq doom-theme 'modus-operandi)
 #+END_SRC
-
-** General
-#+begin_src elisp
-;; (add-hook 'window-setup-hook 'on-after-init)
-(defun on-frame-open (&optional frame)
-  "If the FRAME created in terminal don't load background color."
-  (unless (display-graphic-p frame)
-    (set-face-background 'default "unspecified-bg" frame)))
-
-(add-hook 'after-make-frame-functions 'on-frame-open)
-
-(setq-default line-spacing 0.15
-              word-wrap t)
-(setq display-line-numbers-type t          ; 'relative  ; or `nil'
-      +ivy-buffer-preview t                ; preview buffer on switch
-      ;; emojify-emoji-set ""  ; increase resolution from default "emojione-v2.2.6-22"
-      emojify-emoji-set "emojione-v2.2.6"  ; increase resolution from default "emojione-v2.2.6-22"
-      ;; fringe-mode 'nil  ; should be a number
-      emojify-display-style 'unicode
-      large-file-warning-threshold nil)
-;; Don't highlight the line
-(remove-hook 'doom-first-buffer-hook #'global-hl-line-mode)
-;; Icons in dired
-(add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
-;; Disable git gutter by default
-(global-git-gutter-mode -1)
-(setq git-gutter:disabled-modes
-      '(fundamental-mode image-mode pdf-view-mode org-mode prog-mode dired-mode))
-;; Highlight-indent-guide (package)
-(setq highlight-indent-guides-method 'character
-      highlight-indent-guides-responsive 'stack)
-(add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
-(add-hook 'org-mode-hook 'highlight-indent-guides-mode)  ; FIXME background off in code blocks
-;; ;; Fringes
-;; (add-hook! 'doom-init-ui-hook (fringe-mode '20)) ; FIXME very not loading on startup
-;; (setq fringe-mode '('4  . '8)) ; FIXME very not loading on startup
-;; (set-fringe-mode nil)
-
-;; ;; Raibow-mode: colorise strings that represent colors. e.g. #fffffff
-;; ;; BUG: causing a mess in doom load screen
-;; (define-globalized-minor-mode global-rainbow-mode rainbow-mode
-;;   (lambda () (rainbow-mode 1)))
-;; (global-rainbow-mode 1)
-
-#+end_src
 
 ** Fonts
 ;; - must set ~doom-font~ size for (disable)-~doom-big-mode~ to return font to orginal size.
@@ -265,7 +221,7 @@ Harness the performance advantages of lexical-binding (I think?). See:
 ;; ,(doom-color 'base7)))
 #+end_src
 
-** Column cutoff ~visual-fill-mode~
+** Column cutoff ~visual-fill-mode~)
 Cuts off column.
 #+begin_src elisp
 (setq-default visual-fill-column-width 90)
@@ -313,6 +269,16 @@ keybindings: [[id:3b8fab69-b666-40b1-aba2-e8643f1ecc1c][Column cutoff ~visual-fi
 ** Disable spellcheck (~spell-fu~ (not ~flyspell~))
 #+begin_src elisp
 (remove-hook 'text-mode-hook #'spell-fu-mode)
+#+end_src
+
+** No background color in terminal
+#+begin_src elisp
+;; NO background color in terminal
+(defun on-frame-open (&optional frame)
+  "If the FRAME created in terminal don't load background color."
+  (unless (display-graphic-p frame)
+    (set-face-background 'default "unspecified-bg" frame)))
+(add-hook 'after-make-frame-functions 'on-frame-open)
 #+end_src
 
 * Dashboard
@@ -450,7 +416,7 @@ keybindings: [[id:3b8fab69-b666-40b1-aba2-e8643f1ecc1c][Column cutoff ~visual-fi
 #+end_src
 #
 * Org Mode
-** FIXME General (inc. UI)
+** General (including UI) :UI:
 :PROPERTIES:
 :ID:       c6cc679a-b4e7-463f-8082-a8ac0bbbdf2e
 :END:
@@ -464,65 +430,25 @@ keybindings: [[id:3b8fab69-b666-40b1-aba2-e8643f1ecc1c][Column cutoff ~visual-fi
   (setq org-directory "~/org"              ; dir for agenda etc.
         org-startup-folded 't
         org-num-skip-unnumbered 't         ; skip `:UNNUMBERED:` from numbering
-        org-ellipsis "  "
+        org-ellipsis " "                   ; "  "
         ;; display-line-numbers-type 'nil     ; no line numbers by default in org
         ;; org-image-actual-width 450      ; set default width ; FIXME cannot override
         ;; org-startup-with-latex-preview 't ; TODO test breaking?
         org-startup-shrink-all-tables 't
-        org-startup-indented 'nil          ; dont indent in nested headings
+        ;; org-startup-indented 'nil          ; dont indent in nested headings
         org-id-link-to-org-use-id 't
         ;; org-appear-autolinks 't            ; auto appear links
         ;; org-appear-autosubmarkers 't       ; auto apear subscript/superscript
         ;; org-appear-autoentities 't         ; auto apear \alpha etc.
         ;; org-appear-autokeywords 't         ; auto apear elements in `org-hidden-keywords'
         org-startup-with-inline-images 't
-        org-indent-indentation-per-level 0
+        org-indent-indentation-per-level 2
         org-startup-folded 't))
 
 (setq org-adapt-indentation t)
 #+end_src
 
-** Org Modern :package:
-#+begin_src elisp
-(global-org-modern-mode)
-(set-face-attribute 'org-modern-symbol nil :family "DM Mono")
-
-;; Add frame borders and window dividers
-;; (modify-all-frames-parameters
-;;  '((right-divider-width . 10)
-;;    (internal-border-width . 10)))
-
-;; (dolist (face '(window-divider
-;;                 window-divider-first-pixel
-;;                 window-divider-last-pixel))
-;;   (face-spec-reset-face face)
-;;   (set-face-foreground face (face-attribute 'default :background)))
-;; (set-face-background 'fringe (face-attribute 'default :background))
-
-(setq org-modern-star nil)  ;; not loading!
-(setq org-modern-hide-stars nil)
-
-;; Recommended settings
-(setq
-
-   org-auto-align-tags nil
-   org-tags-column 0
-   org-catch-invisible-edits 'show-and-error
-   org-special-ctrl-a/e t
-   org-insert-heading-respect-content t)
- ;; ;; Agenda styling
- ;; org-agenda-tags-column 0
- ;; org-agenda-block-separator ?─
- ;; org-agenda-time-grid
- ;; '((daily today require-timed)
- ;;   (800 1000 1200 100 1600 1800 2000)
- ;;   " ┄┄┄┄┄ " "┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄")
- ;; org-agenda-current-time-string
- ;; "⭠ now ─────────────────────────────────────────────────")
-#+end_src
-#
-
-** Headings what about it
+** Headings
 #+begin_src elisp
 ;; `weights:' can be [normal, semi-bold, bold]
 (custom-set-faces!
@@ -874,43 +800,7 @@ You can include this function in `org-font-lock-set-keywords-hook'."
 (plist-put org-format-latex-options :justify 'center)
 #+end_src
 #
-** Packages
-:PROPERTIES:
-:ID:       36686cfd-9aaa-4886-bbfd-c5e64f9e1f67
-:END:
-*** Org Cite
-#+begin_src elisp :tangle no
-;; (setq org-cite-global-bibliography "~/org/roam/Zotero/bibliography.bib")
-(setq org-cite-csl-styles-dir "~/org/roam/Zotero/styles")
-#+end_src
-#
-*** DEPRECATED Org-ref
-#+begin_src emacs-lisp
-;; FIXME startup error
-;; (require 'doi-utils)
-
-;; (setq reftex-default-bibliography '("~/org/roam/bibliography.bib"))
-
-;; ;; see org-ref for use of these variables
-;; (setq org-ref-default-bibliography '("~/org/roam/PDFs/bibliography.bib")
-;;       org-ref-bibliography-notes "~/org/roam/PDFs"   ; TODO not in use
-;;       org-ref-pdf-directory "~/org/roam/PDFs/"       ; academic papers
-;;       org-ref-completion-library 'org-ref-ivy-cite
-;;       org-ref-get-pdf-filename-function 'org-ref-get-pdf-filename-helm-bibtex
-;;       org-ref-bibliography-notes "~/org/roam/PDFs"
-;;       org-ref-notes-directory "~/org/roam/PDFs"
-;;       org-ref-notes-function 'orb-edit-notes)
-#+end_src
-#
-*** TODO Helm-bibtex
-#+begin_src elisp
-(after! org
-  (setq bibtex-completion-bibliography "~/org/roam/Zotero/bibliography.bib"
-        bibtex-completion-library-path "~/org/roam/Zotero/storage/."
-        bibtex-completion-notes-path "~/org/roam/Zotero/storage"))
-#+end_src
-#
-*** emacs-jupyter
+** emacs-jupyter :package:
 #+begin_src elisp
 ;; TypeScript
 (setq org-babel-default-header-args:jupyter-typescript '(
@@ -940,22 +830,39 @@ You can include this function in `org-font-lock-set-keywords-hook'."
 )
 #+end_src
 #
-*** Org-noter
+** REMOVE helm-bibtex :package:
 #+begin_src elisp
-(use-package org-noter
-  :after (:any org pdf-view)
-  :config
-  (setq org-noter-always-create-frame nil))  ; stop opening frames
+(after! org
+  (setq bibtex-completion-bibliography "~/org/roam/Zotero/bibliography.bib"
+        bibtex-completion-library-path "~/org/roam/Zotero/storage/."
+        bibtex-completion-notes-path "~/org/roam/Zotero/storage"))
 #+end_src
 #
-*** Hypothesis
+** UPDATE hypothesis :package:
 Hypothesis is a great web extension for highlighting and taking notes on web pages. The emacs extension allows these to be imported into org mode.
 #+begin_src elisp
 (setq hypothesis-username "nazzacode"
       hypothesis-token "6879-DJYjeV3gat2emzWKlSGkQu20tQTvQK3s7xVSepSdjfA")
 #+end_src
 #
-*** FIXME org-download
+** [#A] org-bars (heading indentation guides) :package:UI:
+#+begin_src elisp
+(require 'org-bars)
+(after! org (add-hook 'org-mode-hook #'org-bars-mode))
+;; (setq org-bars-stars '(:empty "*" :invisible "*" :visible "*"))
+;; (setq org-bars-stars '(:empty "◦" :invisible "•" :visible "⦿"))
+(setq org-bars-stars '(:empty "*" :invisible "+" :visible "-"))
+(setq org-bars-extra-pixels-height 0) ;; fix gaps in org-bars
+(setq org-bars-with-dynamic-stars-p 't)
+#+end_src
+
+** org-cite :package:
+#+begin_src elisp :tangle no
+;; (setq org-cite-global-bibliography "~/org/roam/Zotero/bibliography.bib")
+(setq org-cite-csl-styles-dir "~/org/roam/Zotero/styles")
+#+end_src
+#
+** FIXME org-download
 Screenshot capture direct to orgmode.
 #+begin_src elisp :tangle no
 
@@ -975,7 +882,23 @@ Screenshot capture direct to orgmode.
   ;;        ("a-y" . org-download-yank)))
 #+end_src
 #
-*** org-special-blocks-extra
+** org-modern :package:UI:
+#+begin_src elisp :tangle no
+(global-org-modern-mode)
+;; (set-face-attribute 'org-modern-symbol nil :family "DM Mono")
+(setq org-modern-star nil)
+(setq org-modern-hide-stars nil)
+#+end_src
+
+** org-noter :package:
+#+begin_src elisp
+(use-package org-noter
+  :after (:any org pdf-view)
+  :config
+  (setq org-noter-always-create-frame nil))  ; stop opening frames
+#+end_src
+#
+** org-special-blocks-extra :package:
 #+begin_src elisp :tangle no
 (add-hook #'org-mode-hook #'org-special-block-extras-mode)
 #+end_src
@@ -1645,21 +1568,7 @@ See `display-line-numbers' for what these values mean."
                (`nil "disabled")
                (_ (symbol-name next))))))
 #+end_src
-** Org Bars (outline vertical guides) :package:UI:
-#+begin_src elisp
-(require 'org-bars)
-(after! org (add-hook 'org-mode-hook #'org-bars-mode))
-;; (setq org-bars-sars '(:empty "*" :invisible "*" :visible "*"))
-;; (setq org-bars-extra-pixels-height 6) ;; fix gaps in org-bars
-#+end_src
 
-** Org Modern :package:UI:
-#+begin_src elisp :tangle no
-(global-org-modern-mode)
-(set-face-attribute 'org-modern-symbol nil :family "DM Mono")
-(setq org-modern-star nil)
-(setq org-modern-hide-stars nil)
-#+end_src
 ** DEPRECATED Hide radio links :UI:fn:
 Hides expanded view of radio tags like links. Works, but a bit forgotten how to toggle (org hidden links?)
 #+begin_src elisp :tangle no
@@ -1719,6 +1628,7 @@ You can include this function in `org-font-lock-set-keywords-hook'."
       (org-show-properties)
     (org-hide-properties)))
 #+end_src
+
 ** window divider
 #+begin_src elisp :tangle no
 (window-divider-mode +1) ;; visible window divider
