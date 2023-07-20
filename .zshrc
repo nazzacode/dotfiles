@@ -85,16 +85,19 @@ alias vim='nvim'
 
 alias wn='dict-wn'
 
-
 # Variables 
 RUST_SRC_PATH='/home/nathan/.rustup/toolchains/stable-x86_64-unknown-linux-gnu'
-
 
 # Souce oh-my-zsh
 source $ZSH/oh-my-zsh.sh
 
+
 # Starship prompt
 # eval "$(starship init zsh)"
+
+# fortune-mod (quote)
+fortune
+
 
 [ -f /opt/miniconda3/etc/profile.d/conda.sh ] && source /opt/miniconda3/etc/profile.d/conda.sh
 

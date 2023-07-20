@@ -5,6 +5,10 @@
 #+PROPERTY: header-args :results silent :comments link :tangle yes
 #+STARTUP: folded
 
+# TODO: don't include Todo states in alphabet sorting
+# TODO: get rid of the stupid EOL dollar sign (treemacs esp.)
+# treemacs: smaller font all round and no bigger font for headings
+
 * Global Configuration
 ** Better Defaults
 Harness the performance advantages of lexical-binding (I think?). See:
@@ -58,6 +62,7 @@ Harness the performance advantages of lexical-binding (I think?). See:
       user-mail-address "nasharp@outlook.com")
 #+END_SRC
 #
+
 * User Interface (UI) :UI:
 ** General
 #+begin_src elisp :tangle yes
@@ -71,7 +76,6 @@ Harness the performance advantages of lexical-binding (I think?). See:
 (remove-hook 'doom-first-buffer-hook #'global-hl-line-mode) ; don't highlight the line
 (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)       ; icons in dired
 #+end_src
-
 
 ** Fringes
 #+begin_src elisp :tangle yes
@@ -106,9 +110,9 @@ Harness the performance advantages of lexical-binding (I think?). See:
 #+END_SRC
 
 ** Fonts
-;; - must set ~doom-font~ size for (disable)-~doom-big-mode~ to return font to orginal size.
 #+begin_src elisp
-;; - must set ~doom-font~ size for (disable)-~doom-big-mode~ to return font to orginal size.
+;; IMPORTANT: must set ~doom-font~ size for (disable)-~doom-big-mode~ to return font to orginal size.
+
 (setq
   ;;; TODO Doom Font: EXPLAIN
   ;; doom-font (font-spec :size 28)
@@ -120,8 +124,11 @@ Harness the performance advantages of lexical-binding (I think?). See:
   ;; doom-font (font-spec :family "Hasklug Nerd Font Mono" :size 26 :height 1.0)
   ;; doom-font (font-spec :family "Agave Nerd Font Mono")
   ;; doom-font (font-spec :family "Noto Sans")
- doom-font (font-spec :family "Source Code Pro" :size 28 :height 1.0)
+ doom-font (font-spec :family "Source Code Pro" :size 18)
+  ;; :size 28 :height 1.0)
   ;;; Variable Pitch:
+ doom-variable-pitch-font (font-spec :family "Source Code Pro")
+                            ;; :size 28 :height 1.0)
   ;; doom-variable-pitch-font (font-spec :height 1.0)
   ;; doom-variable-pitch-font (font-spec :family "Cousine Nerd Font Mono" :height 1.0)
  ;; doom-variable-pitch-font (font-spec :family "ETBookOT" :height 1.5)
@@ -207,20 +214,6 @@ Harness the performance advantages of lexical-binding (I think?). See:
 ;; color: do in theme 'vertical-bar'
 #+end_src
 
-** FIXME Scroll bar (~yascroll~) :UI:package:
-#+begin_src elisp :tangle no
-(add-hook! 'prog-mode-hook #'yascroll-bar-mode)
-(add-hook! 'org-mode-hook #'yascroll-bar-mode)
-(setq yascroll:delay-to-hide 20)
-;; (add-hook 'yascroll-bar-mode-hook (fringe-mode '8))
-
-;; (custom-set-faces!
-;;  `(yascroll:thumb-fringe :foreground ,(doom-color 'base7) :background
-;; ,(doom-color 'base7))
-;;  `(yascroll:thumb-text-area :foreground ,(doom-color 'base7) .  . . . .  . . X . . . . .  . . . . . . . . . . . . . . . . .:background                      .
-;; ,(doom-color 'base7)))
-#+end_src
-
 ** Column cutoff ~visual-fill-mode~)
 Cuts off column.
 #+begin_src elisp
@@ -250,6 +243,32 @@ keybindings: [[id:3b8fab69-b666-40b1-aba2-e8643f1ecc1c][Column cutoff ~visual-fi
   ))
 #+end_src
 
+** Disable spellcheck (~spell-fu~ (not ~flyspell~))
+#+begin_src elisp
+(remove-hook 'text-mode-hook #'spell-fu-mode)
+#+end_src
+
+** No background color in terminal
+#+begin_src elisp
+;; NO background color in terminal
+(defun on-frame-open (&optional frame)
+  "If the FRAME created in terminal don't load background color."
+  (unless (display-graphic-p frame)
+    (set-face-background 'default "unspecified-bg" frame)))
+(add-hook 'after-make-frame-functions 'on-frame-open)
+#+end_src
+
+** FIXME Scroll bar (~yascroll~) :package:
+#+begin_src elisp
+(add-hook! 'prog-mode-hook #'yascroll-bar-mode)
+(add-hook! 'org-mode-hook #'yascroll-bar-mode)
+(setq yascroll:delay-to-hide nil)
+;; (add-hook 'yascroll-bar-mode-hook (fringe-mode '8))
+
+(custom-set-faces!
+ `(yascroll:thumb-fringe :foreground "grey" :background "grey"))
+#+end_src
+
 ** ~highligh-indent-guide~ (code fences) :package:
 #+begin_src elisp :tangle yes
 ;; Highlight-indent-guide (package)
@@ -266,19 +285,20 @@ keybindings: [[id:3b8fab69-b666-40b1-aba2-e8643f1ecc1c][Column cutoff ~visual-fi
         (evil-terminal-cursor-changer-activate))
 #+end_src
 
-** Disable spellcheck (~spell-fu~ (not ~flyspell~))
+** ~imenu-list~ (outline) :package:keybinding:
 #+begin_src elisp
-(remove-hook 'text-mode-hook #'spell-fu-mode)
+(setq imenu-list-focus-after-activation t
+      imenu-list-position 'right)
+      ;; imenu-list-size 0.15
+      ;; imenu-list-auto-resize t)
 #+end_src
 
-** No background color in terminal
+** window divider thickness
 #+begin_src elisp
-;; NO background color in terminal
-(defun on-frame-open (&optional frame)
-  "If the FRAME created in terminal don't load background color."
-  (unless (display-graphic-p frame)
-    (set-face-background 'default "unspecified-bg" frame)))
-(add-hook 'after-make-frame-functions 'on-frame-open)
+(window-divider-mode +1) ;; visible window divider
+(setq window-divider-default-bottom-width 3 ; size in pixels
+      window-divider-default-right-width 3)
+;; NOTE: name in theme: 'vertical-bar'
 #+end_src
 
 * Dashboard
@@ -365,8 +385,6 @@ keybindings: [[id:3b8fab69-b666-40b1-aba2-e8643f1ecc1c][Column cutoff ~visual-fi
 ;;   (add-hook 'text-mode-hook #'mini-modeline-mode))
 #+end_src
 
-#
-
 * Completion (company)
 ** FIXME main
 #+begin_src elisp
@@ -416,7 +434,7 @@ keybindings: [[id:3b8fab69-b666-40b1-aba2-e8643f1ecc1c][Column cutoff ~visual-fi
 #+end_src
 #
 * Org Mode
-** General (including UI) :UI:
+** General :UI:
 :PROPERTIES:
 :ID:       c6cc679a-b4e7-463f-8082-a8ac0bbbdf2e
 :END:
@@ -425,15 +443,15 @@ keybindings: [[id:3b8fab69-b666-40b1-aba2-e8643f1ecc1c][Column cutoff ~visual-fi
   (add-hook! 'org-mode-hook #'+org-pretty-mode   ; hides emphasis markers and toggles "pretty entities"
                             #'visual-fill-column-mode
                             #'org-appear-mode))    ; expand invisible emphasis markers etc.
-                            ;; #'mixed-pitch-mode)) ; uses var-pitch font for text; writeroom does this (and doesnt turn it off on exit!)
+
 (after! org
   (setq org-directory "~/org"              ; dir for agenda etc.
         org-startup-folded 't
         org-num-skip-unnumbered 't         ; skip `:UNNUMBERED:` from numbering
         org-ellipsis " "                   ; "  "
         ;; display-line-numbers-type 'nil     ; no line numbers by default in org
-        ;; org-image-actual-width 450      ; set default width ; FIXME cannot override
-        ;; org-startup-with-latex-preview 't ; TODO test breaking?
+        ;; org-image-actual-width 450         ; set default width ; FIXME cannot override
+        ;; org-startup-with-latex-preview 't  ; TODO test breaking?
         org-startup-shrink-all-tables 't
         ;; org-startup-indented 'nil          ; dont indent in nested headings
         org-id-link-to-org-use-id 't
@@ -443,16 +461,15 @@ keybindings: [[id:3b8fab69-b666-40b1-aba2-e8643f1ecc1c][Column cutoff ~visual-fi
         ;; org-appear-autokeywords 't         ; auto apear elements in `org-hidden-keywords'
         org-startup-with-inline-images 't
         org-indent-indentation-per-level 2
+            org-adapt-indentation t
         org-startup-folded 't))
-
-(setq org-adapt-indentation t)
 #+end_src
 
 ** Headings
 #+begin_src elisp
 ;; `weights:' can be [normal, semi-bold, bold]
 (custom-set-faces!
-  '(outline-1 :weight normal :height 1.0) ;1.26) ;1.12)
+  '(outline-1 :weight normal :height 1.0 :underline "grey") ;1.26) ;1.12)
   '(outline-2 :weight normal :height 1.0) ;1.16) ;1.08)
   '(outline-3 :weight normal :height 1.0) ;1.10) ;1.05)
   '(outline-4 :weight normal :height 1.0) ;1.06) ;1.03)
@@ -461,11 +478,10 @@ keybindings: [[id:3b8fab69-b666-40b1-aba2-e8643f1ecc1c][Column cutoff ~visual-fi
   '(outline-7 :weight normal)
   '(outline-8 :weight normal)
   '(org-document-title :weight normal :height 1.0)); 1.8)) ; 1.2
-
 ;; Previous symbols: '( "◉" "○" "⎊" "⎉" "⊛" "⊚" "◦" "◘")
 #+end_src
 
-** Todo's
+** Todo's :UI:
 #+begin_src elisp
 (after! org
   (setq org-todo-keywords '(
@@ -527,8 +543,8 @@ keybindings: [[id:3b8fab69-b666-40b1-aba2-e8643f1ecc1c][Column cutoff ~visual-fi
 )
 #+end_src
 #
-** Tags
-#+begin_src elisp
+** FIXME Tags
+#+begin_src elisp :tangle no
 (setq org-tag-persistent-alist
       '((:startgroup . nil)
         ("uni" . ?u)
@@ -545,19 +561,7 @@ keybindings: [[id:3b8fab69-b666-40b1-aba2-e8643f1ecc1c][Column cutoff ~visual-fi
         ("noexport" . ?x)
 ))
 #+end_src
-#
-** Tables
-#+begin_src elisp :tangle no
-;; Horizontal scrolling for tables
-(require 'phscroll)
-(after! org
-  (setq org-startup-truncated nil)
-  (load "org-phscroll.el"))
 
-;; (add-hook 'org-mode-hook #'valign-mode)
-;; (setq valign-fancy-bar 'non-nil)
-#+end_src
-#
 ** Babel (src blocks)
 *** main
 #+begin_src elisp
@@ -571,6 +575,7 @@ keybindings: [[id:3b8fab69-b666-40b1-aba2-e8643f1ecc1c][Column cutoff ~visual-fi
     (:hlines . "no")
     (:tangle . "no")
     (:comments . "link")))
+
 ;; Babel languages
 (org-babel-do-load-languages
   'org-babel-load-languages
@@ -586,6 +591,7 @@ keybindings: [[id:3b8fab69-b666-40b1-aba2-e8643f1ecc1c][Column cutoff ~visual-fi
       ;; (sh . t)
       (typescript . t)
       (jupyter . t)))  ; NOTE: jupyter must be load last
+
 ;; Typescript
 (defun org-babel-execute:typescript (body params)
   (let ((org-babel-js-cmd "npx ts-node < "))
@@ -593,14 +599,21 @@ keybindings: [[id:3b8fab69-b666-40b1-aba2-e8643f1ecc1c][Column cutoff ~visual-fi
 
 ;; (defalias 'org-babel-execute:ts 'org-babel-execute:typescript) ; FIXME
 #+end_src
-#
+
 *** fix emacs-jupyter output results ansi formatting
 #+begin_src elisp
 (defun display-ansi-colors ()
 (ansi-color-apply-on-region (point-min) (point-max)))
 (add-hook 'org-babel-after-execute-hook #'display-ansi-colors)
 #+end_src
-#
+
+*** make org-edit-special (src block) popup in current buffer :UI:
+#+begin_src elisp
+(after! org
+  (setq org-src-window-setup 'current-window)
+  (set-popup-rule! "^\\*Org Src" :ignore t))
+#+end_src
+
 ** Hide/Show Properties Drawer :fn:
 :PROPERTIES:
 :ID:       8efa6cae-1ae0-470a-a4fb-999fe506a2a5
@@ -634,7 +647,7 @@ keybindings: [[id:3b8fab69-b666-40b1-aba2-e8643f1ecc1c][Column cutoff ~visual-fi
 #+end_src
 #
 ** Export
-*** General
+*** main
 #+begin_src elisp :tangle no
 (setq org-export-headline-levels 6) ; I like nesting
 
@@ -643,7 +656,7 @@ keybindings: [[id:3b8fab69-b666-40b1-aba2-e8643f1ecc1c][Column cutoff ~visual-fi
       (format "Emacs %s (Org mode %s %s)" emacs-version (org-release) (org-git-version)))
 #+end_src
 #
-*** HTML Export
+*** HTML export
 #+begin_src elisp :tangle no
 ;; TODO move template to .doom.d folder!
 
@@ -663,7 +676,7 @@ keybindings: [[id:3b8fab69-b666-40b1-aba2-e8643f1ecc1c][Column cutoff ~visual-fi
 ;;          org-html-style-default)))
 #+end_src
 #
-*** Latex Export
+*** Latex export
 #+begin_src elisp
 (require 'ox-extra)
 (ox-extras-activate '(ignore-headlines))
@@ -744,7 +757,10 @@ keybindings: [[id:3b8fab69-b666-40b1-aba2-e8643f1ecc1c][Column cutoff ~visual-fi
       ("\\subsection{%s}" . "\\subsection*{%s}")
       ("\\subsubsection{%s}" . "\\subsubsection*{%s}")))))
 #+end_src
-#
+
+
+*** TODO Docx export
+
 ** Hide radio links :UI:
 Hides expanded view of radio tags like links. Works, but a bit forgotten how to toggle (org hidden links?)
 #+begin_src elisp
@@ -800,7 +816,51 @@ You can include this function in `org-font-lock-set-keywords-hook'."
 (plist-put org-format-latex-options :justify 'center)
 #+end_src
 #
-** emacs-jupyter :package:
+** Headerline
+#+begin_src elisp
+(defun ndk/set-header-line-format()
+  (setq header-line-format '(:eval (ndk/org-breadcrumbs))))
+
+(add-hook 'org-mode-hook #'ndk/set-header-line-format)
+
+(defun ndk/heading-title ()
+   "Get the heading title."
+   (save-excursion
+     (if (not (org-at-heading-p))
+       (org-previous-visible-heading 1))
+     (org-element-property :title (org-element-at-point))))
+
+(defun ndk/org-breadcrumbs ()
+   "Get the chain of headings from the top level down
+    to the current heading."
+   (let ((breadcrumbs (org-format-outline-path
+                         (org-get-outline-path)
+                         (1- (frame-width))
+                         nil "/"))
+         (title (ndk/heading-title)))
+     (if (string-empty-p breadcrumbs)
+         title
+       (format "%s/%s" breadcrumbs title))))
+
+
+#+end_src
+
+** Hide radio-target syntax in node name
+#+begin_src elisp
+(defun org-link-display-format-h (s)
+  "Replace radio links in string S with their description.
+If there is no description, use the link target."
+  (save-match-data
+    (replace-regexp-in-string
+     org-radio-target-regexp
+     (lambda (m) (or (match-string 2 m) (match-string 1 m)))
+     s nil t)))
+
+(advice-add  'org-link-display-format :filter-return 'org-link-display-format-h)
+#+end_src
+
+* Org-mode packages :package:
+** ~emacs-jupyter~
 #+begin_src elisp
 ;; TypeScript
 (setq org-babel-default-header-args:jupyter-typescript '(
@@ -830,22 +890,8 @@ You can include this function in `org-font-lock-set-keywords-hook'."
 )
 #+end_src
 #
-** REMOVE helm-bibtex :package:
-#+begin_src elisp
-(after! org
-  (setq bibtex-completion-bibliography "~/org/roam/Zotero/bibliography.bib"
-        bibtex-completion-library-path "~/org/roam/Zotero/storage/."
-        bibtex-completion-notes-path "~/org/roam/Zotero/storage"))
-#+end_src
-#
-** UPDATE hypothesis :package:
-Hypothesis is a great web extension for highlighting and taking notes on web pages. The emacs extension allows these to be imported into org mode.
-#+begin_src elisp
-(setq hypothesis-username "nazzacode"
-      hypothesis-token "6879-DJYjeV3gat2emzWKlSGkQu20tQTvQK3s7xVSepSdjfA")
-#+end_src
-#
-** [#A] org-bars (heading indentation guides) :package:UI:
+
+** ~org-bars~ (heading indentation guides) :UI:
 #+begin_src elisp
 (require 'org-bars)
 (after! org (add-hook 'org-mode-hook #'org-bars-mode))
@@ -856,41 +902,21 @@ Hypothesis is a great web extension for highlighting and taking notes on web pag
 (setq org-bars-with-dynamic-stars-p 't)
 #+end_src
 
-** org-cite :package:
+** ~org-cite~ (citation manager)
 #+begin_src elisp :tangle no
 ;; (setq org-cite-global-bibliography "~/org/roam/Zotero/bibliography.bib")
 (setq org-cite-csl-styles-dir "~/org/roam/Zotero/styles")
 #+end_src
 #
-** FIXME org-download
-Screenshot capture direct to orgmode.
-#+begin_src elisp :tangle no
-
-(require 'org-download)
-(add-hook 'dired-mode-hook 'org-download-enable)  ; allow in dired
-;; (setq org-download-screenshot-method "xclip")
-(setq org-download-screenshot-method "spectacle")
-(setq-default org-download-image-dir "~/org/roam/Images")
-;; NOTE: Set for individual files with:
-;; -*- mode: Org; org-download-image-dir: "~/org/roam/Images"; -*-
-
-  ;; (use-package org-download
-  ;; :after org
-  ;; :bind
-  ;; (:map org-mode-map
-  ;;       (("a-Y" . org-download-screenshot)
-  ;;        ("a-y" . org-download-yank)))
-#+end_src
-#
-** org-modern :package:UI:
-#+begin_src elisp :tangle no
+** ~org-modern~ :UI:package:
+#+begin_src elisp
 (global-org-modern-mode)
 ;; (set-face-attribute 'org-modern-symbol nil :family "DM Mono")
-(setq org-modern-star nil)
-(setq org-modern-hide-stars nil)
+(setq org-modern-star nil
+      org-modern-hide-stars nil)
 #+end_src
 
-** org-noter :package:
+** ~org-noter~ :PDF:
 #+begin_src elisp
 (use-package org-noter
   :after (:any org pdf-view)
@@ -898,25 +924,13 @@ Screenshot capture direct to orgmode.
   (setq org-noter-always-create-frame nil))  ; stop opening frames
 #+end_src
 #
-** org-special-blocks-extra :package:
-#+begin_src elisp :tangle no
-(add-hook #'org-mode-hook #'org-special-block-extras-mode)
-#+end_src
-#
-* Org-roam
-** General
-See: [[https://www.orgroam.com/manual.html][org-roam manual]]
+** ~org-roam~
+*** main
 #+begin_src elisp
-(setq org-roam-directory "~/org/roam")
-
-      ;; +org-roam-open-buffer-on-find-file nil)
-
-; FIXME: way to exclude nodes in roam-dir from search graph
-;; (setq org-roam-db-node-include-function (lambda ()
-;;   (not (member "ROAM_EXCLUDE" (org-get-tags)))))
+(setq org-roam-directory "~/org")
 #+end_src
-#
-** Org Roam Capture Templates
+
+*** MAYBE org-roam capture templates
 :PROPERTIES:
 :ID:       f1adfb35-ad24-4956-9d91-22461b485a94
 :END:
@@ -1015,96 +1029,98 @@ See: [[https://www.orgroam.com/manual.html][org-roam manual]]
     :unnarrowed t)))
 #+end_src
 
-** Hide radio-target syntax in node name
-NOt needed anymore?
+** ~ox-odt~ :export:
 #+begin_src elisp
-(defun org-link-display-format-h (s)
-  "Replace radio links in string S with their description.
-If there is no description, use the link target."
-  (save-match-data
-    (replace-regexp-in-string
-     org-radio-target-regexp
-     (lambda (m) (or (match-string 2 m) (match-string 1 m)))
-     s nil t)))
+;; missing package
+(require 'dom)
+#+end_src
 
-(advice-add  'org-link-display-format :filter-return 'org-link-display-format-h)
+** UPDATE ~hypothesis~
+Hypothesis is a great web extension for highlighting and taking notes on web pages. The emacs extension allows these to be imported into org mode.
+#+begin_src elisp
+(setq hypothesis-username "nazzacode"
+      hypothesis-token "6879-DJYjeV3gat2emzWKlSGkQu20tQTvQK3s7xVSepSdjfA")
 #+end_src
 #
-** Packages
-:PROPERTIES:
-:ID:       0a2cd5a0-816a-462f-9e9e-c0b6e92d086d
-:END:
-*** DEPRECATED Org-roam-bibtex (ORB)
+** FIXME ~org-download~
+Screenshot capture direct to orgmode.
 #+begin_src elisp :tangle no
-(use-package! org-roam-bibtex
-  :after (org-roam)
-  :hook (org-roam-mode . org-roam-bibtex-mode)
-  :config
-  (require 'org-ref)) ; optional: if Org Ref is not loaded anywhere else, load it here
 
-;;   (setq orb-preformat-keywords
-;;       '("citekey" "title" "url" "author-or-editor" "keywords" "file")
-;;       orb-process-file-keyword t
-;;       orb-file-field-extensions '("pdf"))
-;;   ;; (setq orb-preformat-keywords
-;;   ;; '("=key=" "title" "url" "file" "author-or-editor" "keywords"))
-;;   (setq orb-templates
-;;     '(("r" "ref" plain (function org-roam-fapture--get-point)
-;;      ""
-;;      :file-name "${slug}"
-;;      :head "#+TITLE: ${citekey}: ${title}\n#+roam_key: ${ref}\n#+roam_tags:
+(require 'org-download)
+(add-hook 'dired-mode-hook 'org-download-enable)  ; allow in dired
+;; (setq org-download-screenshot-method "xclip")
+(setq org-download-screenshot-method "spectacle")
+(setq-default org-download-image-dir "~/org/roam/Images")
+;; NOTE: Set for individual files with:
+;; -*- mode: Org; org-download-image-dir: "~/org/roam/Images"; -*-
 
-;; - keywords :: ${keywords}
-
-;; \n* ${title}
-;; :PROPERTIES:
-;; :Custom_ID: ${citekey}
-;; :URL: ${url}
-;; :AUTHOR: ${author-or-editor}
-;; :NOTER_DOCUMENT: ${file}
-;; :NOTER_PAGE:
-;; :END:"
-;;      :unnarrowed t))))
+  ;; (use-package org-download
+  ;; :after org
+  ;; :bind
+  ;; (:map org-mode-map
+  ;;       (("a-Y" . org-download-screenshot)
+  ;;        ("a-y" . org-download-yank)))
 #+end_src
 #
-*** org-roam-ui
+** MAYBE ~org-special-blocks-extra~
+#+begin_src elisp :tangle no
+(add-hook #'org-mode-hook #'org-special-block-extras-mode)
+#+end_src
+
+** MAYBE ~org-roam-ui~
 #+begin_src elisp
 (use-package! websocket
     :after org-roam)
 
 (use-package! org-roam-ui
-    :after org-roam ;; or :after org
-;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
-;;         a hookable mode anymore, you're advised to pick something yourself
-;;         if you don't care about startup time, use
-    ;; :hook (after-init . org-roam-ui-mode)
+    :after org-roam
     :config
     (setq org-roam-ui-sync-theme t
           org-roam-ui-follow t
           org-roam-ui-update-on-save t
           org-roam-ui-open-on-start t))
 #+end_src
+
+** DEPRECATED ~phscroll~ :tables:
+#+begin_src elisp :tangle no
+;; Horizontal scrolling for tables
+(require 'phscroll)
+(after! org
+  (setq org-startup-truncated nil)
+  (load "org-phscroll.el"))
+
+;; (add-hook 'org-mode-hook #'valign-mode)
+;; (setq valign-fancy-bar 'non-nil)
+#+end_src
+#
+** REMOVE ~helm-bibtex~
+#+begin_src elisp
+(after! org
+  (setq bibtex-completion-bibliography "~/org/roam/Zotero/bibliography.bib"
+        bibtex-completion-library-path "~/org/roam/Zotero/storage/."
+        bibtex-completion-notes-path "~/org/roam/Zotero/storage"))
+#+end_src
 #
 * Dired
 #+begin_src elisp
-;; only open one dired buffer at a time
 
-(setf dired-kill-when-opening-new-dired-buffer t)
+(add-hook 'dired-mode-hook 'dired-hide-details-mode) ; hide details (show with `(`)
+(setf dired-kill-when-opening-new-dired-buffer t)    ; one butter at a time
 
-(add-hook 'dired-mode-hook 'dired-hide-details-mode)
 #+end_src
 #
-* Agenda
+* MAYBE Agenda
 :PROPERTIES:
 :ID:       944f3c98-54c4-4a7c-a6ed-7c609fc340ce
 :END:
-** General
+# TODO: return to gcal integration glory (there was some double occurance bug last time)
+** main
 #+begin_src elisp :tangle no
 ;; (custom-set-variables '(org-agenda-files (list "~/org/roam/gcal.org")))
  (setq org-agenda-files '("~/org/roam/gcal.org"))
 #+end_src
 #
-** Clean category column garbage
+** DEPRECATED clean category column garbage
 #+begin_src elisp :tangle no
 (setq org-agenda-prefix-format
       '((agenda . " %i %-12(vulpea-agenda-category)%?-12t% s")
@@ -1150,24 +1166,18 @@ Refer to `org-agenda-prefix-format' for more information."
        (match-end 1)))))
 #+end_src
 #
-* Calendar
+* MAYBE Calendar (~gcal~ + ~calfw~)
 #+begin_src elisp :tangle no
 ;; gcal integration
 (require 'calfw)
 (require 'org-gcal)
+(require 'calfw-ical)
+(require 'calfw-org)
 
+;; NOTE: requires gpg (gnupg)
 (setq org-gcal-client-id "189857002612-bei34shug7gu4ft5ssi5mfedl1kb50u2.apps.googleusercontent.com"
       org-gcal-client-secret "jMCbPjcHaUWrGu02yUVwIi1m"
       org-gcal-fetch-file-alist '(("nathansharp03@gmail.com" .  "~/org/roam/gcal.org")))
-
-                                  ;; ("another-mail@gmail.com" .  "~/task.org")))
-;; NOTE: requires gpg (gnupg)
-
-;; Pull into single calender
-;; (require 'calfw-cal)
-(require 'calfw-ical)
-;;(require 'calfw-howm)
-(require 'calfw-org)
 
 (defun my-open-calendar ()
   (interactive)
@@ -1184,34 +1194,21 @@ Refer to `org-agenda-prefix-format' for more information."
 )))
 
 (setq package-check-signature nil)
-
-;; duplication of defualt behavior
-;; TODO on startup?
-;; (add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync) ))
-;; (add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync) ))
-
 #+end_src
-#
-* Latex
-#+begin_src elisp
-(setq org-format-latex-options
-  (list
-        :foreground 'default  ;; or `auto'
-        ;; :background 'auto
-        :scale 1.1  ;; bigger latex fragment
-        ;; :html-foreground "Black"
-        ;; :html-background "Transparent"
-        ;; :html-scale 1.0
-        :matchers '("begin" "$1" "$" "$$" "\\(" "\\[")))
+
+* Packages :package:
+** ~git-gutter~
+#+begin_src elisp 
+(after! git-gutter
+  (setq git-gutter:disabled-modes '(org-mode image-mode)))
 #+end_src
-#
-** [[id:4272fde4-d8c9-4932-af2c-01d2522f7baa][Latex Fragments]]
-* Packages
+
 ** ~good-scroll~
 #+begin_src elisp
 (good-scroll-mode 1)
 #+end_src
-** Graphviz (dot)
+
+** graphviz (dot)
 #+begin_src elisp :tangle no
 (use-package! graphviz-dot-mode
   :commands graphviz-dot-mode
@@ -1227,7 +1224,7 @@ Refer to `org-agenda-prefix-format' for more information."
 ;;   :after graphviz-dot-mode)
 #+end_src
 #
-** LSP
+** lsp
 #+begin_src elisp
 (setq lsp-ui-doc-enable t
       lsp-ui-doc-show-with-cursor t
@@ -1242,10 +1239,8 @@ Refer to `org-agenda-prefix-format' for more information."
       lsp-completion-show-detail t
       lsp-completion-show-kind t)
 #+end_src
-** ~lsp-ui-imenu~
-# TODO open in reduced font and less width
 
-** Nov.el
+** DEPRECATED ~nov.el~
 #+begin_src elisp :tangle no
 (add-to-list 'auto-mode-alist '("\\.epub\\'" . nov-mode))
 
@@ -1290,9 +1285,7 @@ Refer to `org-agenda-prefix-format' for more information."
 ;; (add-hook 'nov-post-html-render-hook 'my-nov-post-html-render-hook)
 #+end_src
 #
-** [[id:36686cfd-9aaa-4886-bbfd-c5e64f9e1f67][Org mode packages]]
-** [[id:0a2cd5a0-816a-462f-9e9e-c0b6e92d086d][Org-roam packages]]
-** Pdf (tools)
+** UPDATE ~pdf-tools~
 #+begin_src elisp
 ;; more fine-grained zooming
 (setq pdf-view-resize-factor 1.05)
@@ -1341,27 +1334,23 @@ Refer to `org-agenda-prefix-format' for more information."
 ;;   (my-pdf-view-double-scroll-up-or-next-page)
 ;;   (enlarge-window 1)
 ;;   (other-window 1))
-
-
 #+end_src
-#
-** Tree sittier
+
+** ~treemacs~ (file browser)
+#+begin_src elisp
+(setq treemacs-width 30)
+(setq treemacs--width-is-locked nil)
+(setq treemacs-width-is-initially-locked nil)
+(setq doom-themes-treemacs-enable-variable-pitch nil)
+#+end_src
+
+** ~tree sittier~ (code hl) :UI:
 #+begin_src elisp
 (use-package! tree-sitter
   :config
   (require 'tree-sitter-langs)
   (global-tree-sitter-mode)
   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
-#+end_src
-
-** Writeroom mode
-#+begin_src elisp
-(with-eval-after-load 'writeroom-mode
-  (define-key writeroom-mode-map (kbd "C-M-<") #'writeroom-decrease-width)
-  (define-key writeroom-mode-map (kbd "C-M->") #'writeroom-increase-width)
-  (define-key writeroom-mode-map (kbd "C-M-=") #'writeroom-adjust-width))
-
-(add-hook 'writeroom-mode-hook #'(lambda () (text-scale-increase 1)))
 #+end_src
 
 * Languages
@@ -1390,44 +1379,10 @@ Refer to `org-agenda-prefix-format' for more information."
 (setq tide-completion-detailed t)
 #+end_src
 #
-** Solidity
-#+begin_src elisp :tangle no
-;; (require 'flycheck)
-;; (require 'solidity-flycheck)
-
-;; ;; Linter Paths
-;; (setq solidity-solc-path "/usr/bin/solcjs")
-;; (setq solidity-solium-path "/usr/bin/solium")
-
-;; (require 'solidity-mode)
-
-
-;; (setq solidity-flycheck-solc-checker-active t)
-;; (setq solidity-flycheck-solium-checker-active t)
-
-(setq solidity-comment-style 'slash)
-
-(add-hook 'after-init-hook #'global-flycheck-mode)
-
-;; (setq solidity-solc-path "/usr/bin/solcjs")
-
-(setq solidity-solium-path "/usr/bin/solium")
-;; (setq flycheck-solidity-solium-soliumrcfile "~/.soliumrc.json")
-
-(setq solidity-flycheck-solium-checker-active t)
-
-(require 'solidity-flycheck)
-
-;; (add-hook 'solidity-mode-hook
-;;   (lambda ()
-;;   (set (make-local-variable 'company-backends)
-;;     (append '((company-solidity company-capf company-dabbrev-code))
-;;       company-backends))))
-#+end_src
-#
-** TODO Julia
-* My Functions
-#+begin_src elisp :tangle no
+** TODO Rust 
+* My Functions :my:fn:
+** split paragraphs into lines
+#+begin_src elisp
 (defun my-split-pararagraph-into-lines ()
   "Split current paragraph into lines with one sentence each."
   (interactive)
@@ -1449,159 +1404,12 @@ Refer to `org-agenda-prefix-format' for more information."
         (when (looking-at "^$")
           (backward-delete-char 1))))))
 #+end_src
-
-* My Keybindings :my:
-:PROPERTIES:
-:ID:       f92454e0-c4da-451a-9da9-ae118c1d8947
-:END:
-** note
-From the [[https://discourse.doomemacs.org/t/how-to-re-bind-keys/56][doom documentation on keybindings]]:
-#+begin_quote
-Emacs reads keymaps to determine what to do when you type in a key sequence. A
-keymap is a mapping of key sequences to commands (and each key=>command mapping
-is a keybind). At any time Emacs has a hierarchy of active keymaps, all vying
-for precedence. *Keymaps with higher precedence will override keymaps with lower
-precedence.* i.e. If you press a key, Emacs will travel down the list of active
-keymaps from  highest to lowest precedence until it finds a matching keybind.
-#+end_quote
-
-** mixed pitch mode :example:
-#+begin_src elisp
-(map! :leader
-      (:prefix-map ("t" . "toggle")
-       :desc "mixed pitch mode" "p" #'mixed-pitch-mode))
-#+end_src
-
-** VS code emulation
-    #+begin_src elisp
-;; comment lines
-(define-key global-map (kbd "C-/") #'evilnc-comment-or-uncomment-lines)
-;; TODO move lines up/down
-    #+end_src
-
-** outline (~lsp-ui-imenu~)
-#+begin_src elisp :tangle yes
-(map! :leader
-      (:prefix-map ("t" . "toggle")
-       :desc "lsp-ui-imenu ([o]utline contents)" "o" #'lsp-ui-imenu))
-#+end_src
-
-** Column cutoff ~visual-fill-column~ (better zen/writeroom mode)
-:PROPERTIES:
-:ID:       3b8fab69-b666-40b1-aba2-e8643f1ecc1c
-:END:
-#+begin_src elisp
-(add-hook 'visual-fill-column-mode-hook (setq visual-fill-column-width my-visual-fill-column-width))
-
-(map! :leader
-      (:prefix-map ("t" . "toggle")
-       :desc "visual fill column" "z" #'visual-fill-column-mode))
-       ;; :desc "visual fill column" "z" (lambda () (interactive) (setq visual-fill-column-width my-visual-fill-column-width) (#'visual-fill-column-mode))))
-#+end_src
-
-** git diff fringe(~diff-hl~) :package:UI:
-#+begin_src elisp
-;;   (global-diff-hl-mode -1) ;; FIXME
-(map! :leader
-      (:prefix-map ("t" . "toggle")
-       :desc "git diff-hl fringe" "d" #'diff-hl-mode))
-#+end_src
-
-* [!] Experimental
-* TODO To add back
-** ~highligh-indent-guide~ (code fences) :package:
-#+begin_src elisp :tangle no
-;; Highlight-indent-guide (package)
-(setq highlight-indent-guides-method 'character
-      highlight-indent-guides-responsive 'stack)
-(add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
-(add-hook 'org-mode-hook 'highlight-indent-guides-mode)  ; FIXME background off in code blocks
- #+end_src
-
-** Don't load background in terminal :fn:
-#+begin_src elisp :tangle no:tangle no
-(defun on-frame-open (&optional frame)
-  "If the FRAME created in terminal don't load background color."
-  (unless (display-graphic-p frame)
-    (set-face-background 'default "unspecified-bg" frame)))
-(add-hook 'after-make-frame-functions 'on-frame-open)
-;; (defun on-frame-open (frame)
-;;   (if (not (display-graphic-p frame))
-;;     (set-face-background 'default "unspecified-bg" frame)))
-;; (on-frame-open (selected-frame))
-;; (add-hook 'after-make-frame-functions 'on-frame-open)
-;; (defun on-after-init ()
-;;   (unless (display-graphic-p (selected-frame))
-;;     (set-face-background 'default "unspecified-bg" (selected-frame))))
-;; (add-hook 'window-setup-hook 'on-after-init)
- #+end_src
-**
-#+begin_src elisp :tangle no
-org-startup-indented 't             ; dont indent in nested headings
-#+end_src
-
-** no 'relative' line numbers :fn:
-# FIXME: make load on startup
-#+begin_src elisp :tangle no:tangle yes
-;; lib: lisp/lib/ui.el
-(eval-after-load "ui" ;; <- TODO package name?
-'(defun doom/toggle-line-numbers ()
-  "Toggle line numbers.
-Cycles through regular, relative and no line numbers. The order depends on what
-`display-line-numbers-type' is set to. If you're using Emacs 26+, and
-visual-line-mode is on, this skips relative and uses visual instead.
-See `display-line-numbers' for what these values mean."
-  (interactive)
-  (defvar doom--line-number-style display-line-numbers-type)
-  (let* ((styles `(t nil))
-         (order (cons display-line-numbers-type (remq display-line-numbers-type styles)))
-         (queue (memq doom--line-number-style order))
-         (next (if (= (length queue) 1)
-       
-                 (car (cdr queue)))))
-    (setq doom--line-number-style next)
-    (setq display-line-numbers next)
-    (message "Switched to %s line numbers"
-
-             (pcase next
-               (`t "normal")
-               (`nil "disabled")
-               (_ (symbol-name next))))))
-#+end_src
-
-** DEPRECATED Hide radio links :UI:fn:
-Hides expanded view of radio tags like links. Works, but a bit forgotten how to toggle (org hidden links?)
-#+begin_src elisp :tangle no
-(defcustom org-hidden-links-additional-re "\\(<<<\\)[[:print:]]+?\\(>>>\\)"
-  "Regular expression that matches strings where the invisible-property of the sub-matches 1 and 2 is set to org-link."
-  :type '(choice (const :tag "Off" nil) regexp)
-  :group 'org-link)
-(make-variable-buffer-local 'org-hidden-links-additional-re)
-
-(defun org-activate-hidden-links-additional (limit)
-  "Put invisible-property org-link on strings matching `org-hide-links-additional-re'."
-  (if org-hidden-links-additional-re
-      (re-search-forward org-hidden-links-additional-re limit t)
-    (goto-char limit)
-    nil))
-
-(defun org-hidden-links-hook-function ()
-  "Add rule for `org-activate-hidden-links-additional' to `org-font-lock-extra-keywords'.
-You can include this function in `org-font-lock-set-keywords-hook'."
-  (add-to-list 'org-font-lock-extra-keywords
-                              '(org-activate-hidden-links-additional
-                                (1 '(face org-target invisible org-link))
-                (2 '(face org-target invisible org-link)))))
-
-(add-hook 'org-font-lock-set-keywords-hook #'org-hidden-links-hook-function)
-
-#+end_src
-#
-** Hide/show properties drawer :fn:
+*
+** Hide/show properties drawer
 :PROPERTIES:
 :ID:       8efa6cae-1ae0-470a-a4fb-999fe506a2a5
 :END:
-#+begin_src elisp :tangle no
+#+begin_src elisp 
 ;; Funtion to hide/unhide the properties drawer
 (defun my/org-toggle-properties ()
   "Hide all org-mode headline property drawers in buffer. Could be slow if it has a lot of overlays."
@@ -1629,43 +1437,108 @@ You can include this function in `org-font-lock-set-keywords-hook'."
     (org-hide-properties)))
 #+end_src
 
-** window divider
-#+begin_src elisp :tangle no
-(window-divider-mode +1) ;; visible window divider
-(setq window-divider-default-bottom-width 3 ; size in pixels
-      window-divider-default-right-width 3)
-;; NOTE: name in theme: 'vertical-bar'
+* My Keybindings :my:
+:PROPERTIES:
+:ID:       f92454e0-c4da-451a-9da9-ae118c1d8947
+:END:
+** column cutoff ~visual-fill-column~ (better zen/writeroom mode)
+:PROPERTIES:
+:ID:       3b8fab69-b666-40b1-aba2-e8643f1ecc1c
+:END:
+#+begin_src elisp
+(add-hook 'visual-fill-column-mode-hook (setq visual-fill-column-width my-visual-fill-column-width))
+
+(map! :leader
+      (:prefix-map ("t" . "toggle")
+       :desc "visual fill column" "z" #'visual-fill-column-mode))
+       ;; :desc "visual fill column" "z" (lambda () (interactive) (setq visual-fill-column-width my-visual-fill-column-width) (#'visual-fill-column-mode))))
 #+end_src
 
+** git diff fringe(~diff-hl~) :package:UI:
+#+begin_src elisp
+(map! :leader
+      (:prefix-map ("t" . "toggle")
+       :desc "git diff-hl fringe" "d" #'diff-hl-mode))
+#+end_src
+
+** ~imenu-list~ toggle (outline) :package:keybinding:
+   #+begin_src elisp
+(map! :leader
+      (:prefix-map ("t" . "toggle")
+       :desc "imenu list (outline)" "'" #'imenu-list-smart-toggle))
+   #+end_src
+
+** mixed pitch mode :example:
+#+begin_src elisp
+(map! :leader
+      (:prefix-map ("t" . "toggle")
+       :desc "mixed pitch mode" "p" #'mixed-pitch-mode))
+#+end_src
+
+** note on precedence from the doom docs :note:
+From the [[https://discourse.doomemacs.org/t/how-to-re-bind-keys/56][doom documentation on keybindings]]:
+#+begin_quote
+Emacs reads keymaps to determine what to do when you type in a key sequence. A
+keymap is a mapping of key sequences to commands (and each key=>command mapping
+is a keybind). At any time Emacs has a hierarchy of active keymaps, all vying
+for precedence. *Keymaps with higher precedence will override keymaps with lower
+precedence.* i.e. If you press a key, Emacs will travel down the list of active
+keymaps from  highest to lowest precedence until it finds a matching keybind.
+#+end_quote
+
+** outline (~lsp-ui-imenu~)
+#+begin_src elisp 
+(map! :leader
+      (:prefix-map ("t" . "toggle")
+       :desc "lsp-ui-imenu ([o]utline contents)" "o" #'lsp-ui-imenu))
+#+end_src
+
+** UPDATE VS code emulation
+    #+begin_src elisp
+;; comment lines
+(define-key global-map (kbd "C-/") #'evilnc-comment-or-uncomment-lines)
+;; TODO move lines up/down
+    #+end_src
+
+** FIXME no 'relative' line numbers :fn:
+# FIXME: just turns off and cant turn on again
+#+begin_src elisp :tangle no
+;; lib: lisp/lib/ui.el
+(eval-after-load "ui"
+'(defun doom/toggle-line-numbers ()
+  "Toggle line numbers.
+Cycles through regular, relative and no line numbers. The order depends on what
+`display-line-numbers-type' is set to. If you're using Emacs 26+, and
+visual-line-mode is on, this skips relative and uses visual instead.
+See `display-line-numbers' for what these values mean."
+  (interactive)
+  (defvar doom--line-number-style display-line-numbers-type)
+  (let* ((styles `(t nil))
+         (order (cons display-line-numbers-type (remq display-line-numbers-type styles)))
+         (queue (memq doom--line-number-style order))
+         (next (if (= (length queue) 1)
+
+                 (car (cdr queue)))))
+    (setq doom--line-number-style next)
+    (setq display-line-numbers next)
+    (message "Switched to %s line numbers"
+
+             (pcase next
+               (`t "normal")
+               (`nil "disabled")
+               (_ (symbol-name next)))))))
+#+end_src
+
+* TODO To add back
 ** high
-** vc gutter (current is good?)
-   (vc-gutter +diff-hl)         ; vcs diff in the fringe
-** package
-
-#+begin_src elisp :tangle no
-(package! org-bars :recipe (:host github :repo "tonyaldon/org-bars"))      ; indentation guides for org mode headers
-#+end_src
-
+** packages
 #+begin_src elisp :tangle no
 -(package! org-extra-emphasis)
 -;; :recipe (:host github :repo "QiangF/org-extra-emphasis")) ; provides two additional markers !! (hihglight) and !@ (red)
 #+end_src
 
-#+begin_src elisp :tangle no
-(package! ox-odt :recipe (:host github :repo "kjambunathan/org-mode-ox-odt"
-                           :files ("lisp/ox-odt.el" "etc" "docs" "contrib/odt/LibreOffice")))
-(package! pdf-continuous-scroll-mode :recipe (:host github :repo "dalanicolai/pdf-continuous-scroll-mode.el"))
-
-;; REMOVE (package! org-superstar)     ; fancy headings and bullets
-
-(package! phscroll :recipe (:host github :repo "misohena/phscroll"))  ; partial horizontal scrolling in org mode (use case: wide tables)
-#+end_src
-
--(package! treemacs-icons-dired) ; treemacs icons
 
 ** bonus
--        org-startup-indented 't             ; dont indent in nested headings
-
 #+begin_src elisp :tangle no
     ;; FIXME casuing message errors
     ("[ ]" :background nil :foreground "DarkSeaGreen")
@@ -1685,12 +1558,4 @@ You can include this function in `org-font-lock-set-keywords-hook'."
     (:hlines   . "no")
     (:tangle   . "no")
     (:eval     . "never-export")
-#+end_src
-
-#+begin_src elisp :tangle no
-;; [[file:config.org::*Make org-edit-special (src block) popup in current buffer][Make org-edit-special (src block) popup in current buffer:1]]
-(after! org
-  (setq org-src-window-setup 'current-window)
-  (set-popup-rule! "^\\*Org Src" :ignore t))
-;; Make org-edit-special (src block) popup in current buffer:1 ends here
 #+end_src

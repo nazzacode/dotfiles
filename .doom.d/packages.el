@@ -12,6 +12,7 @@
 (package! graphviz-dot-mode) ; graph diagrams
 (package! highlight-indent-guides)
 (package! hypothesis :recipe (:host github :repo "Kungsgeten/hypothesis")) ; webpage highlighting and notes
+(package! imenu-list)
 (package! justify-kp :recipe (:host github :repo "Fuco1/justify-kp"))  ; nice paragraph justification for novel mode
 (package! mini-modeline)     ; modeline embedded in minibuffer
 (package! mixed-pitch)
@@ -23,12 +24,15 @@
 (package! org-download)      ; screenshots
 (package! org-fragtog)       ; auto latex fragement rendering
 (package! org-modern)        ; wowoa cool ui for org
+(package! org-modern-indent :recipe (:host github :repo "jdtsmith/org-modern-indent")) ; make those boxes nicer
 (package! org-noter)         ; pdf + synced notes; side by side
 (package! org-ref)           ; academic referencing in org mode
-(package! org-roam-bibtex)   ; org + roam + bibtex
+;; (package! org-roam-bibtex)   ; org + roam + bibtex
 (package! org-roam-ui :recipe (:host github :repo "org-roam/org-roam-ui" :files ("*.el" "out"))) ; graph explorer for org roam
 (package! org-special-block-extras)
 ;; (package! org-superstar)     ; fancy headings and bullets
+(package! ox-odt :recipe (:host github :repo "kjambunathan/org-mode-ox-odt"
+                           :files ("lisp/ox-odt.el" "lisp/odt.el" "etc" "docs" "contrib/odt/LibreOffice")))
 (package! pdf-continuous-scroll-mode :disable (not (and (fboundp 'init-image-library) (init-image-library 'svg))))
 (package! pdf-continuous-scroll-mode :recipe (:host github :repo "dalanicolai/pdf-continuous-scroll-mode.el"))
 (package! pdf-view-restore)

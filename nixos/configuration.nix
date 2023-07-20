@@ -69,7 +69,7 @@
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
-  fonts.fontconfig.dpi=180;  # font scaling
+  fonts.fontconfig.dpi = 180;  # font scaling
 
   services.xserver.xkbOptions = "caps:swapescape";
   console.useXkbConfig = true;  # apply to external consoles (e.g tty)

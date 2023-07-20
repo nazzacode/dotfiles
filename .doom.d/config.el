@@ -71,7 +71,8 @@
 ;; Theme:1 ends here
 
 ;; [[file:config.org::*Fonts][Fonts:1]]
-;; - must set ~doom-font~ size for (disable)-~doom-big-mode~ to return font to orginal size.
+;; IMPORTANT: must set ~doom-font~ size for (disable)-~doom-big-mode~ to return font to orginal size.
+
 (setq
   ;;; TODO Doom Font: EXPLAIN
   ;; doom-font (font-spec :size 28)
@@ -83,8 +84,11 @@
   ;; doom-font (font-spec :family "Hasklug Nerd Font Mono" :size 26 :height 1.0)
   ;; doom-font (font-spec :family "Agave Nerd Font Mono")
   ;; doom-font (font-spec :family "Noto Sans")
- doom-font (font-spec :family "Source Code Pro" :size 28 :height 1.0)
+ doom-font (font-spec :family "Source Code Pro" :size 18)
+  ;; :size 28 :height 1.0)
   ;;; Variable Pitch:
+ doom-variable-pitch-font (font-spec :family "Source Code Pro")
+                            ;; :size 28 :height 1.0)
   ;; doom-variable-pitch-font (font-spec :height 1.0)
   ;; doom-variable-pitch-font (font-spec :family "Cousine Nerd Font Mono" :height 1.0)
  ;; doom-variable-pitch-font (font-spec :family "ETBookOT" :height 1.5)
@@ -180,6 +184,29 @@
 (setq-default display-fill-column-indicator-character ?\u00A6) ; 2502)
 ;; Column indicator:1 ends here
 
+;; [[file:config.org::*Disable spellcheck (~spell-fu~ (not ~flyspell~))][Disable spellcheck (~spell-fu~ (not ~flyspell~)):1]]
+(remove-hook 'text-mode-hook #'spell-fu-mode)
+;; Disable spellcheck (~spell-fu~ (not ~flyspell~)):1 ends here
+
+;; [[file:config.org::*No background color in terminal][No background color in terminal:1]]
+;; NO background color in terminal
+(defun on-frame-open (&optional frame)
+  "If the FRAME created in terminal don't load background color."
+  (unless (display-graphic-p frame)
+    (set-face-background 'default "unspecified-bg" frame)))
+(add-hook 'after-make-frame-functions 'on-frame-open)
+;; No background color in terminal:1 ends here
+
+;; [[file:config.org::*FIXME Scroll bar (~yascroll~)][FIXME Scroll bar (~yascroll~):1]]
+(add-hook! 'prog-mode-hook #'yascroll-bar-mode)
+(add-hook! 'org-mode-hook #'yascroll-bar-mode)
+(setq yascroll:delay-to-hide nil)
+;; (add-hook 'yascroll-bar-mode-hook (fringe-mode '8))
+
+(custom-set-faces!
+ `(yascroll:thumb-fringe :foreground "grey" :background "grey"))
+;; FIXME Scroll bar (~yascroll~):1 ends here
+
 ;; [[file:config.org::*~highligh-indent-guide~ (code fences)][~highligh-indent-guide~ (code fences):1]]
 ;; Highlight-indent-guide (package)
 (setq highlight-indent-guides-method 'character
@@ -194,18 +221,12 @@
         (evil-terminal-cursor-changer-activate))
 ;; ~emacs-terminal-cursor-changer~ (vim state in term):1 ends here
 
-;; [[file:config.org::*Disable spellcheck (~spell-fu~ (not ~flyspell~))][Disable spellcheck (~spell-fu~ (not ~flyspell~)):1]]
-(remove-hook 'text-mode-hook #'spell-fu-mode)
-;; Disable spellcheck (~spell-fu~ (not ~flyspell~)):1 ends here
-
-;; [[file:config.org::*No background color in terminal][No background color in terminal:1]]
-;; NO background color in terminal
-(defun on-frame-open (&optional frame)
-  "If the FRAME created in terminal don't load background color."
-  (unless (display-graphic-p frame)
-    (set-face-background 'default "unspecified-bg" frame)))
-(add-hook 'after-make-frame-functions 'on-frame-open)
-;; No background color in terminal:1 ends here
+;; [[file:config.org::*~imenu-list~ (outline)][~imenu-list~ (outline):1]]
+(setq imenu-list-focus-after-activation t
+      imenu-list-position 'right)
+      ;; imenu-list-size 0.15
+      ;; imenu-list-auto-resize t)
+;; ~imenu-list~ (outline):1 ends here
 
 ;; [[file:config.org::*Modeline][Modeline:1]]
 (setq doom-modeline-height 25
@@ -313,7 +334,7 @@
 ;; [[file:config.org::*Headings][Headings:1]]
 ;; `weights:' can be [normal, semi-bold, bold]
 (custom-set-faces!
-  '(outline-1 :weight normal :height 1.0 :underline "orange") ;1.26) ;1.12)
+  '(outline-1 :weight normal :height 1.0 :underline "grey") ;1.26) ;1.12)
   '(outline-2 :weight normal :height 1.0) ;1.16) ;1.08)
   '(outline-3 :weight normal :height 1.0) ;1.10) ;1.05)
   '(outline-4 :weight normal :height 1.0) ;1.06) ;1.03)
@@ -322,7 +343,6 @@
   '(outline-7 :weight normal)
   '(outline-8 :weight normal)
   '(org-document-title :weight normal :height 1.0)); 1.8)) ; 1.2
-
 ;; Previous symbols: '( "◉" "○" "⎊" "⎉" "⊛" "⊚" "◦" "◘")
 ;; Headings:1 ends here
 
@@ -601,6 +621,32 @@ You can include this function in `org-font-lock-set-keywords-hook'."
 (plist-put org-format-latex-options :justify 'center)
 ;; Latex fragments:1 ends here
 
+;; [[file:config.org::*Headerline][Headerline:1]]
+(defun ndk/set-header-line-format()
+  (setq header-line-format '(:eval (ndk/org-breadcrumbs))))
+
+(add-hook 'org-mode-hook #'ndk/set-header-line-format)
+
+(defun ndk/heading-title ()
+   "Get the heading title."
+   (save-excursion
+     (if (not (org-at-heading-p))
+       (org-previous-visible-heading 1))
+     (org-element-property :title (org-element-at-point))))
+
+(defun ndk/org-breadcrumbs ()
+   "Get the chain of headings from the top level down
+    to the current heading."
+   (let ((breadcrumbs (org-format-outline-path
+                         (org-get-outline-path)
+                         (1- (frame-width))
+                         nil "/"))
+         (title (ndk/heading-title)))
+     (if (string-empty-p breadcrumbs)
+         title
+       (format "%s/%s" breadcrumbs title))))
+;; Headerline:1 ends here
+
 ;; [[file:config.org::*emacs-jupyter][emacs-jupyter:1]]
 ;; TypeScript
 (setq org-babel-default-header-args:jupyter-typescript '(
@@ -652,12 +698,23 @@ You can include this function in `org-font-lock-set-keywords-hook'."
 (setq org-bars-with-dynamic-stars-p 't)
 ;; org-bars (heading indentation guides):1 ends here
 
+;; [[file:config.org::*org-modern][org-modern:1]]
+(global-org-modern-mode)
+;; (set-face-attribute 'org-modern-symbol nil :family "DM Mono")
+(setq org-modern-star nil
+      org-modern-hide-stars nil)
+;; org-modern:1 ends here
+
 ;; [[file:config.org::*org-noter][org-noter:1]]
 (use-package org-noter
   :after (:any org pdf-view)
   :config
   (setq org-noter-always-create-frame nil))  ; stop opening frames
 ;; org-noter:1 ends here
+
+;; [[file:config.org::*ox-odt][ox-odt:1]]
+(require 'dom)
+;; ox-odt:1 ends here
 
 ;; [[file:config.org::*General][General:1]]
 (setq org-roam-directory "~/org/roam")
@@ -818,7 +875,7 @@ If there is no description, use the link target."
 (good-scroll-mode 1)
 ;; ~good-scroll~:1 ends here
 
-;; [[file:config.org::*LSP][LSP:1]]
+;; [[file:config.org::*lsp][lsp:1]]
 (setq lsp-ui-doc-enable t
       lsp-ui-doc-show-with-cursor t
       lsp-lens-enable t
@@ -831,9 +888,9 @@ If there is no description, use the link target."
       lsp-signature-render-documentation t
       lsp-completion-show-detail t
       lsp-completion-show-kind t)
-;; LSP:1 ends here
+;; lsp:1 ends here
 
-;; [[file:config.org::*Pdf (tools)][Pdf (tools):1]]
+;; [[file:config.org::*pdf-tools][pdf-tools:1]]
 ;; more fine-grained zooming
 (setq pdf-view-resize-factor 1.05)
 
@@ -881,24 +938,36 @@ If there is no description, use the link target."
 ;;   (my-pdf-view-double-scroll-up-or-next-page)
 ;;   (enlarge-window 1)
 ;;   (other-window 1))
-;; Pdf (tools):1 ends here
+;; pdf-tools:1 ends here
 
-;; [[file:config.org::*Tree sittier][Tree sittier:1]]
+;; [[file:config.org::*tree sittier][tree sittier:1]]
 (use-package! tree-sitter
   :config
   (require 'tree-sitter-langs)
   (global-tree-sitter-mode)
   (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode))
-;; Tree sittier:1 ends here
+;; tree sittier:1 ends here
 
-;; [[file:config.org::*Writeroom mode][Writeroom mode:1]]
+;; [[file:config.org::*writeroom mode][writeroom mode:1]]
 (with-eval-after-load 'writeroom-mode
   (define-key writeroom-mode-map (kbd "C-M-<") #'writeroom-decrease-width)
   (define-key writeroom-mode-map (kbd "C-M->") #'writeroom-increase-width)
   (define-key writeroom-mode-map (kbd "C-M-=") #'writeroom-adjust-width))
 
 (add-hook 'writeroom-mode-hook #'(lambda () (text-scale-increase 1)))
-;; Writeroom mode:1 ends here
+;; writeroom mode:1 ends here
+
+;; [[file:config.org::*treemacs (file browser)][treemacs (file browser):1]]
+(setq treemacs-width 30)
+(setq treemacs--width-is-locked nil)
+(setq treemacs-width-is-initially-locked nil)
+(setq doom-themes-treemacs-enable-variable-pitch nil)
+;; treemacs (file browser):1 ends here
+
+;; [[file:config.org::*git-gutter][git-gutter:1]]
+(after! git-gutter
+  (setq git-gutter:disabled-modes '(org-mode image-mode)))
+;; git-gutter:1 ends here
 
 ;; [[file:config.org::*mixed pitch mode][mixed pitch mode:1]]
 (map! :leader
@@ -933,3 +1002,9 @@ If there is no description, use the link target."
       (:prefix-map ("t" . "toggle")
        :desc "git diff-hl fringe" "d" #'diff-hl-mode))
 ;; git diff fringe(~diff-hl~):1 ends here
+
+;; [[file:config.org::*~imenu-list~ toggle (outline)][~imenu-list~ toggle (outline):1]]
+(map! :leader
+      (:prefix-map ("t" . "toggle")
+       :desc "imenu list (outline)" "'" #'imenu-list-smart-toggle))
+;; ~imenu-list~ toggle (outline):1 ends here
